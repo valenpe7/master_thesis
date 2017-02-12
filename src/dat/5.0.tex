@@ -14,21 +14,46 @@ algorithm:
 	\begin{equation}
 	\bar{\vec{E}}_{0, \bot}^{ijn} = \frac{\delta x \delta y}{(2 \pi)^2} \sum_{l, m = 1}^{N_x, N_y} \hat{\vec{E}}_{0, \bot}^{lmn} \e^{- \i \: \left(k_x^i x^l + k_y^j y^m \right)}, \quad i, j \in \left\lbrace 1, \dots, N_{x, y} \right\rbrace.
 	\end{equation}
-	\item Calculate transverse electric field components at the boundary:
+	\item Calculate transverse electric field components at the boundary $ z = z_\mathrm{B} $:
 	\begin{equation}
 	k_z^{ijn} = \Re \sqrt{\frac{(\omega^n)^2}{c^2} - (k_x^i)^2 - (k_y^j)^2},
 	\end{equation}
 	\begin{equation}
-	\bar{\vec{E}}_{B, \bot}^{ijn} =
-	\begin{cases}
-	\bar{\vec{E}}_{0, \bot}^{ijn} \e^{\i k_z^{ijn}(z_B - z_0)} & \text{for} \ k_z^{ijn} > 0 \\
-	0							 							   & \text{for} \  k_z^{ijn} = 0 
-	\end{cases}
+	\bar{\vec{E}}_{\mathrm{B}, \bot}^{ijn} =
+	\begin{cases} \bar{\vec{E}}_{0, \bot}^{ijn} \e^{\i k_z^{ijn}(z_\mathrm{B} - z_0)} & \text{for} \ k_z^{ijn} > 0 \\ 0 & \text{for} \ k_z^{ijn} = 0 \end{cases}.
 	\end{equation}
-	\item Calculate longitudinal electric field components at the boundary.
-	\item Calculate the magnetic field at the boundary.
-	\item Calculate $ \hat{\vec{E}}_{\mathrm{B}}^{ijn} $, $ \hat{\vec{B}}_{\mathrm{B}}^{ijn} $ via two-dimensional inverse discrete Fourier transforms.
+	\item Calculate longitudinal electric field components at the boundary $ z = z_\mathrm{B} $:
+	\begin{equation}
+	\bar{E}_{\mathrm{B}, z}^{ijn} = \begin{cases} -\frac{k_x^i \bar{E}_{\mathrm{B}, x}^{ijn} + k_y^j \bar{E}_{\mathrm{B}, y}^{ijn}}{k_z^{ijn}} & \text{for} \ k_z^{ijn} > 0 \\ 0 & \text{for} \ k_z^{ijn} = 0 \end{cases}.
+	\end{equation}
+	\item Calculate the magnetic field at the boundary $ z = z_\mathrm{B} $:
+	\begingroup
+	\renewcommand*{\arraystretch}{1.7}
+	\begin{equation}
+	\mathbb{R}^{ijn} =  \begin{pmatrix}
+	-k_x^i k_y^j & (k_x^i)^2 - (\omega^n)^2/c^2 \\
+	(\omega^n)^2/c^2 - (k_y^j)^2 & k_x^i k_y^j \\
+	-k_y^j k_z^{ijn} & k_x^i k_z^{ijn} 
+	\end{pmatrix},
+	\end{equation} 
+	\endgroup
+	\begin{equation}
+	\bar{\vec{B}}_{\mathrm{B}}^{ijn} = \begin{cases} (\omega^n k_z^{ijn})^{-1} \mathbb{R}^{ijn} \bar{\vec{E}}_{\mathrm{B}, \bot}^{ijn} & \text{for} \ k_z^{ijn} > 0 \\ 0 & \text{for} \ k_z^{ijn} = 0 \end{cases}.
+	\end{equation}
+	\item Calculate $ \hat{\vec{E}}_{\mathrm{B}}^{ijn} $, $ \hat{\vec{B}}_{\mathrm{B}}^{ijn} $ via two-dimensional inverse discrete Fourier transforms:
+	\begin{equation}
+	\hat{\vec{E}}_{\mathrm{B}}^{ijn} = \frac{(2 \pi)^2}{N_x N_y \delta x \delta y} \sum_{l, m = 1}^{Nx, Ny} \bar{\vec{E}}_{\mathrm{B}}^{lmn} \e^{\i(k_x^l x^i + k_y^m y^j)},
+	\end{equation}
+	\begin{equation}
+	\hat{\vec{B}}_{\mathrm{B}}^{ijn} = \frac{(2 \pi)^2}{N_x N_y \delta x \delta y}  \sum_{l, m = 1}^{Nx, Ny} \bar{\vec{B}}_{\mathrm{B}}^{lmn} \e^{\i(k_x^l x^i + k_y^m y^j)}.
+	\end{equation}
 	\item Calculate $ \vec{E}_{\mathrm{B}}^{ij}(t) $, $ \vec{B}_{\mathrm{B}}^{ij}(t) $ for any given time $ t \in [t^{1} - \frac{z_{\mathrm{B}} - z_{0}}{c}, t^{N_{t}}  - \frac{z_{\mathrm{B}} - z_{0}}{c}] $.
+	\begin{equation}
+	\vec{E}_{\mathrm{B}}^{ij} (t) = \frac{2 \pi}{N_t \delta t} \sum_{n = 1}^{N_t} \hat{\vec{E}}_{\mathrm{B}}^{ijn} \e^{-\i \omega^n t},
+	\end{equation}
+	\begin{equation}
+	\vec{B}_{\mathrm{B}}^{ij} (t) = \frac{2 \pi}{N_t \delta t} \sum_{n = 1}^{N_t} \hat{\vec{B}}_{\mathrm{B}}^{ijn} \e^{-\i \omega^n t}.
+	\end{equation}
 \end{enumerate}
 
 \noindent
