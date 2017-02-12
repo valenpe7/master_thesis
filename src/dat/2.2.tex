@@ -1,0 +1,37 @@
+There are basically three different approaches to plasma physics: the hydrodynamic theory, the kinetic theory and the particle theory. Each approach has some advantages and limitations which stems from simplified assumptions appropriate only for certain phenomena and time scales.
+
+The plasma kinetic theory takes into account the motion of all of the particles. This can be done in an exact way, using Klimontovich equation. However, one is not usually interested in the exact motion of the particles, but rather in certain average characteristics. Thus, this equation can be good starting point for the derivation of approximate equations.
+
+The kinetic theory is based on a set of equations for the distribution functions $ f_s \left(\vec{x}, \vec{v}, t \right) $ of each plasma particle species $ s $, together with Maxwell equations. Here $ \vec{x} $ is the vector of coordinates for all the degrees of freedom, $ \vec{v} $ is the corresponding vector of velocities and $ t $ is time. The distribution function is a statistical description of a very large number of interacting particles. If collisions can be neglected (for example in hot plasmas), the evolution of such a system can be described by the collisionless Vlasov equation,
+\begin{equation}
+\label{2.2.1}
+\diffp[]{f_{s}}{t} + \vec{v} \cdot \nabla f_s + \frac{q_{s}}{m_{s}}\left( \vec{E} + \vec{v} \times \vec{B} \right) \cdot \diffp[]{f_s}{\vec{v}} = 0.
+\end{equation}
+Here $ \vec{E} $ and $ \vec{B} $ are macroscopic electric and magnetic fields acting on the particles.
+
+The equation (\ref{2.2.1}) is obtained only by making the assumption that the particle density is conserved, such that the rate of change in a phase-space volume is equal to the flux of particles into that volume. Because of its comparative simplicity, this equation is most commonly used in kinetic theory. However, the assumption to neglect collisions in a plasma is not generally valid. If it is necessary to take them into account, the collision term can be approximated under certain conditions.
+
+The second approach is hydrodynamic theory. In this model, the conservation laws of mass, momentum and energy are coupled to Maxwell equations. The fluid theory is the simplest description of a plasma, however this approximation is sufficiently accurate to describe the majority of observed phenomena. The velocity distribution of each species is assumed to be Maxwellian everywhere, so the dependent variables are functions of only space coordinates and time. The fluid equations are simply the first three moments of the Vlasov equation. These yield the following fluid equations for the density, the momentum and the energy,
+\begin{equation}
+\label{2.2.2}
+\diffp{n_s}{t} + \nabla \cdot \left(n_s \vec{u}_s \right) = 0,
+\end{equation}
+\begin{equation}
+\label{2.2.3}
+m_s n_s \left[ \diffp{\vec{u}_s}{t} + \left(\vec{u}_s \cdot \nabla \right) \vec{u}_s \right] + \nabla \cdot \mathbb{P}_s = q_s n_s \left(\vec{E} + \vec{u}_s \times \vec{B} \, \right),
+\end{equation}
+\begin{equation}
+\label{2.2.4}
+\diffp{}{t} \left(\frac{1}{2} n_s m_s u_s^2 + e_{s} \right) + \nabla \cdot \left(\frac{1}{2} n_s m_s u_s^2 \vec{u}_s + e_{s} \vec{u}_s + \mathbb{P}_s \vec{u}_s + \vec{Q}_s \right) = q_s n_s \vec{u}_s \cdot \vec{E}.
+\end{equation}
+
+The zeroth-order moment (\ref{2.2.2}) gives the continuity equation, where $ \vec{u}_s\left(\vec{x}, t \right) $ is the velocity of the fluid of species $ s $. This equation essentially states that the total number of particles is conserved. The first-order moment (\ref{2.2.3}) leads to a momentum equation. Here $ \mathbb{P}_s\left(\vec{x}, t \right) $ is the pressure tensor. This comes about by separating the particle velocity into the fluid and a thermal component of velocity. The thermal velocity then leads to the pressure term. Finally, the second-order moment (\ref{2.2.4}) corresponds to the energy equation, where $ e_{s} $ is the density of the internal energy and $ \vec{Q}_s $ describes the heat flux density.
+
+The moment equations are an infinite set of equations and a truncation is required in order to solve these equations. For this equation system to be complete it has to be supplemented by an equation of state, which describes the relation between pressure and density in the plasma. However, the equations of state are well defined only in local thermodynamic equilibrium. Otherwise, the system cannot be described by fluid equations.
+
+The last possible description is the particle theory approach. The plasma is described by electrons and ions moving under the influence of the external (e.g. laser) fields and electromagnetic fields due to their own charge. The basic equation of motion for a charged particle in an electromagnetic field is given by the Newton equations of motion with the Lorentz force,
+\begin{equation}
+\label{2.2.5}
+\diff{\vec{x}}{t} = \vec{v}, \qquad \diff{\vec{v}}{t} = \frac{q_s}{m_s} \left(\vec{E} + \vec{v} \times \vec{B} \, \right).
+\end{equation}
+However, plasmas typically consist of an extremely large number of particles that interact in self-consistent fields, so the analysis can be applied only with the help of powerful computing infrastructure and particle simulation codes.

@@ -1,0 +1,467 @@
+\documentclass[12pt, twoside, a4paper, openright]{report}
+
+%packages-----------------------------------------------------------------------
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{array}
+%\usepackage{times}
+%\usepackage{charter}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{verbatim}
+\usepackage{pdfpages}
+\usepackage[unicode]{hyperref}
+\usepackage[small, bf]{caption}
+\usepackage{enumerate}
+\usepackage{epstopdf}
+\usepackage{epsfig}
+\usepackage{setspace}
+\usepackage{esdiff}
+\usepackage{enumitem}
+\usepackage[inner=2.5cm, outer=2cm]{geometry}
+\usepackage{emptypage}
+\usepackage{caption}
+%\usepackage{subcaption}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{multicol}
+\usepackage{lipsum}
+\usepackage{mathabx}
+\usepackage{floatrow}
+\usepackage[position=top]{subfig}
+
+%fancystyles--------------------------------------------------------------------
+
+\usepackage{fancyhdr}
+
+\fancypagestyle{myfancy}{
+
+\fancyhead[LE]{\nouppercase{\leftmark}}
+\fancyhead[LO]{}
+\fancyhead[CO]{}
+\fancyhead[CE]{}
+\fancyhead[RE]{}
+\fancyhead[RO]{\nouppercase{\rightmark}}
+
+\fancyfoot[LE]{\thepage}
+\fancyfoot[LO]{}
+\fancyfoot[CO]{}
+\fancyfoot[CE]{}
+\fancyfoot[RE]{}
+\fancyfoot[RO]{\thepage}
+
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.0pt}
+}
+
+\fancypagestyle{plain}{
+
+\fancyhead[LE]{}
+\fancyhead[LO]{}
+\fancyhead[CO]{}
+\fancyhead[CE]{}
+\fancyhead[RE]{}
+\fancyhead[RO]{}
+
+\fancyfoot[LE]{\thepage}
+\fancyfoot[LO]{}
+\fancyfoot[CO]{}
+\fancyfoot[CE]{}
+\fancyfoot[RE]{}
+\fancyfoot[RO]{\thepage}
+
+\renewcommand{\headrulewidth}{0.0pt}
+\renewcommand{\footrulewidth}{0.0pt}
+}
+
+%tikz---------------------------------------------------------------------------
+
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows}
+
+%url----------------------------------------------------------------------------
+
+\usepackage{url}
+\DeclareUrlCommand\url{\def\UrlLeft{<}\def\UrlRight{>} \urlstyle{tt}}
+
+%color--------------------------------------------------------------------------
+
+\definecolor{darkred}{rgb}{0.6,0,0}
+\definecolor{darkgreen}{rgb}{0,0.6,0}
+\definecolor{darkblue}{rgb}{0,0,0.6}
+\definecolor{darkgrey}{rgb}{0.3,0.3,0.3}
+\definecolor{grey}{rgb}{0.6,0.6,0.6}
+\definecolor{lightgrey}{rgb}{0.95,0.95,0.95}
+\definecolor{lightred}{rgb}{0.99,0.85,0.85}
+\definecolor{violet}{rgb}{0.65,0.45,0.75}
+
+%listings-----------------------------------------------------------------------
+
+\lstset{
+   language=Matlab,
+   basicstyle=\small\ttfamily,
+   keywordstyle=\small,
+   breaklines=true,
+   showstringspaces=false,
+   stringstyle=\small\color{darkred},
+   commentstyle=\color{darkgreen}\small,
+   columns=fullflexible,
+   numbers=left,
+   firstnumber=1,
+   numberstyle=\tiny,
+   stepnumber=1
+}
+{}
+
+%settings-----------------------------------------------------------------------
+
+\setlength{\parindent}{20pt}
+\setlength{\parskip}{0pt plus 0.2pt minus 0.2pt}
+\pagenumbering{arabic}
+\frenchspacing
+
+\DeclareFontFamily{U}{mathx}{\hyphenchar\font45}
+\DeclareFontShape{U}{mathx}{m}{n}{<-> mathx10}{}
+\DeclareSymbolFont{mathx}{U}{mathx}{m}{n}
+\DeclareMathAccent{\widebar}{0}{mathx}{"73}
+
+%commands-----------------------------------------------------------------------
+
+\renewcommand{\baselinestretch}{1.0}
+
+\newcommand{\ctu}{Czech Technical University in Prague }
+\newcommand{\fnspe}{Faculty of Nuclear Sciences and Physical Engineering }
+\newcommand{\dpe}{Department of Physical Electronics }
+\newcommand{\branch}{Computational Physics }
+
+\newcommand{\projecttitle}{Tight-focusing of short intense laser pulses in~PIC~simulations of laser-plasma~interaction }
+\newcommand{\projecttitlecz}{Zaostření krátkého intenzivního laserového impulsu do velmi malého ohniska v PIC simulacích interakce s plazmatem }
+
+\newcommand{\valenta}{Bc. Petr Valenta }
+\newcommand{\klimo}{doc. Ing. Ondřej Klimo, Ph.D. }
+\newcommand{\weber}{Dr. Stefan Weber }
+\newcommand{\academicyear}{2016/2017 }
+
+\newcommand{\keywords}{}
+\newcommand{\projectabstract}{}
+
+%macros-------------------------------------------------------------------------
+
+\newcommand{\nucl}[3]{
+\ensuremath{
+\phantom{
+\ensuremath{^{#1}_{#2}}}
+\llap{\ensuremath{^{\rule{0pt}{0pt}#1}}}
+\llap{\ensuremath{_{\rule{0pt}{7pt}#2}}}
+\mbox{#3}}}
+
+\newcommand{\norm}[1]{\lVert#1\rVert}
+\newcommand{\abs}[1]{\lvert#1\rvert}
+
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+\newcommand{\rot}[1]{\nabla \times #1}
+\newcommand{\grad}[1]{\nabla #1}
+\renewcommand{\div}[1]{\nabla \cdot #1}
+\newcommand{\laplace}[1]{\Delta #1}
+
+\newcommand{\e}[0]{\mathrm{e}}
+\renewcommand{\i}[0]{\mathrm{i}}
+
+%changecountering---------------------------------------------------------------
+
+\usepackage{chngcntr}
+%\counterwithout{equation}{chapter}
+\counterwithout{figure}{chapter}
+\counterwithout{table}{chapter}
+
+%document-----------------------------------------------------------------------
+
+\begin{document}
+
+\pagestyle{empty}
+
+%1------------------------------------------------------------------------------
+
+\mbox{}
+\newpage
+
+\begin{titlepage}
+
+\begin{center}
+{\Large \bf \ctu}\\[4mm]
+{\Large \bf \fnspe}\\[4mm]
+{\Large \bf \dpe}\\[16mm]
+\epsfysize=45mm \epsffile{img/logo/ctu.eps}\\[12mm]
+\begin{spacing}{2.0}
+{\LARGE \bf \projecttitle}\\[2mm]
+\end{spacing}
+{\Large (Master thesis)} \\
+\vfill
+\end{center}
+
+\begin{flushleft}
+\begin{tabular}{rl}
+Author: & \valenta \\[1mm]
+Supervisor: & \klimo \\[1mm]
+Consultant: & \weber \\[1mm]
+Academic year: & \academicyear \\[1mm]
+\end{tabular}
+\end{flushleft}
+
+\end{titlepage}
+
+%2------------------------------------------------------------------------------
+
+\newpage
+\mbox{}
+
+%3------------------------------------------------------------------------------
+
+\newpage
+\includepdf[pages=1]{dat/zadani.pdf}
+
+%4------------------------------------------------------------------------------
+
+\newpage
+\includepdf[pages=2]{dat/zadani.pdf}
+
+%5------------------------------------------------------------------------------
+
+\newpage
+\null
+\vfill
+{\bf \noindent Declaration} \\[5mm]
+I declare that I carried out this work independently, and only with the cited sources, literature and other professional sources.\\
+\vspace{5mm}In Prague on .............................\hfill
+\begin{tabular}{c}
+........................................\\
+\valenta
+\end{tabular}
+
+%6------------------------------------------------------------------------------
+
+\newpage
+\thispagestyle{empty}
+\mbox{}
+
+%7------------------------------------------------------------------------------
+
+\newpage
+\begin{flushleft}
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{r p{12cm}}
+		Název práce:
+		~ & \bf \projecttitlecz \\
+		Autor:
+		~ & \valenta \\
+		Druh práce:
+		~ & Diplomová práce \\
+		Obor:
+		~ & Informatická fyzika\\
+		Vedoucí práce:
+		~ & \klimo \newline Katedra fyzikální elektroniky, Fakulta jaderná a fyzikálně inženýrská, České vysoké učení technické v Praze \\
+		Konzultant:
+		~ & \weber \newline Fyzikální ústav Akademie věd České republiky, v. v. i., projekt ELI-Beamlines \\
+	\end{tabular}
+\end{flushleft}
+
+\begin{center}
+\textbf{Abstrakt}\\
+\end{center}
+
+Content...\\
+
+Keywords:
+
+
+%8------------------------------------------------------------------------------
+
+\newpage
+\begin{flushleft}
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{r p{12cm}}
+		Title:
+		~ & \bf \projecttitle \\
+		Author:
+		~ & \valenta \\
+		Type of work:
+		~ & Master thesis \\
+		Branch of study:
+		~ & Computational Physics \\
+		Supervisor:
+		~ & \klimo \newline Department of Physical Electronics, Faculty of Nuclear Sciences and Physical Engineering, Czech Technical University in Prague \\
+		Consultant:
+		~ & \weber \newline Institute of Physics, Academy of Sciences of the Czech Republic, v. v. i., Project ELI-Beamlines \\
+	\end{tabular}
+\end{flushleft}
+
+\begin{center}
+	\textbf{Abstract}\\
+\end{center}
+
+Content...\\
+
+Keywords: plasma-based amplification, PIC simulations, parametric instabilities
+
+%9------------------------------------------------------------------------------
+
+\tableofcontents
+\addtocontents{toc}{\protect\thispagestyle{empty}}
+\thispagestyle{empty}
+
+%-------------------------------------------------------------------------------
+
+\pagestyle{myfancy}
+
+\chapter*{Introduction\markboth{Introduction}{Introduction}}
+\addcontentsline{toc}{chapter}{Introduction}
+%\input{dat/introduction.tex}
+
+%-------------------------------------------------------------------------------
+
+\chapter{The electromagnetic field}
+%\input{dat/1.0.tex}
+
+%\section{Principles of nuclear fusion}
+%\input{dat/1.1.tex}
+
+%\section{Lawson criterion}
+%\input{dat/1.2.tex}
+
+%\section{Direct and indirect drive}
+%\input{dat/1.3.tex}
+
+%\section{Modern approaches}
+%\input{dat/1.4.tex}
+
+%-------------------------------------------------------------------------------
+
+\chapter{Laser-matter interaction}
+\input{dat/2.0.tex}
+
+\section{Introduction to plasma physics}
+\input{dat/2.1.tex}
+
+\section{Description of plasma}
+\input{dat/2.2.tex}
+
+\section{Electromagnetic waves in plasmas}
+\input{dat/2.3.tex}
+
+\section{Laser absorption processes}
+\input{dat/2.4.tex}
+
+\subsection{Collisional absorption}
+\input{dat/2.4.1.tex}
+
+\subsection{Resonance absorption}
+\input{dat/2.4.2.tex}
+
+\subsection{Landau damping}
+\input{dat/2.4.3.tex}
+
+\section{Non-linear processes and instabilities}
+\input{dat/2.5.tex}
+
+\subsection{Ponderomotive force}
+\input{dat/2.5.1.tex}
+
+\subsection{Parametric instabilities}
+\input{dat/2.5.2.tex}
+
+%\subsubsection{Stimulated Raman scattering}
+%\input{dat/}
+
+%\subsubsection{Stimulated Brillouin scattering}
+%\input{dat/}
+
+%\subsubsection{Two-plasmon decay}
+%\input{dat/}
+
+%\subsection{Filamentation and self-focusing}
+%\input{dat/2.5.3.tex}
+
+%-------------------------------------------------------------------------------
+
+\chapter{The particle-in-cell method}
+\input{dat/3.0.tex}
+
+\section{Particle-in-cell method}
+\input{dat/3.1.tex}
+
+\subsection{Field solver}
+\input{dat/3.1.1.tex}
+
+\subsection{Particle and field weighting}
+\input{dat/3.1.2.tex}
+
+\subsection{Particle pusher}
+\input{dat/3.1.3.tex}
+
+\subsection{Stability and accuracy}
+\input{dat/3.1.4.tex}
+
+\section{Code EPOCH}
+\input{dat/3.2.tex}
+
+%-------------------------------------------------------------------------------
+
+\chapter{Tight focusing of laser beams}
+%\input{dat/4.0.tex}
+
+%\section{Boundary conditions}
+%\input{dat/4.1.tex}
+
+%\section{Two-dimensional simulations}
+%\input{dat/4.2.tex}
+
+\chapter{Results}
+
+\input{dat/5.0.tex}
+
+%\input{dat/5.1.tex}
+
+
+%-------------------------------------------------------------------------------
+
+
+\chapter*{Conclusion\markboth{Conclusion}{Conclusion}}
+\addcontentsline{toc}{chapter}{Conclusion}
+\input{dat/conclusion.tex}
+
+%-------------------------------------------------------------------------------
+
+\newpage
+\pagestyle{plain}
+\null
+\vfill
+{\bf \noindent Acknowledgments} \\
+
+I wish express my gratitude to both, my supervisor \klimo and consultant \weber for constant support and guidance, as well as for providing invaluable advice and direction.\\
+
+Access to computing and storage facilities owned by parties and projects contributing to the National Grid Infrastructure MetaCentrum, provided under the programme "Projects of Large Infrastructure for Research, Development, and Innovations" (LM2010005), is greatly appreciated.\\
+
+Access to the CERIT-SC computing and storage facilities provided under the programme Center CERIT Scientific Cloud, part of the Operational Program Research and Development for Innovations, reg. no. CZ. 1.05/3.2.00/08.0144, is greatly  appreciated.\\
+
+The development of the EPOCH code was funded in part by the UK EPSRC grants EP/G054950/1, EP/G056803/1, EP/G055165/1 and EP/ M022463/1.\\
+\begin{flushright}
+\valenta
+\end{flushright}
+
+%-------------------------------------------------------------------------------
+
+\newpage
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliographystyle{plain}
+\bibliography{bib/ref}
+
+%-------------------------------------------------------------------------------
+
+\end{document}

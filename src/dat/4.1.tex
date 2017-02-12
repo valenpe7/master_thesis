@@ -1,0 +1,22 @@
+The purpose of adding new boundary conditions to the code was to eliminate accumulation of the electromagnetic field at the boundary of the simulation domain (Figure \ref{fig:bc1}-a), which was pushing the electrons back and caused non-physical phenomena, especially in longer simulations with higher intensities. To mitigate this non-physical effect, a new boundary condition has been implemented using the Monte Carlo method. Thus as electron moves towards the target core, there is an increasing probability that its energy will be decreased to the value corresponding to the initial temperature. This approach has an analogy in the thermalization process in dense plasmas. Many types of probability density functions have been tested. It turned out, that the best properties has a modified trigonometric function (Figure \ref{fig:bc1}-b).
+
+\begin{figure}[h!]
+	\centering
+	\subfloat[]{{\includegraphics[width=0.5\linewidth]{./img/bc/profil/profil.pdf} }}%
+	\subfloat[]{{\includegraphics[width=0.5\linewidth]{./img/bc/funkce/funkce.eps} }}%
+	\caption{\textbf{(a)} Ion density profile (blue) and longitudinal electric field (red) at the time of 2500 laser periods in a test simulation of intense laser pulse interaction with plasma with the former absorbing boundary conditions. The plasma profile is exponential with the scale length of 10 laser wavelengths. The laser beam enters simulation domain on the left side, $ n_c $ stands for the critical density. \textbf{(b)} The function used for boundary condition. The condition is set on the last 3000 computational cells (laser wavelength corresponds to 120 cells).}%
+	\label{fig:bc1}%
+\end{figure}
+	
+\begin{figure}[h!]
+	\centering
+	\subfloat[]{{\includegraphics[width=0.5\linewidth]{./img/bc/spatne/spatne.eps} }}%
+	\subfloat[]{{\includegraphics[width=0.5\linewidth]{./img/bc/dobre/dobre.eps} }}%
+	\caption{Energy distribution function of electrons recorded at the location of the boundary condition going into the target core (blue) and backwards (red). The former absorbing boundary condition is used in \textbf{(a)} while the newly implemented boundary condition is used in \textbf{(b)}. Other simulation parameters are the same as in Fig. \ref{fig:bc1}.}%
+	\label{fig:bc2}%
+\end{figure}
+
+Boundary conditions have been tested recently using one-dimensional simulation code \cite{lichters}. The laser pulse with $ I\lambda^{2} = 4,95 \cdot 10^{16} \: \mathrm{W \mu m^2/cm^2} $ has been normally incident and p-polarized. The initial temperature has been chosen to 530 eV for electrons, 60 eV for ions. Coulomb collisions were neglected in these simulations. The behavior and effect of the implemented boundary condition can be observed in Figure \ref{fig:bc2}. In ideal case, the distribution of particles forming the return current should be approximately Maxwellian with the initial temperature (Figure \ref{fig:bc2}-b). Without this boundary condition, the energy spectrum of electrons propagating backwards is almost equal with spectrum of electrons moving towards the target core and it contains a tail with very high energy electrons (Figure \ref{fig:bc2}-a).
+
+
+

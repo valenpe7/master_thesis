@@ -1,0 +1,59 @@
+The particle-in-cell (PIC) method refers to a technique used to solve a certain class of partial differential equations. The method was proposed in the mid-fifties and it gained a great popularity in plasma physics applications early. It is based on the particle description approach, thus the evolution of the system is conducted in principle by following the trajectory of each particle.
+
+However, the real systems are often extremely large in terms of the number of particles they contain. In order to make simulations efficient or at all possible, so-called macro-particles are used. A macro-particle is a finite-sized computational particle that represents a group of physical particles that are near each other in the phase space. It is allowed to rescale the number of particles, because the Lorentz force depends only on the charge to mass ratio, which is invariant to this transformation. Thus, a macro-particle will follow the same trajectory as the corresponding real particles would \cite{hockney}.
+
+Although this approach significantly reduces the number of computational particles, the binary interactions for every pair of a system cannot be taken into account. The cost would scales quadratically, as the number of particles increases, which makes the computational effort unmanageable in the case of larger systems. Many of the phenomena occur in high-temperature plasmas where collisional effects are very weak, thus one can neglect them. Otherwise, one may use other techniques to include collisional effects \cite{lapenta}.
+
+Here, the procedure for deriving the PIC method is considered. The phase space distribution function  $ f_{s} \left(\vec{x}, \vec{v}, t\right) $ for a given species $ s $ is governed by the Vlasov equation (\ref{2.2.1}) in the collisionless plasma. The PIC method can be regarded as a finite element approach but with finite elements that are themselves moving and overlapping. The mathematical formulation of the PIC method is obtained by assuming that the distribution function of each species is given by the sum of distribution functions for macro-particles,
+\begin{equation}
+\label{3.1.1}
+f_{s} \left(\vec{x}, \vec{v}, t \right) =  \sum_{p} f_{p}\left(\vec{x}, \vec{v}, t \right).
+\end{equation}
+Index $ p $ denotes hereafter the quantities attributable to macro-particles. The distribution function for each macro-particle is further assumed to be
+\begin{equation}
+\label{3.1.2}
+f_{p}\left(\vec{x}, \vec{v}, t \right) = N_{p} S_{x}\left(\vec{x} - \vec{x}_{p}\left(t\right) \right)  S_{v}\left(\vec{v} - \vec{v}_{p}\left( t\right) \right),
+\end{equation}
+where $ N_{p} $ is the number of physical particles that are represented by each macro-particle, and $ S_{x} $, $ S_{v} $ are the so-called shape functions.
+
+The shape functions cannot be chosen arbitrarily. They have to fulfill a several special properties. Let $ S_{\xi} $ be the shape function of the phase space coordinate $ \vec{\xi} $. Then:
+\begin{enumerate}[nolistsep, topsep=5pt]
+\item The support of the shape function is compact, $ \exists R > 0, \: \mathrm{supp} \: S_{\xi} \subset \left(-R, R\right) $.
+\item Integral of the shape function is unitary, $ \int\limits_{-\infty}^{+\infty} S_{\xi}\left(\vec{\xi}\right)  \mathrm{d} \xi = 1 $.
+\item The shape function is symmetrical, $ S_{\xi}\left(\vec{\xi}\right) = S_{\xi}\left(-\vec{\xi}\right) $.
+\end{enumerate}
+
+While these restrictive conditions still offer a wide range of possibilities, the standard PIC method is essentially determined by the choice of the shape function in the velocity direction as a Dirac $ \delta $-function and in the spatial direction as a m-th order b-spline basis function $ b_{m} $,
+\begin{equation}
+\label{3.1.3}
+S_{v}\left(\vec{v} - \vec{v}_{p}\left(t\right)\right) = \delta\left(\vec{v} - \vec{v}_{p}\left(t\right)\right), \qquad S_{x}\left(\vec{x} - \vec{x}_{p}\left(t\right)\right)  = b_{m}\left(\frac{\vec{x} - \vec{x}_{p}\left(t\right)}{\Delta p}\right),
+\end{equation}
+where $ \Delta p $ is the size of the support of the computational particles, typically the same as simulation grid cell. Stability and accuracy of the simulation strongly depend on the choice of the shape functions. The choice of higher-order basis functions results in less numerical noise interpolation of density and field quantities and reduces non-physical phenomena in simulations, obviously at the cost of increased computational time.
+
+The computational cycle of the PIC method is shown in Figure \ref{3.1.4}. Individual steps are closer described in several following sections. The influence of the choice of the time and spatial step on the stability and accuracy of the PIC method is demonstrated in the last section.
+
+\begin{figure}[h!]
+\centering
+\tikzstyle{empty} = [rectangle, fill=white, text width=12em, text badly centered, node distance=4em]
+\tikzstyle{block} = [rectangle, draw, thick, fill=white, text width=12em, text centered, rounded corners, minimum height=4.5em]
+\tikzstyle{line} = [draw, -triangle 45]
+\begin{tikzpicture}[node distance = 2cm, auto]
+
+\node [block] (nahore) {Particle mover\\[2mm] $ \vec{F}_p \rightarrow \left(\vec{x}, \vec{v}\,\right)_{p} $};
+    
+\node [empty, below of=nahore, node distance=2.5cm] (uprostred) {};
+    
+\node [block, right of=uprostred, node distance=4.5cm] (vpravo) {Particle weighting\\[2mm] $ \left(\vec{x}, \vec{v}\right)_{p} \rightarrow \left(\rho, \vec{J}\,\right) _{i, j, k} $ };
+    
+\node [block, left of=uprostred, node distance=4.5cm] (vlevo) {Field weighting \\[2mm] $ \left(\vec{E}, \vec{B}\,\right)_{i, j, k} \rightarrow \vec{F}_p $};
+    
+\node [block, below of=uprostred, node distance=2.5cm] (dole) {Field solver\\[2mm] $ \left(\rho, \vec{J}\,\right) _{i, j, k} \rightarrow \left(\vec{E}, \vec{B}\,\right)_{i, j, k} $};
+
+\path [line] (dole) -| (vlevo);
+\path [line] (vlevo) |- (nahore);
+\path [line] (nahore) -| (vpravo);
+\path [line] (vpravo) |- (dole);
+\end{tikzpicture}
+\caption{Computational cycle of the particle-in-cell method}
+\label{3.1.4}
+\end{figure}

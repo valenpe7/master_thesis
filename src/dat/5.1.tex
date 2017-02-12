@@ -1,0 +1,49 @@
+\newpage
+\noindent
+$ \vec{E} $ and $ \vec{B} $ fields in terms of scalar potential $ \Phi $ and vector potential $ \vec{A} $:
+\begin{equation*}
+	\vec{E} = - \grad{\Phi} - \diffp{\vec{A}}{t}, \qquad \vec{B} = \rot{\vec{A}}
+\end{equation*}
+$ \Phi $ and $ \vec{A} $ in the form of plane waves propagating along z-axis:
+\begin{equation*}
+	\vec{A}\left(x, y, z, t\right)  = \vec{A_0}\left( x, y, z\right) \e^{i(k_z z - \omega t)}, \qquad \Phi\left(x, y, z, t \right) = \Phi_0\left(x, y, z\right) \e^{i(k_z z - \omega t)}
+\end{equation*}
+Lorentz gauge condition:
+\begin{equation*}
+	\div{\vec{A}} + \frac{1}{c^2} \diffp{\Phi}{t} = 0
+\end{equation*}
+scalar potential in terms of vector potential:
+\begin{equation*}
+	\diffp{\Phi}{t} = - \i \omega \Phi \qquad \longrightarrow \qquad \Phi = - \i \frac{c}{k_z} \div{\vec{A}} 
+\end{equation*}
+$ \vec{E} $ and $ \vec{B} $ fields in terms of vector potential $ \vec{A} $:
+\begin{equation*}
+	\vec{E} = \i \frac{c}{k_z} \grad{\left(\div{\vec{A}}\right)} + \i \omega \vec{A}, \qquad \vec{B} = \rot{\vec{A}}
+\end{equation*}
+wave equation for vector potential $ \vec{A} $:
+\begin{equation*}
+\laplace{\vec{A}} - \frac{1}{c^2}\diffp[2]{\vec{A}}{t} = 0
+\end{equation*}
+Helmholtz equation:
+\begin{equation*}
+\laplace{\vec{A_0}} + 2 \i k_z \diffp{\vec{A_0}}{z} = 0
+\end{equation*}
+paraxial (slowly varying envelope) approximation:
+\begin{equation*}
+\left\| \diffp[2]{\vec{A_0}}{z}\right\|  \leq \left\|2 k_z \diffp{\vec{A_0}}{z}\right\|  \longrightarrow 
+\diffp[2]{\vec{A_0}}{x} + \diffp[2]{\vec{A_0}}{y} + \diffp[2]{\vec{A_0}}{z} + 2 \i k_z \diffp{\vec{A_0}}{z} = 0
+\end{equation*}
+\newpage
+\noindent
+Solution - Gaussian beam:
+\begin{equation*}
+\vec{E}\left(x, y, z \right) = \vec{E_0} \frac{w_0}{w(z)} \exp \left( - \frac{x^2 + y^2}{w(z)^2} \right) \cos\left( \omega t - k_z \left(z + \frac{x^2 + y^2}{2R(z)} \right) + \phi_G(z) \right) 
+\end{equation*}
+where
+\begin{flalign*}
+& w(z) = w_0 \sqrt{1 + \left(\frac{z}{z_R} \right)^2} \dots \mathrm{evolving \: beam \: width} & \\
+& z_r = \frac{\pi w_0^2}{\lambda} \dots \mathrm{Rayleigh \: range} & \\
+& R(z) = z\left(1 + \left(\frac{z_R}{z} \right)^2 \right) \dots \mathrm{evolving \: radius \: of \: curvature} & \\
+& \phi(z) = \tan^{-1}\left(\frac{z}{z_R} \right) \dots \mathrm{Guoy \: phase} & \\
+& \theta = \tan^{-1}\left(\frac{w(z)}{z} \right) \simeq \frac{\lambda}{\pi w_0} \dots \mathrm{beam \: divergence \: angle} &
+\end{flalign*}
