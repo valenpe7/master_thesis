@@ -71,7 +71,7 @@ One potential bottleneck could happen during the computation of spatial Fourier 
 
 This issue has been solved by gathering the data on master process, performing the Fourier transforms in space by only one processor and scattering the data back to corresponding processes. This is the reason why the code does not scale well, however, the time to compute all desired quantities is in most cases negligible in comparison with time required by main simulation cycle. Nevertheless, this issue could be improved in future.
 
-The next critical part of the code is responsible for dumping of the data.
+Cely vypocet najednou, do pameti se nevejde -> nutnost ukladat data. The next critical part of the code is responsible for dumping the data.
 
 \begin{itemize}
 	\item 2D version of algorithm, Ey, Bx, Bz omitted (identically equal to 0) 
