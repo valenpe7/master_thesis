@@ -47,3 +47,311 @@ where
 & \phi(z) = \tan^{-1}\left(\frac{z}{z_R} \right) \dots \mathrm{Guoy \: phase} & \\
 & \theta = \tan^{-1}\left(\frac{w(z)}{z} \right) \simeq \frac{\lambda}{\pi w_0} \dots \mathrm{beam \: divergence \: angle} &
 \end{flalign*}
+
+\noindent
+Features:
+\begin{itemize}
+	\item 2D version of algorithm, Ey, Bx, Bz omitted (identically equal to 0) 
+	\item Code written in C++, object oriented to be easily extended to 3D, compiled to static library
+	\item Linked into EPOCH as a static library (in order not to disturb the code, for this reason also added support for CMake – machine independent)
+	\item Parallelized using hybrid techniques (OpenMP + MPI – computation time in most cases negligible in comparison with the main simulation)
+	\item Fourier transforms can be computed using Intel MKL library, FFTW library or without any library (compile time option)
+	\item Computed fields dumped into shared files using binary coding (speed up output, save disk storage)
+	\item Only transverse component of electric field (Ex) passed to the EPOCH at each time step (no significant slowdown or memory overhead), other fields computed by EPOCH
+	\item All new parameters needed for tight-focusing (w0, focal length, etc.) may be specified via input file
+	\item Implementation works generally regardless the number of lasers in the simulation or boundaries that they are attached to
+\end{itemize}
+
+\begin{lstlisting}[style=CXX, caption=Function performing forward fast Fourier transform using MKL library]
+std::vector<std::complex<double>> fft::mkl_fft_forward(std::vector<std::complex<double>> in) {
+DFTI_DESCRIPTOR_HANDLE desc;
+MKL_LONG status;
+DftiCreateDescriptor(&desc, DFTI_DOUBLE, DFTI_COMPLEX, 1, static_cast<MKL_LONG>(in.size()));
+DftiCommitDescriptor(desc);
+status = DftiComputeForward(desc, in.data());
+if(status != 0) {
+std::cerr << DftiErrorMessage(status) << std::endl;
+abort();
+}
+DftiFreeDescriptor(&desc);
+return in;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=Function performing backward fast Fourier transform using MKL library]
+std::vector<std::complex<double>> fft::mkl_fft_backward(std::vector<std::complex<double>> in) {
+DFTI_DESCRIPTOR_HANDLE desc;
+MKL_LONG status;
+DftiCreateDescriptor(&desc, DFTI_DOUBLE, DFTI_COMPLEX, 1, static_cast<MKL_LONG>(in.size()));
+DftiCommitDescriptor(desc);
+status = DftiComputeBackward(desc, in.data());
+if(status != 0) {
+std::cerr << DftiErrorMessage(status) << std::endl;
+abort();
+}
+DftiFreeDescriptor(&desc);
+return in;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=Function performing forward fast Fourier transform using FFTW library]
+std::vector<std::complex<double>> fft::fftw_fft_forward(std::vector<std::complex<double>> in) {
+fftw_plan p = fftw_plan_dft_1d(in.size(), reinterpret_cast<fftw_complex*>(in.data()), reinterpret_cast<fftw_complex*>(in.data()), FFTW_FORWARD, FFTW_ESTIMATE);
+fftw_execute(p);
+fftw_destroy_plan(p);
+return in;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=Function performing backward fast Fourier transform using FFTW library]
+std::vector<std::complex<double>> fft::fftw_fft_backward(std::vector<std::complex<double>> in) {
+fftw_plan p = fftw_plan_dft_1d(in.size(), reinterpret_cast<fftw_complex*>(in.data()), reinterpret_cast<fftw_complex*>(in.data()), FFTW_BACKWARD, FFTW_ESTIMATE);
+fftw_execute(p);
+fftw_destroy_plan(p);
+return in;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=Function performing forward discrete Fourier transform without using any library]
+std::vector<std::complex<double>> fft::fft_forward(std::vector<std::complex<double>> in) {
+std::vector<std::complex<double>> out(in.size());
+for(auto j = 0; j < out.size(); j++) {
+for(auto l = 0; l < out.size(); l++) {
+out.at(j) += in.at(l) * exp(-2.0 * constants::pi * I * l * j / in.size());
+}
+}
+return out;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=Function performing backward discrete Fourier transform without using any library]
+std::vector<std::complex<double>> fft::fft_backward(std::vector<std::complex<double>> in) {
+std::vector<std::complex<double>> out(in.size());
+for(auto j = 0; j < out.size(); j++) {
+for(auto l = 0; l < out.size(); l++) {
+out.at(j) += in.at(l) * exp(+2.0 * constants::pi * I * l * j / in.size());
+}
+}
+return out;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=Method for performing discrete Fourier transform in time]
+void laser_bcs::dft_time(field_2d<std::complex<double>>& field) const {
+#ifdef OPENMP
+#pragma omp parallel for schedule(static)
+#endif
+for(auto j = 0; j < this->domain->Nx; j++) {
+#ifdef USE_MKL
+field.add_col(fft::mkl_fft_backward(field.get_col(j)), j);
+#elif USE_FFTW
+field.add_col(fft::fftw_fft_backward(field.get_col(j)), j);
+#else
+field.add_col(fft::fft_backward(field.get_col(j)), j);
+#endif
+}
+field.multiply(this->domain->dt / (2.0 * constants::pi));
+return;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=Method for performing inverse discrete Fourier transform in time]
+void laser_bcs::idft_time(field_2d<std::complex<double>>& field) const {
+#ifdef OPENMP
+#pragma omp parallel for schedule(static)
+#endif
+for(auto j = 0; j < this->domain->Nx; j++) {
+#ifdef USE_MKL
+field.add_col(fft::mkl_fft_forward(field.get_col(j)), j);
+#elif USE_FFTW
+field.add_col(fft::fftw_fft_forward(field.get_col(j)), j);
+#else
+field.add_col(fft::fft_forward(field.get_col(j)), j);
+#endif
+}
+field.multiply(2.0 * (2.0 * constants::pi) / (this->domain->Nt * this->domain->dt));
+return;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=Method for performing discrete Fourier transform in space]
+void laser_bcs::dft_space(field_2d<std::complex<double>>& field) const {
+std::vector<std::complex<double>> row_global(this->domain->Nx_global);
+std::vector<std::complex<double>> row_local;
+for(auto j = 0; j < this->domain->Nt; j++) {
+row_local = field.get_row(j);
+MPI_Gatherv(row_local.data(), this->domain->Nx, MPI_CXX_DOUBLE_COMPLEX, row_global.data(), this->domain->counts.data(), this->domain->displs.data(), MPI_CXX_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
+if(this->domain->rank == 0) {
+#ifdef USE_MKL
+row_global = fft::mkl_fft_forward(row_global);
+#elif USE_FFTW
+row_global = fft::fftw_fft_forward(row_global);
+#else
+row_global = fft::fft_forward(row_global);
+#endif
+}
+MPI_Scatterv(row_global.data(), this->domain->counts.data(), this->domain->displs.data(), 	MPI_CXX_DOUBLE_COMPLEX, row_local.data(), this->domain->Nx, MPI_CXX_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
+field.add_row(row_local, j);
+}
+field.multiply(this->domain->dx / (2.0 * constants::pi));
+return;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=Method for performing inverse discrete Fourier transform in space]
+void laser_bcs::idft_space(field_2d<std::complex<double>>& field) const {
+std::vector<std::complex<double>> row_global(this->domain->Nx_global);
+std::vector<std::complex<double>> row_local;
+for(auto j = 0; j < this->domain->Nt; j++) {
+row_local = field.get_row(j);
+MPI_Gatherv(row_local.data(), this->domain->Nx, MPI_CXX_DOUBLE_COMPLEX, row_global.data(), this->domain->counts.data(), this->domain->displs.data(), MPI_CXX_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
+if(this->domain->rank == 0) {
+#ifdef USE_MKL
+row_global = fft::mkl_fft_backward(row_global);
+#elif USE_FFTW
+row_global = fft::fftw_fft_backward(row_global);
+#else
+row_global = fft::fft_backward(row_global);
+#endif
+}
+MPI_Scatterv(row_global.data(), this->domain->counts.data(), this->domain->displs.data(), MPI_CXX_DOUBLE_COMPLEX, row_local.data(), this->domain->Nx, MPI_CXX_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
+field.add_row(row_local, j);
+}
+field.multiply((2.0 * constants::pi) / (this->domain->Nx_global * this->domain->dx));
+return;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=Method for dumping data into shared file]
+template <typename T>
+void field_2d<T>::dump_to_shared_file(std::string name, int row_first, int row_last, int row_size_local, int row_size_global, int col_start) const {
+MPI_File file;
+MPI_Offset offset = 0;
+MPI_Status status;
+MPI_Datatype local_array;
+int col_size = row_last - row_first;
+const int ndims = 2;
+std::array<int, ndims> size_global = {col_size, row_size_global};
+std::array<int, ndims> size_local = {col_size, row_size_local};
+std::array<int, ndims> start_coords = {0, col_start};
+MPI_Type_create_subarray(2, size_global.data(), size_local.data(), start_coords.data(), MPI_ORDER_C, MPI_DOUBLE, &local_array);
+MPI_Type_commit(&local_array);
+std::vector<double> real_part(col_size * row_size_local);
+for(auto i = std::make_pair(row_first, 0); i.first < row_last; i.first++, i.second++) {
+for(auto j = 0; j < row_size_local; j++) {
+real_part[i.second * row_size_local + j] = std::real(this->data[i.first * row_size_local + j]);
+}
+}
+MPI_File_open(MPI_COMM_WORLD, name.data(), MPI_MODE_CREATE|MPI_MODE_WRONLY, MPI_INFO_NULL, &file);
+MPI_File_set_view(file, offset, MPI_DOUBLE, local_array, "native", MPI_INFO_NULL);
+MPI_File_write_all(file, real_part.data(), col_size * row_size_local, MPI_DOUBLE, &status);
+MPI_File_close(&file);
+MPI_Type_free(&local_array);
+return;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=Extern C++ function to fill Fortran arrays with laser fields dumped in binary file]
+void populate_laser_field_on_boundary(double* field, int* id, const char* data_dir, const char* name, int* timestep, int* size_global, int* first, int* last) {
+double num = 0.0;
+std::string laser_id = std::to_string(*id);
+std::string output_path(data_dir);
+std::string filename(name);
+std::ifstream in;
+in.open(output_path + "/" + filename + laser_id + ".dat", std::ios::binary);
+if(in.is_open()) {
+in.seekg(((*timestep) * (*size_global) + (*first) - 1) * sizeof(num));
+for(auto i = 0; i < *last - *first + 1; i++) {
+in.read(reinterpret_cast<char*>(&num), sizeof(num));
+field[i] = num;
+}
+in.close();
+} else {
+std::cout << "error: cannot read file " << output_path + "/" + filename + laser_id + ".dat" << std::endl;
+}
+return;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=FORTRAN, caption=Fortran interfaces for C++ library functions]
+INTERFACE
+
+SUBROUTINE compute_laser_fields_on_boundary(rank, nproc, laser_start, laser_end, fwhm_time, t_0, omega, pos, amp, w_0, id, L_min, L_max, L_focus, T_min, T_max, T_ncells, cpml_thickness, t_end, T_cell_size, L_cell_size, dt, output_path) bind(c)
+USE, INTRINSIC :: iso_c_binding
+IMPLICIT NONE
+INTEGER(c_int), INTENT(IN) :: rank, nproc, id, T_ncells, cpml_thickness
+CHARACTER(kind=c_char), DIMENSION(*), INTENT(IN) :: output_path
+REAL(c_double), INTENT(IN) :: laser_start, laser_end, fwhm_time, t_0, omega, pos,    &
+amp, w_0, L_min, L_max, L_focus, T_min, T_max, t_end, T_cell_size, L_cell_size, dt
+END SUBROUTINE compute_laser_fields_on_boundary
+
+SUBROUTINE populate_laser_field_on_boundary(field, laser_id, output_path, field_name, timestep, size_global, first, last) bind(c)
+USE, INTRINSIC :: iso_c_binding
+IMPLICIT NONE
+INTEGER(c_int), INTENT(IN) :: laser_id, timestep, size_global, first, last
+CHARACTER(kind=c_char), DIMENSION(*), INTENT(IN) :: output_path, field_name
+REAL(c_double), DIMENSION(*), INTENT(OUT) :: field
+END SUBROUTINE populate_laser_field_on_boundary
+
+END INTERFACE
+\end{lstlisting}
+
+\begin{lstlisting}[style=FORTRAN, caption=Fortran subroutines for Maxwell consistent computation of laser fields on boundaries]
+SUBROUTINE Maxwell_consistent_computation_of_EM_fields
+
+TYPE(laser_block), POINTER :: current
+
+current => laser_x_min
+DO WHILE(ASSOCIATED(current))
+CALL compute_laser_fields_on_boundary(rank, nproc, current%t_start, current%t_end, current%fwhm_time, current%t_0, current%omega, current%pos, current%amp, current%w_0, current%id, x_min, x_max, current%focus, y_min, y_max, ny_global, cpml_thickness, t_end, dy, dx, dt, TRIM(data_dir)//C_NULL_CHAR)
+current => current%next
+ENDDO
+
+current => laser_x_max
+DO WHILE(ASSOCIATED(current))
+CALL compute_laser_fields_on_boundary(rank, nproc, current%t_start, current%t_end, current%fwhm_time, current%t_0, current%omega, current%pos, current%amp, current%w_0, current%id, x_min, x_max, current%focus, y_min, y_max, ny_global, cpml_thickness, t_end, dy, dx, dt, TRIM(data_dir)//C_NULL_CHAR)
+current => current%next
+ENDDO
+
+current => laser_y_min
+DO WHILE(ASSOCIATED(current))
+CALL compute_laser_fields_on_boundary(rank, nproc, current%t_start, current%t_end, current%fwhm_time, current%t_0, current%omega, current%pos, current%amp, current%w_0, current%id, y_min, y_max, current%focus, x_min, x_max, nx_global, cpml_thickness, t_end, dx, dy, dt, TRIM(data_dir)//C_NULL_CHAR)
+current => current%next
+ENDDO
+
+current => laser_y_max
+DO WHILE(ASSOCIATED(current))
+CALL compute_laser_fields_on_boundary(rank, nproc, current%t_start, current%t_end, current%fwhm_time, current%t_0, current%omega, current%pos, current%amp, current%w_0, current%id, y_min, y_max, current%focus, x_min, x_max, nx_global, cpml_thickness, t_end, dx, dy, dt, TRIM(data_dir)//C_NULL_CHAR)
+current => current%next
+ENDDO
+
+END SUBROUTINE Maxwell_consistent_computation_of_EM_fields
+\end{lstlisting}
+
+\begin{lstlisting}[style=FORTRAN, caption=Fortran subroutines for populating laser sources on boundaries]
+SUBROUTINE get_source_x_boundary(source1, source2, laser_id) 
+REAL(num), DIMENSION(:), INTENT(INOUT) :: source1, source2
+REAL(num), DIMENSION(ny) :: laser_ex, laser_ey
+INTEGER, INTENT(IN) :: laser_id
+INTEGER :: i
+CALL populate_laser_field_on_boundary(laser_ex, laser_id, TRIM(data_dir)//C_NULL_CHAR, "e_x"//C_NULL_CHAR, step, ny_global, ny_global_min, ny_global_max)
+laser_ey = 0.0_num
+DO i = 1, ny
+source1(i) = source1(i) + laser_ex(i)
+source2(i) = source2(i) + laser_ey(i)
+ENDDO
+END SUBROUTINE get_source_x_boundary
+
+SUBROUTINE get_source_y_boundary(source1, source2, laser_id)
+REAL(num), DIMENSION(:), INTENT(INOUT) :: source1, source2
+REAL(num), DIMENSION(nx) :: laser_ex, laser_ey
+INTEGER, INTENT(IN) :: laser_id
+INTEGER :: i
+CALL populate_laser_field_on_boundary(laser_ex, laser_id, TRIM(data_dir)//C_NULL_CHAR, "e_x"//C_NULL_CHAR, step, nx_global, nx_global_min, nx_global_max)
+laser_ey = 0.0_num
+DO i = 1, nx
+source1(i) = source1(i) + laser_ey(i)
+source2(i) = source2(i) + laser_ex(i)
+ENDDO
+END SUBROUTINE get_source_y_boundary
+\end{lstlisting}

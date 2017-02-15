@@ -1,4 +1,12 @@
+\section{Calculation}
+
 \section{Algorithm}
+
+In the following section, the practical implementation of a boundary conditions based on the previously derived solution of Maxwell equations is presented. Assume, that the laser beam propagates in a forward direction along the axis z. In the beginning, it is necessary to prescribe the electric laser field $ \vec{E}_{0, \bot} (\vec{r}_{\bot}, t) $ in the plane $ \mathcal{P} $ at $ z = z_0 $. Note, that it can be defined by arbitrary function of space and time. The goal is then to find the fields $ \vec{E}_{\mathrm{B}} (\vec{r}_{\bot}, t) $ and $ \vec{B}_{\mathrm{B}} (\vec{r}_{\bot}, t) $ at the corresponding boundary $ z = z_\mathrm{B} $.
+
+Consider that the transverse part of simulation domain is made of equidistant rectangular grid described by $ x^{i} $, $ y^{j} $, where $ i, j \in \left\lbrace 1, \ldots, N_{x, y} \right\rbrace $, and the grid steps $ \delta x $, $\delta y $. The simulation time $ t^{n} $, where $ n \in \left\lbrace 1, \ldots, N_{t} \right\rbrace $, is also divided into equidistant time steps of size $ \delta t $.
+
+The algorithm allows to calculate fields $ \vec{E}_{\mathrm{B}}^{ij} (t) $ and $ \vec{B}_{\mathrm{B}}^{ij} (t) $ for any given time $ t $ from the interval $ \left[ t^{1} - \frac{z_\mathrm{B} - z_0}{c}, t^{N_t} - \frac{z_\mathrm{B} - z_0}{c} \right] $. In order to preserve clarity, the algorithm below is given in the exact form as in the original paper.
 
 \begin{enumerate}
 	\item Calculate $ \hat{\vec{E}}_{0, \bot}^{ijn} $ via discrete Fourier transforms in time:
@@ -23,6 +31,7 @@
 	\bar{\vec{E}}_{\mathrm{B}, \bot}^{ijn} =
 	\begin{cases} \bar{\vec{E}}_{0, \bot}^{ijn} \e^{\i k_z^{ijn}(z_\mathrm{B} - z_0)} & \text{for} \ k_z^{ijn} > 0 \\ 0 & \text{for} \ k_z^{ijn} = 0 \end{cases}.
 	\end{equation}
+	Symbol $ \Re $ stands for the real part of a complex number.
 	\item Calculate longitudinal electric field components at the boundary $ z = z_\mathrm{B} $:
 	\begin{equation}
 	\bar{E}_{\mathrm{B}, z}^{ijn} = \begin{cases} -\frac{k_x^i \bar{E}_{\mathrm{B}, x}^{ijn} + k_y^j \bar{E}_{\mathrm{B}, y}^{ijn}}{k_z^{ijn}} & \text{for} \ k_z^{ijn} > 0 \\ 0 & \text{for} \ k_z^{ijn} = 0 \end{cases}.
@@ -65,321 +74,20 @@ The final decision has been to create a static library, which will be able to co
 
 The library has been written in C++ language and is object oriented so the algorithm can be easily extended to three dimensional geometry. In order to speedup the whole underlying computation, the algorithm has been parallelized using hybrid techniques. The time domain has been decomposed into the stripes corresponding to individual computational processes, the communication between these processes is ensured by MPI library. Furthermore, the computationally most expensive cycles are parallelized using OpenMP implementation of multi-threading. Later on, the speedup and parallel scaling performance will be briefly discussed.
 
-Fourier transforms form the core of the computational process and their performance is crucial for the overall performance of the code. For this reason, many currently available libraries have been considered. Eventually, the Fourier transforms in the algorithm can be computed using FFTW library, Intel MKL library or it is also possible to directly evaluate the formulas without using any additional library. The user specifies his option at a compile time. Regarding both libraries, a threaded versions of 1D in-place complex fast Fourier transforms has been used throughout the code. According to several measures, there is no significant difference between the speed of both implementations.
+Fourier transforms form the core of the computational process and their performance is crucial for the overall performance of the code. For this reason, many currently available libraries have been considered. Eventually, the Fourier transforms in the algorithm can be computed using FFTW library, Intel MKL library or it is also possible to directly evaluate the formulas without using any additional library. The user specifies his option before the compilation. Regarding both libraries, a threaded versions of 1D in-place complex fast Fourier transforms has been used throughout the code. According to several measures, there is no significant difference between the speed of both implementations.
 
-One potential bottleneck could happen during the computation of spatial Fourier transforms since the arrays with spatial data are decomposed into different processes. The cluster versions of functions performing the Fourier transforms has been tried, however they did not bring any significant speedup. The reason is as follows. They require to have the global array in memory and use its own distribution which involves overlapping. Since the size of global arrays is usually not so large and since it is necessary to perform a lot of different Fourier transforms, the majority of computational time is spent rather for communication, mainly if many of computational cores are used.
+One potential bottleneck could happen during the computation of spatial Fourier transforms since the arrays with spatial data are decomposed into different processes. The cluster versions of functions performing the Fourier transforms has been tested, however they did not bring any significant speedup. The reason is as follows. They require to have the global array in memory and use its own distribution which involves overlapping. Since the size of global arrays is usually not so large and since it is necessary to perform a lot of different Fourier transforms, the majority of computational time is spent rather for communication, mainly if many of computational cores are used.
 
-This issue has been solved by gathering the data on master process, performing the Fourier transforms in space by only one processor and scattering the data back to corresponding processes. This is the reason why the code does not scale well, however, the time to compute all desired quantities is in most cases negligible in comparison with time required by main simulation cycle. Nevertheless, this issue could be improved in future.
+This issue has been solved by gathering the data on master process, performing the Fourier transforms in space by only one processor and scattering the data back to corresponding processes. This is the reason why the code does not scale well, however, the time to compute all desired quantities is in most cases negligible in comparison with the time required by main simulation cycle. Nevertheless, this issue could be improved in future.
 
-Cely vypocet najednou, do pameti se nevejde -> nutnost ukladat data. The next critical part of the code is responsible for dumping the data.
+Since it is necessary to compute the whole time evolution of the laser field at boundary for each grid point before the simulation starts, the resulting amount of data can be significantly large and does not have to fit in a computer memory. Thus, it is inevitable to dump the data into a file, which will be then accessed by the main simulation code. Due to the performance purposes, each computational process stores its data into a shared file with corresponding offset and in binary coding. Therefore, the output operations are as fast as possible and save the storage resources. Library then provide a function which allows to seek an arbitrary position in a file. This function is then called each time step of the main simulation loop to fill the laser source arrays with all the relevant data. This way of accessing data does not cause any significant slowdown or memory overhead.
 
-\begin{itemize}
-	\item 2D version of algorithm, Ey, Bx, Bz omitted (identically equal to 0) 
-	\item Code written in C++, object oriented to be easily extended to 3D, compiled to static library
-	\item Linked into EPOCH as a static library (in order not to disturb the code, for this reason also added support for CMake – machine independent)
-	\item Parallelized using hybrid techniques (OpenMP + MPI – computation time in most cases negligible in comparison with the main simulation)
-	\item Fourier transforms can be computed using Intel MKL library, FFTW library or without any library (compile time option)
-	\item Computed fields dumped into shared files using binary coding (speed up output, save disk storage)
-	\item Only transverse component of electric field (Ex) passed to the EPOCH at each time step (no significant slowdown or memory overhead), other fields computed by EPOCH
-	\item All new parameters needed for tight-focusing (w0, focal length, etc.) may be specified via input file
-	\item Implementation works generally regardless the number of lasers in the simulation or boundaries that they are attached to
-\end{itemize}
+The EPOCH code require only transverse components of laser electric field, all other quantities are computed by the FDTD solver. The implementation of the library allows fully connection with EPOCH. In practice, if the user wants to simulate tight-focusing, he has to enable corresponding flag as a compile-time option and then specifies all required parameters in the input file. The code then automatically computes all necessary data. It works generally regardless the number of lasers in the simulation or boundaries that they are attached to.
 
-\begin{lstlisting}[style=CXX, caption=Function performing forward fast Fourier transform using MKL library]
-std::vector<std::complex<double>> fft::mkl_fft_forward(std::vector<std::complex<double>> in) {
-	DFTI_DESCRIPTOR_HANDLE desc;
-	MKL_LONG status;
-	DftiCreateDescriptor(&desc, DFTI_DOUBLE, DFTI_COMPLEX, 1, static_cast<MKL_LONG>(in.size()));
-	DftiCommitDescriptor(desc);
-	status = DftiComputeForward(desc, in.data());
-	if(status != 0) {
-		std::cerr << DftiErrorMessage(status) << std::endl;
-		abort();
-	}
-	DftiFreeDescriptor(&desc);
-	return in;
-}
-\end{lstlisting}
+The current version of library does not work for obliquely incident laser pulses, because in this case one cannot exploit the advantage of an efficient computation with fast Fourier transforms. However, the code allows to compute the laser fields at boundary by evaluating Fourier integrals directly, so it could be easily extended. Second, it is at the moment possible to simulate only Gaussian laser pulses. However, the user can easily prescribe its own shape and position of the beam in focal plane by modifying corresponding part of the code.
 
-\begin{lstlisting}[style=CXX, caption=Function performing backward fast Fourier transform using MKL library]
-std::vector<std::complex<double>> fft::mkl_fft_backward(std::vector<std::complex<double>> in) {
-	DFTI_DESCRIPTOR_HANDLE desc;
-	MKL_LONG status;
-	DftiCreateDescriptor(&desc, DFTI_DOUBLE, DFTI_COMPLEX, 1, static_cast<MKL_LONG>(in.size()));
-	DftiCommitDescriptor(desc);
-	status = DftiComputeBackward(desc, in.data());
-	if(status != 0) {
-		std::cerr << DftiErrorMessage(status) << std::endl;
-		abort();
-	}
-	DftiFreeDescriptor(&desc);
-	return in;
-}
-\end{lstlisting}
+Several most important data structures, functions and methods that form the core of library for tight-focusing can be seen in Appendix.
 
-\begin{lstlisting}[style=CXX, caption=Function performing forward fast Fourier transform using FFTW library]
-std::vector<std::complex<double>> fft::fftw_fft_forward(std::vector<std::complex<double>> in) {
-	fftw_plan p = fftw_plan_dft_1d(in.size(), reinterpret_cast<fftw_complex*>(in.data()), reinterpret_cast<fftw_complex*>(in.data()), FFTW_FORWARD, FFTW_ESTIMATE);
-	fftw_execute(p);
-	fftw_destroy_plan(p);
-	return in;
-}
-\end{lstlisting}
-
-\begin{lstlisting}[style=CXX, caption=Function performing backward fast Fourier transform using FFTW library]
-std::vector<std::complex<double>> fft::fftw_fft_backward(std::vector<std::complex<double>> in) {
-	fftw_plan p = fftw_plan_dft_1d(in.size(), reinterpret_cast<fftw_complex*>(in.data()), reinterpret_cast<fftw_complex*>(in.data()), FFTW_BACKWARD, FFTW_ESTIMATE);
-	fftw_execute(p);
-	fftw_destroy_plan(p);
-	return in;
-}
-\end{lstlisting}
-
-\begin{lstlisting}[style=CXX, caption=Function performing forward discrete Fourier transform without using any library]
-std::vector<std::complex<double>> fft::fft_forward(std::vector<std::complex<double>> in) {
-	std::vector<std::complex<double>> out(in.size());
-	for(auto j = 0; j < out.size(); j++) {
-		for(auto l = 0; l < out.size(); l++) {
-			out.at(j) += in.at(l) * exp(-2.0 * constants::pi * I * l * j / in.size());
-		}
-	}
-	return out;
-}
-\end{lstlisting}
-
-\begin{lstlisting}[style=CXX, caption=Function performing backward discrete Fourier transform without using any library]
-std::vector<std::complex<double>> fft::fft_backward(std::vector<std::complex<double>> in) {
-	std::vector<std::complex<double>> out(in.size());
-	for(auto j = 0; j < out.size(); j++) {
-		for(auto l = 0; l < out.size(); l++) {
-			out.at(j) += in.at(l) * exp(+2.0 * constants::pi * I * l * j / in.size());
-		}
-	}
-	return out;
-}
-\end{lstlisting}
-
-\begin{lstlisting}[style=CXX, caption=Method for performing discrete Fourier transform in time]
-void laser_bcs::dft_time(field_2d<std::complex<double>>& field) const {
-#ifdef OPENMP
-#pragma omp parallel for schedule(static)
-#endif
-	for(auto j = 0; j < this->domain->Nx; j++) {
-#ifdef USE_MKL
-		field.add_col(fft::mkl_fft_backward(field.get_col(j)), j);
-#elif USE_FFTW
-		field.add_col(fft::fftw_fft_backward(field.get_col(j)), j);
-#else
-		field.add_col(fft::fft_backward(field.get_col(j)), j);
-#endif
-	}
-	field.multiply(this->domain->dt / (2.0 * constants::pi));
-	return;
-}
-\end{lstlisting}
-
-\begin{lstlisting}[style=CXX, caption=Method for performing inverse discrete Fourier transform in time]
-void laser_bcs::idft_time(field_2d<std::complex<double>>& field) const {
-#ifdef OPENMP
-#pragma omp parallel for schedule(static)
-#endif
-	for(auto j = 0; j < this->domain->Nx; j++) {
-#ifdef USE_MKL
-		field.add_col(fft::mkl_fft_forward(field.get_col(j)), j);
-#elif USE_FFTW
-		field.add_col(fft::fftw_fft_forward(field.get_col(j)), j);
-#else
-		field.add_col(fft::fft_forward(field.get_col(j)), j);
-#endif
-	}
-	field.multiply(2.0 * (2.0 * constants::pi) / (this->domain->Nt * this->domain->dt));
-	return;
-}
-\end{lstlisting}
-
-\begin{lstlisting}[style=CXX, caption=Method for performing discrete Fourier transform in space]
-void laser_bcs::dft_space(field_2d<std::complex<double>>& field) const {
-	std::vector<std::complex<double>> row_global(this->domain->Nx_global);
-	std::vector<std::complex<double>> row_local;
-	for(auto j = 0; j < this->domain->Nt; j++) {
-		row_local = field.get_row(j);
-		MPI_Gatherv(row_local.data(), this->domain->Nx, MPI_CXX_DOUBLE_COMPLEX, row_global.data(), this->domain->counts.data(), this->domain->displs.data(), MPI_CXX_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
-		if(this->domain->rank == 0) {
-#ifdef USE_MKL
-			row_global = fft::mkl_fft_forward(row_global);
-#elif USE_FFTW
-			row_global = fft::fftw_fft_forward(row_global);
-#else
-			row_global = fft::fft_forward(row_global);
-#endif
-		}
-		MPI_Scatterv(row_global.data(), this->domain->counts.data(), this->domain->displs.data(), 	MPI_CXX_DOUBLE_COMPLEX, row_local.data(), this->domain->Nx, MPI_CXX_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
-		field.add_row(row_local, j);
-	}
-	field.multiply(this->domain->dx / (2.0 * constants::pi));
-	return;
-}
-\end{lstlisting}
-
-\begin{lstlisting}[style=CXX, caption=Method for performing inverse discrete Fourier transform in space]
-void laser_bcs::idft_space(field_2d<std::complex<double>>& field) const {
-	std::vector<std::complex<double>> row_global(this->domain->Nx_global);
-	std::vector<std::complex<double>> row_local;
-	for(auto j = 0; j < this->domain->Nt; j++) {
-		row_local = field.get_row(j);
-		MPI_Gatherv(row_local.data(), this->domain->Nx, MPI_CXX_DOUBLE_COMPLEX, row_global.data(), this->domain->counts.data(), this->domain->displs.data(), MPI_CXX_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
-		if(this->domain->rank == 0) {
-#ifdef USE_MKL
-			row_global = fft::mkl_fft_backward(row_global);
-#elif USE_FFTW
-			row_global = fft::fftw_fft_backward(row_global);
-#else
-			row_global = fft::fft_backward(row_global);
-#endif
-		}
-		MPI_Scatterv(row_global.data(), this->domain->counts.data(), this->domain->displs.data(), MPI_CXX_DOUBLE_COMPLEX, row_local.data(), this->domain->Nx, MPI_CXX_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
-		field.add_row(row_local, j);
-	}
-	field.multiply((2.0 * constants::pi) / (this->domain->Nx_global * this->domain->dx));
-	return;
-}
-\end{lstlisting}
-
-\begin{lstlisting}[style=CXX, caption=Method for dumping data into shared file]
-template <typename T>
-void field_2d<T>::dump_to_shared_file(std::string name, int row_first, int row_last, int row_size_local, int row_size_global, int col_start) const {
-	MPI_File file;
-	MPI_Offset offset = 0;
-	MPI_Status status;
-	MPI_Datatype local_array;
-	int col_size = row_last - row_first;
-	const int ndims = 2;
-	std::array<int, ndims> size_global = {col_size, row_size_global};
-	std::array<int, ndims> size_local = {col_size, row_size_local};
-	std::array<int, ndims> start_coords = {0, col_start};
-	MPI_Type_create_subarray(2, size_global.data(), size_local.data(), start_coords.data(), MPI_ORDER_C, MPI_DOUBLE, &local_array);
-	MPI_Type_commit(&local_array);
-	std::vector<double> real_part(col_size * row_size_local);
-	for(auto i = std::make_pair(row_first, 0); i.first < row_last; i.first++, i.second++) {
-		for(auto j = 0; j < row_size_local; j++) {
-			real_part[i.second * row_size_local + j] = std::real(this->data[i.first * row_size_local + j]);
-		}
-	}
-	MPI_File_open(MPI_COMM_WORLD, name.data(), MPI_MODE_CREATE|MPI_MODE_WRONLY, MPI_INFO_NULL, &file);
-	MPI_File_set_view(file, offset, MPI_DOUBLE, local_array, "native", MPI_INFO_NULL);
-	MPI_File_write_all(file, real_part.data(), col_size * row_size_local, MPI_DOUBLE, &status);
-	MPI_File_close(&file);
-	MPI_Type_free(&local_array);
-	return;
-}
-\end{lstlisting}
-
-\begin{lstlisting}[style=CXX, caption=Extern C++ function to fill Fortran arrays with laser fields dumped in binary file]
-void populate_laser_field_on_boundary(double* field, int* id, const char* data_dir, const char* name, int* timestep, int* size_global, int* first, int* last) {
-	double num = 0.0;
-	std::string laser_id = std::to_string(*id);
-	std::string output_path(data_dir);
-	std::string filename(name);
-	std::ifstream in;
-	in.open(output_path + "/" + filename + laser_id + ".dat", std::ios::binary);
-	if(in.is_open()) {
-		in.seekg(((*timestep) * (*size_global) + (*first) - 1) * sizeof(num));
-		for(auto i = 0; i < *last - *first + 1; i++) {
-			in.read(reinterpret_cast<char*>(&num), sizeof(num));
-			field[i] = num;
-		}
-		in.close();
-	} else {
-		std::cout << "error: cannot read file " << output_path + "/" + filename + laser_id + ".dat" << std::endl;
-	}
-	return;
-}
-\end{lstlisting}
-
-\begin{lstlisting}[style=FORTRAN, caption=Fortran interfaces for C++ library functions]
-INTERFACE
-
-SUBROUTINE compute_laser_fields_on_boundary(rank, nproc, laser_start, laser_end, fwhm_time, t_0, omega, pos, amp, w_0, id, L_min, L_max, L_focus, T_min, T_max, T_ncells, cpml_thickness, t_end, T_cell_size, L_cell_size, dt, output_path) bind(c)
-	USE, INTRINSIC :: iso_c_binding
-	IMPLICIT NONE
-	INTEGER(c_int), INTENT(IN) :: rank, nproc, id, T_ncells, cpml_thickness
-	CHARACTER(kind=c_char), DIMENSION(*), INTENT(IN) :: output_path
-	REAL(c_double), INTENT(IN) :: laser_start, laser_end, fwhm_time, t_0, omega, pos,    &
-	amp, w_0, L_min, L_max, L_focus, T_min, T_max, t_end, T_cell_size, L_cell_size, dt
-END SUBROUTINE compute_laser_fields_on_boundary
-
-SUBROUTINE populate_laser_field_on_boundary(field, laser_id, output_path, field_name, timestep, size_global, first, last) bind(c)
-	USE, INTRINSIC :: iso_c_binding
-	IMPLICIT NONE
-	INTEGER(c_int), INTENT(IN) :: laser_id, timestep, size_global, first, last
-	CHARACTER(kind=c_char), DIMENSION(*), INTENT(IN) :: output_path, field_name
-	REAL(c_double), DIMENSION(*), INTENT(OUT) :: field
-END SUBROUTINE populate_laser_field_on_boundary
-
-END INTERFACE
-\end{lstlisting}
-
-\begin{lstlisting}[style=FORTRAN, caption=Fortran subroutines for Maxwell consistent computation of laser fields on boundaries]
-SUBROUTINE Maxwell_consistent_computation_of_EM_fields
-  
-  TYPE(laser_block), POINTER :: current
-  
-  current => laser_x_min
-  DO WHILE(ASSOCIATED(current))
-	  CALL compute_laser_fields_on_boundary(rank, nproc, current%t_start, current%t_end, current%fwhm_time, current%t_0, current%omega, current%pos, current%amp, current%w_0, current%id, x_min, x_max, current%focus, y_min, y_max, ny_global, cpml_thickness, t_end, dy, dx, dt, TRIM(data_dir)//C_NULL_CHAR)
-	  current => current%next
-  ENDDO
-  
-  current => laser_x_max
-  DO WHILE(ASSOCIATED(current))
-	  CALL compute_laser_fields_on_boundary(rank, nproc, current%t_start, current%t_end, current%fwhm_time, current%t_0, current%omega, current%pos, current%amp, current%w_0, current%id, x_min, x_max, current%focus, y_min, y_max, ny_global, cpml_thickness, t_end, dy, dx, dt, TRIM(data_dir)//C_NULL_CHAR)
-	  current => current%next
-  ENDDO
-  
-  current => laser_y_min
-  DO WHILE(ASSOCIATED(current))
-	  CALL compute_laser_fields_on_boundary(rank, nproc, current%t_start, current%t_end, current%fwhm_time, current%t_0, current%omega, current%pos, current%amp, current%w_0, current%id, y_min, y_max, current%focus, x_min, x_max, nx_global, cpml_thickness, t_end, dx, dy, dt, TRIM(data_dir)//C_NULL_CHAR)
-	  current => current%next
-  ENDDO
-  
-  current => laser_y_max
-  DO WHILE(ASSOCIATED(current))
-	  CALL compute_laser_fields_on_boundary(rank, nproc, current%t_start, current%t_end, current%fwhm_time, current%t_0, current%omega, current%pos, current%amp, current%w_0, current%id, y_min, y_max, current%focus, x_min, x_max, nx_global, cpml_thickness, t_end, dx, dy, dt, TRIM(data_dir)//C_NULL_CHAR)
-	  current => current%next
-  ENDDO
-  
-END SUBROUTINE Maxwell_consistent_computation_of_EM_fields
-\end{lstlisting}
-
-\begin{lstlisting}[style=FORTRAN, caption=Fortran subroutines for populating laser sources on boundaries]
-SUBROUTINE get_source_x_boundary(source1, source2, laser_id) 
-  REAL(num), DIMENSION(:), INTENT(INOUT) :: source1, source2
-  REAL(num), DIMENSION(ny) :: laser_ex, laser_ey
-  INTEGER, INTENT(IN) :: laser_id
-  INTEGER :: i
-  CALL populate_laser_field_on_boundary(laser_ex, laser_id, TRIM(data_dir)//C_NULL_CHAR, "e_x"//C_NULL_CHAR, step, ny_global, ny_global_min, ny_global_max)
-  laser_ey = 0.0_num
-  DO i = 1, ny
-	  source1(i) = source1(i) + laser_ex(i)
-	  source2(i) = source2(i) + laser_ey(i)
-  ENDDO
-END SUBROUTINE get_source_x_boundary
-  
-SUBROUTINE get_source_y_boundary(source1, source2, laser_id)
-  REAL(num), DIMENSION(:), INTENT(INOUT) :: source1, source2
-  REAL(num), DIMENSION(nx) :: laser_ex, laser_ey
-  INTEGER, INTENT(IN) :: laser_id
-  INTEGER :: i
-  CALL populate_laser_field_on_boundary(laser_ex, laser_id, TRIM(data_dir)//C_NULL_CHAR, "e_x"//C_NULL_CHAR, step, nx_global, nx_global_min, nx_global_max)
-  laser_ey = 0.0_num
-  DO i = 1, nx
-	  source1(i) = source1(i) + laser_ey(i)
-	  source2(i) = source2(i) + laser_ex(i)
-  ENDDO
-END SUBROUTINE get_source_y_boundary
-\end{lstlisting}
-
-\newpage
 \section{Evaluation}
 
 To evaluate the correctness of the algorithm presented in the previous section of this chapter as well as to demonstrate the drawbacks of the paraxial approximation, several test simulations in 2D geometry have been performed. In the following text, a two limit cases are presented. The first pair of simulations employs tightly focused Gaussian laser beam, with the size of the focus comparable with the center laser wavelength, whilst the second one shows the case of the Gaussian beam with the size of the focus one order of magnitude larger than the center laser wavelength, where both approaches should return identical results. Note, that all simulations have been computed using 2D version of particle-in-cell code EPOCH instrumented with library for tight focusing.
