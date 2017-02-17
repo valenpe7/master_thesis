@@ -1,12 +1,18 @@
 The investigation of laser-matter interaction also involves exploring of specific themes of the ultra-relativistic regime, which requires extremely high intensities of the external field. These intensities, that are experimentally inaccessible at present, could be potentially achieved by tight-focusing and that would allow a broad spectrum of many multidisciplinary applications.
 
-As mentioned in the previous chapter, various aspects of electromagnetic interaction are usually studied using sophisticated numerical simulation codes. Vast majority of these codes, however, use a paraxial approximation to prescribe the laser fields at the boundaries, and afterwards, the FDTD solver guides the beam across the simulation domain. The paraxial approximation is valid only if the angular spectrum of laser pulse is sufficiently narrow, therefore it is not possible to simulate tightly focused laser beams using this approach. As might be seen later, paraxial approximation in this case leads to a distorted field profiles which have strong impact on the results of laser-matter interaction.
+As mentioned in the previous chapter, various aspects of electromagnetic interaction are usually studied using sophisticated numerical simulation codes. Vast majority of these codes, however, use a paraxial approximation to prescribe the laser fields at the boundaries, and afterwards, a field solver guides the beam across the simulation domain. The paraxial approximation is valid only if the angular spectrum of laser pulse is sufficiently narrow, therefore it is not possible to simulate tightly focused laser beams using this approach. As might be seen later, paraxial approximation in this case leads to a distorted field profiles which have strong impact on the results of laser-matter interaction.
 
-Several interesting solutions, how to simulate strongly focused beams, have been already proposed [source]. Within this work, a simple and efficient algorithm for a Maxwell consistent calculation of the electromagnetic fields at the boundaries of the computational domain (also called laser boundary conditions) has been used and implemented into the PIC code EPOCH. Note, that this algorithm is able to describe laser beams with arbitrary shape.
+Several interesting solutions, how to simulate strongly focused beams, have been already proposed [source]. Within this work, a simple and efficient algorithm for a Maxwell consistent calculation of the electromagnetic fields at the boundaries of the computational domain [source] (also called laser boundary conditions) has been used and implemented into the PIC code EPOCH. Note, that this algorithm is able to describe laser beams with arbitrary shape.
 
 \section{Calculation}
 
-
+Maxwell equations:
+\begin{equation}
+\nabla \cdot \vec{E} = 0, \qquad \nabla \cdot \vec{B} = 0
+\end{equation}
+\begin{equation}
+\nabla \times \vec{E} = - \diffp{\vec{B}}{t}, \qquad \nabla \times \vec{B} = \mu_{0} \vec{J} + \frac{1}{c^{2}} \diffp{\vec{E}}{t},
+\end{equation}
 
 \section{Algorithm}
 
@@ -106,6 +112,20 @@ The size of the simulation domain is $ 16 \lambda \times 16 \lambda $, with 100 
 
 In the following paragraph, the results of the first simulation are discussed in a more detail. Fig. \ref{fig:1} shows transverse and longitudinal electric field components at their maximal intensity in the focus for both cases, laser beam propagating under the paraxial approximation (Fig. \ref{fig:1} - a, b) and according to the approach consistent with Maxwell equations (Fig. \ref{fig:1} - c, d). In the case of paraxial approximation, one can clearly see strong distortions and asymmetry in the shape of both electric field components. In addition, the focus location is shifted about $ 1 \: \mathrm{\mu m} $ closer to the left boundary and the corresponding amplitude in focus is less than half the required value. In contrast, the fields produced by the simulation using Maxwell consistent calculation of laser fields at boundary are symmetric with respect to the focus and without any distortions. Furthermore, the focus location as well as the amplitude fulfills the initial requirements precisely.
 
+Fig. \ref{fig:2} shows transverse and longitudinal slices of transverse electric field component in focus for the case of laser beam propagating under the paraxial approximation (Fig. \ref{fig:2} - a, b) as well as for the case where the beam propagation has been resolved within the Maxwell consistent approach (Fig. \ref{fig:2} - c, d). For the case of paraxial approximation, one can clearly see the asymmetry of the field shape in the longitudinal slice (Fig. \ref{fig:2} - b), which consequently leads to a decrease of the amplitude in focus and to the strong side-wings in the spatial beam profile, as might be seen from the transverse slice (Fig. \ref{fig:2} - a). On the other hand, Maxwell consistent approach calculates fields of perfect symmetry with respect to the focus (Fig. \ref{fig:2} - c) and no side-wings or distortions are present (Fig. \ref{fig:2} - d).
+
+In Fig. \ref{fig:3} one can examine the time evolution of transverse (Fig. \ref{fig:3} - a) and longitudinal (Fig. \ref{fig:3} - b) electric field components at boundary as computed using Maxwell consistent approach. Note, that one have to chose carefully the transverse size of the domain, since the beam width at boundary may be much larger than in focus because of a diffraction.
+
+To evaluate a correctness of the beam propagation using Maxwell consistent approach, several criteria has been defined. The correctness of the amplitude and beam width at focus as well as the right focus location has already been verified. Additional criteria has been set on a beam symmetry. In Fig. \ref{fig:4}, one can find a comparison of the transverse electric laser field component when it achieves its maximal intensity at front and rear boundary. One can clearly see the exact match between the field shapes at different time steps of the simulation in transverse (Fig. \ref{fig:4} - a) and longitudinal (Fig. \ref{fig:4} - b) slices. Moreover, all the aforementioned criteria has been fulfilled also in other simulations with different input parameters that are not presented here. Consequently, these observations prove the correctness of the propagation at least of the tightly focused Gaussian laser beams.
+
+For the second simulation, all the input parameters remained the same except the beam width in focus. Now, the parameter $ w_0 = 5 \: \mathrm{\mu m} $, which is about the limit case for the beam propagating under the paraxial approximation. Thus, one would expect that the simulation results will be almost identical.
+
+Similarly as in Fig. \ref{fig:1}, Fig. \ref{fig:5} shows again transverse and longitudinal electric field components at their maximal intensity in the focus for both cases, laser beam propagating under the paraxial approximation (Fig. \ref{fig:5} - a, b) and according to the approach consistent with Maxwell equations (Fig. \ref{fig:5} - c, d). Here, one cannot register any difference between the results corresponding to both approaches.
+
+Also, the transverse slice of the transverse electric laser field component in focus (Fig. \ref{fig:6} - a) shows the correct shape and amplitude for both cases. The longitudinal slice (Fig. \ref{fig:6} - b), however, points out the fact that the location of the focus is still little bit shifted closer to the left hand side boundary. Nevertheless, this difference could be in practice neglected. At the end of the day, for the Gaussian beams propagating under the paraxial approximation, the beam diameter at focus should be at least one order of magnitude larger than the center laser wavelength.
+
+In conclusion, one should be aware that propagation of tightly focused laser pulses cannot be described by paraxial approximation. Above, it has been shown that for the beams focused to a spot with the size comparable to a center laser wavelength, paraxial approximation leads to a shifted location of the focus, asymmetric laser field profiles with distortions and lower amplitude. These deviations are far from negligible and have without any doubt strong impact on the laser-matter interaction results. On the other hand, the propagation of tightly focused Gaussian laser beams prescribed at boundaries according to the Maxwell consistent approach has been proven to be correct.
+
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
 \begin{figure}[h!]
 	\centering
@@ -118,10 +138,6 @@ In the following paragraph, the results of the first simulation are discussed in
 	\caption{Transverse ($ E_{y} $) and longitudinal ($ E_{x} $) electric laser field components captured at the time step of their maximal intensity in the focal spot. The cases \textbf{(a)}, \textbf{(b)} correspond to the laser pulse propagating under the paraxial approximation, whilst \textbf{(c)}, \textbf{(d)} come from the simulation where the beam propagation has been resolved within the Maxwell consistent approach. In the case of paraxial approximation, both components reveal strong distortions and asymmetry, their focal spot is located about $ \mathrm{1 \mu m} $ closer to the left boundary than specified and the corresponding amplitude is significantly lower. The laser has been attached to the left hand side boundary.}
 	\label{fig:1}
 \end{figure}
-
-Fig. \ref{fig:2} shows transverse and longitudinal slices of transverse electric field component in focus for the case of laser beam propagating under the paraxial approximation (Fig. \ref{fig:2} - a, b) as well as for the case where the beam propagation has been resolved within the Maxwell consistent approach (Fig. \ref{fig:2} - c, d). For the case of paraxial approximation, one can clearly see the asymmetry of the field shape in the longitudinal slice (Fig. \ref{fig:2} - b), which consequently leads to a decrease of the amplitude in focus and to the strong side-wings in the spatial beam profile, as might be seen from the transverse slice (Fig. \ref{fig:2} - a). On the other hand, Maxwell consistent approach calculates fields of perfect symmetry with respect to the focus (Fig. \ref{fig:2} - c) and no side-wings or distortions are present (Fig. \ref{fig:2} - d).
-
-In Fig. \ref{fig:3} one can examine the time evolution of transverse (Fig. \ref{fig:3} - a) and longitudinal (Fig. \ref{fig:3} - b) electric field components at boundary as computed using Maxwell consistent approach. Note, that one have to chose carefully the transverse size of the domain, since the beam width at boundary may be much larger than in focus because of a diffraction.
 
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
 \begin{figure}[h!]
@@ -136,10 +152,6 @@ In Fig. \ref{fig:3} one can examine the time evolution of transverse (Fig. \ref{
 	\label{fig:2}
 \end{figure}
 
-To evaluate a correctness of the beam propagation using Maxwell consistent approach, several criteria has been defined. The correctness of the amplitude and beam width at focus as well as the right focus location has already been verified. Additional criteria has been set on a beam symmetry. In Fig. \ref{fig:4}, one can find a comparison of the transverse electric laser field component when it achieves its maximal intensity at front and rear boundary. One can clearly see the exact match between the field shapes at different time steps of the simulation in transverse (Fig. \ref{fig:4} - a) and longitudinal (Fig. \ref{fig:4} - b) slices. Moreover, all the aforementioned criteria has been fulfilled also in other simulations with different input parameters that are not presented here. Consequently, these observations prove the correctness of the propagation at least of the tightly focused Gaussian laser beams.
-
-For the second simulation, all the input parameters remained the same except the beam width in focus. Now, the parameter $ w_0 = 5 \: \mathrm{\mu m} $, which is about the limit case for the beam propagating under the paraxial approximation. Thus, one would expect that the simulation results will be almost identical.
-
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
 \begin{figure}[h!]
 	\centering
@@ -148,6 +160,13 @@ For the second simulation, all the input parameters remained the same except the
 	\sidesubfloat[]{{\includegraphics[width=0.44\linewidth]{./img/lbcs/Ex_boundary_time.pdf}}}
 	\caption{The time evolution of transverse ($ E_{y} $) \textbf{(a)} and longitudinal ($ E_{x} $) \textbf{(b)} electric laser field components at the boundary that the laser is attached to. Both components has been calculated according to the Maxwell consistent approach.}
 	\label{fig:3}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.44\linewidth]{./img/lbcs/beam_envelope.pdf}
+	\caption{Beam envelope shape}
+	\label{fig:7}
 \end{figure}
 
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
@@ -159,8 +178,6 @@ For the second simulation, all the input parameters remained the same except the
 	\caption{Transverse \textbf{(a)} and longitudinal \textbf{(b)} slice of the transverse electric laser field ($ E_{y} $) when it reaches its maximal intensity at the front (blue) and rear (red) boundary. The results come from the simulation where the Maxwell consistent approach for laser propagation has been used. For better comparison, the field at the rear boundary in \textbf{(b)} has been horizontally flipped. The exact match between the field shapes at a different time steps of simulation proves the correctness of the laser beam propagation.}
 	\label{fig:4}
 \end{figure}
-
-Similarly as in Fig. \ref{fig:1}, Fig. \ref{fig:5} shows again transverse and longitudinal electric field components at their maximal intensity in the focus for both cases, laser beam propagating under the paraxial approximation (Fig. \ref{fig:5} - a, b) and according to the approach consistent with Maxwell equations (Fig. \ref{fig:5} - c, d). Here, one cannot register any difference between the results corresponding to both approaches.
 
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
 \begin{figure}[h!]
@@ -175,8 +192,6 @@ Similarly as in Fig. \ref{fig:1}, Fig. \ref{fig:5} shows again transverse and lo
 	\label{fig:5}
 \end{figure}
 
-Also, the transverse slice of the transverse electric laser field component in focus (Fig. \ref{fig:6} - a) shows the correct shape and amplitude for both cases. The longitudinal slice (Fig. \ref{fig:6} - b), however, points out the fact that the location of the focus is still little bit shifted closer to the left hand side boundary. Nevertheless, this difference could be in practice neglected. At the end of the day, for the Gaussian beams propagating under the paraxial approximation, the beam diameter at focus should be at least one order of magnitude larger than the center laser wavelength.
-
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
 \begin{figure}[h!]
 	\centering
@@ -186,5 +201,3 @@ Also, the transverse slice of the transverse electric laser field component in f
 	\caption{Transverse \textbf{(a)} and longitudinal \textbf{(b)} slices of the transverse electric laser field ($ E_{y} $) at the time step when it reaches maximal intensity in the focal spot. Red lines correspond to the laser pulse propagating under the paraxial approximation, whilst blue lines come from the simulation where the beam propagation has been resolved within the Maxwell consistent approach. The size of the focus has been chosen to be one order of magnitude larger than the center laser wavelength. In the case of paraxial approximation, the focus is slightly shifted closer to the left boundary \textbf{(b)}, otherwise the size of the focus as well as the amplitude is correct for both cases \textbf{(a)}.}
 	\label{fig:6}
 \end{figure}
-
-In conclusion, one should be aware that propagation of tightly focused laser pulses cannot be described by paraxial approximation. Above, it has been shown that for the beams focused to a spot with the size comparable to a center laser wavelength, paraxial approximation leads to a shifted location of the focus, asymmetric laser field profiles with distortions and lower amplitude. These deviations are far from negligible and have without any doubt strong impact on the laser-matter interaction results. On the other hand, the propagation of tightly focused Gaussian laser beams prescribed at boundaries according to the Maxwell consistent approach has been proven to be correct.
