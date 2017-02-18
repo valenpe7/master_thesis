@@ -2,21 +2,80 @@ The investigation of laser-matter interaction also involves exploring of specifi
 
 As mentioned in the previous chapter, various aspects of electromagnetic interaction are usually studied using sophisticated numerical simulation codes. Vast majority of these codes, however, use a paraxial approximation to prescribe the laser fields at the boundaries, and afterwards, a field solver guides the beam across the simulation domain. The paraxial approximation is valid only if the angular spectrum of laser pulse is sufficiently narrow, therefore it is not possible to simulate tightly focused laser beams using this approach. As might be seen later, paraxial approximation in this case leads to a distorted field profiles which have strong impact on the results of laser-matter interaction.
 
-Several interesting solutions, how to simulate strongly focused beams, have been already proposed [source]. Within this work, a simple and efficient algorithm for a Maxwell consistent calculation of the electromagnetic fields at the boundaries of the computational domain [source] (also called laser boundary conditions) has been used and implemented into the PIC code EPOCH. Note, that this algorithm is able to describe laser beams with arbitrary shape.
+Several interesting solutions, how to simulate strongly focused beams, have been already proposed [source]. Within this work, a simple and efficient algorithm for a Maxwell consistent calculation of the electromagnetic fields at the boundaries of the computational domain [source] (also called laser boundary conditions) has been used and implemented into the PIC code EPOCH [source]. Note, that this algorithm is able to describe laser beams with arbitrary shape.
 
-\section{Calculation}
-
-Maxwell equations:
+\section{Maxwell consistent calculation of EM fields}
+All the following calculations are reproduced from the excellent work of Illia Thiele et al. [source].
+Maxwell equations in vacuum:
 \begin{equation}
 \nabla \cdot \vec{E} = 0, \qquad \nabla \cdot \vec{B} = 0
 \end{equation}
 \begin{equation}
-\nabla \times \vec{E} = - \diffp{\vec{B}}{t}, \qquad \nabla \times \vec{B} = \mu_{0} \vec{J} + \frac{1}{c^{2}} \diffp{\vec{E}}{t},
+\nabla \times \vec{E} = - \diffp{\vec{B}}{t}, \qquad \nabla \times \vec{B} = \frac{1}{c^{2}} \diffp{\vec{E}}{t},
+\end{equation}
+Wave equation for E (analogically for B):
+\begin{equation}
+\laplace{\vec{E}} \left(\vec{r}, t \right) - \frac{1}{c^2} \diffp[2]{}{t}\vec{E} \left(\vec{r}, t \right) = 0.
+\end{equation}
+FT in time:
+\begin{equation}
+\laplace{\hat{\vec{E}}} \left(\vec{r}, \omega \right) + \frac{\omega^2}{c^2} \hat{\vec{E}} \left(\vec{r}, \omega \right) = 0.
+\end{equation}
+FT in transverse space:
+\begin{equation}
+\left(\frac{\omega^2}{c^2} - k^2_x - k^2_y \right) \bar{\vec{E}} \left(k_x, k_y, z, \omega \right) + \diffp[2]{}{z} \bar{\vec{E}} \left(k_x, k_y, z, \omega \right) = 0.
+\end{equation}
+after subs:
+\begin{equation}
+k^2_z \left(\vec{k}_\bot, \omega \right) \bar{\vec{E}}(\vec{k}_\bot, z, \omega) + \diffp[2]{}{z} \bar{\vec{E}} \left(\vec{k}_\bot, z, \omega \right) = 0.
+\end{equation}
+fundamental solution:
+\begin{equation}
+\bar{\vec{E}}^{\pm} \left(\vec{k}_\bot, z, \omega \right) = \bar{\vec{E}}_{0}^{\pm} \left(\vec{k}_\bot, \omega \right) \e^{\pm \i k_z \left(\vec{k}_\bot, \omega \right) \left(z - z_0 \right)}.
+\end{equation}
+only two of six components independent, other derived from Maxwell equations:
+\begin{equation}
+\bar{\vec{E}}^{\pm}_{\bot} \left(\vec{k}_\bot, z, \omega \right) = \bar{\vec{E}}^{\pm}_{0, \bot} \left(\vec{k}_\bot, \omega \right) \e^{\pm \i k_z \left(\vec{k}_\bot, \omega \right) \left(z - z_0 \right)}
+\end{equation}
+\begin{equation}
+\bar{E}^{\pm}_z \left(\vec{k}_\bot, z, \omega \right) = \mp \frac{\vec{k}_\bot \cdot \bar{\vec{E}}^{\pm}_{\bot}(\vec{k}_\bot, z, \omega)}{k_z \left(\vec{k}_\bot, \omega \right)}
+\end{equation}
+\begin{equation}
+\bar{\vec{B}}^{\pm}_{\bot} \left(\vec{k}_\bot, z, \omega \right) = \frac{1}{\omega k_z \left(\vec{k}_\bot, \omega \right)} \mathbb{R}^{\pm} \left(\vec{k}_\bot, \omega \right) \bar{\vec{E}}^{\pm} \left(\vec{k}_\bot, z, \omega \right)
+\end{equation}
+where:
+\begingroup
+\renewcommand*{\arraystretch}{1.7}
+\begin{equation}
+\mathbb{R}^{\pm} \left(\vec{k}_\bot, \omega \right) =  \begin{pmatrix}
+\mp k_x k_y & \mp \left[ k_z^2 \left(\vec{k}_\bot, \omega \right) + k_y^2 \right] & 0 \\
+\pm \left[ k_z^2 \left(\vec{k}_\bot, \omega \right) + k_x^2 \right] & \pm k_x k_y & 0 \\
+- k_y k_z \left(\vec{k}_\bot, \omega \right) & - k_x k_z \left(\vec{k}_\bot, \omega \right) & 0
+\end{pmatrix},
+\end{equation} 
+\endgroup
+Taylor series:
+\begin{equation}
+k_z \left(\vec{k}_\bot, \omega \right) \approx \frac{\abs{\omega}}{c} - \frac{c}{2 \abs{\omega}} \left( k_x^2 + k_y^2 \right)  
+\end{equation}
+by subs. get back paraxial approximation:
+\begin{equation}
+\bar{\vec{E}}^{\pm}_{\bot} \left(\vec{k}_\bot, z, \omega \right) \approx \bar{\vec{E}}^{\pm}_{0, \bot} \left(\vec{k}_\bot, \omega \right) \e^{\pm \i \left[ \frac{\abs{\omega}}{c} - \frac{c}{2 \abs{\omega}} \left( k_x^2 + k_y^2 \right) \right] \left(z - z_0 \right)}
+\end{equation}
+\begin{equation}
+\bar{E}^{\pm}_z \left(\vec{k}_\bot, z, \omega \right) \approx 0
+\end{equation}
+\begin{equation}
+\bar{B}^{\pm}_x \left(\vec{k}_\bot, z, \omega \right) \approx \mp \frac{1}{c} \bar{E}^{\pm}_y \left(\vec{k}_\bot, z, \omega \right)
+\end{equation}
+\begin{equation}
+\bar{B}^{\pm}_y \left(\vec{k}_\bot, z, \omega \right) \approx \pm \frac{1}{c} \bar{E}^{\pm}_x \left(\vec{k}_\bot, z, \omega \right)
+\end{equation}
+\begin{equation}
+\bar{B}^{\pm}_z \left(\vec{k}_\bot, z, \omega \right) \approx 0
 \end{equation}
 
-\section{Algorithm}
-
-In the following section, the practical implementation of a boundary conditions based on the previously derived solution of Maxwell equations is presented. Assume, that the laser beam propagates in a forward direction along the axis z. In the beginning, it is necessary to prescribe the electric laser field $ \vec{E}_{0, \bot} (\vec{r}_{\bot}, t) $ in the plane $ \mathcal{P} $ at $ z = z_0 $. Note, that it can be defined by arbitrary function of space and time. The goal is then to find the fields $ \vec{E}_{\mathrm{B}} (\vec{r}_{\bot}, t) $ and $ \vec{B}_{\mathrm{B}} (\vec{r}_{\bot}, t) $ at the corresponding boundary $ z = z_\mathrm{B} $.
+In the last part of this section, the practical implementation of the boundary conditions based on the previously derived solution of Maxwell equations is presented. Assume, that the laser beam propagates in a forward direction along the axis z. In the beginning, it is necessary to prescribe the electric laser field $ \vec{E}_{0, \bot} (\vec{r}_{\bot}, t) $ in the plane $ \mathcal{P} $ at $ z = z_0 $. Note, that it can be defined by arbitrary function of space and time. The goal is then to find the fields $ \vec{E}_{\mathrm{B}} (\vec{r}_{\bot}, t) $ and $ \vec{B}_{\mathrm{B}} (\vec{r}_{\bot}, t) $ at the corresponding boundary $ z = z_\mathrm{B} $.
 
 Consider that the transverse part of simulation domain is made of equidistant rectangular grid described by $ x^{i} $, $ y^{j} $, where $ i, j \in \left\lbrace 1, \ldots, N_{x, y} \right\rbrace $, and the grid steps $ \delta x $, $\delta y $. The simulation time $ t^{n} $, where $ n \in \left\lbrace 1, \ldots, N_{t} \right\rbrace $, is also divided into equidistant time steps of size $ \delta t $.
 
@@ -80,7 +139,7 @@ The algorithm allows to calculate fields $ \vec{E}_{\mathrm{B}}^{ij} (t) $ and $
 	\end{equation}
 \end{enumerate}
 
-\section{Implementation}
+\section{Implementation of laser boundary conditions}
 
 One of the main goals of this work has been to implement the algorithm mentioned in the previous section, to evaluate its correctness in several test simulations and finally, to exploit resulting implementation for simulations of tightly focused Gaussian beams in laser-matter interaction. The main requirement on implementation has been easy to use with 2D version of particle-in-cell simulation code EPOCH [source]. For this reason, several possible solutions has been taken into account.
 
@@ -114,7 +173,7 @@ In the following paragraph, the results of the first simulation are discussed in
 
 Fig. \ref{fig:2} shows transverse and longitudinal slices of transverse electric field component in focus for the case of laser beam propagating under the paraxial approximation (Fig. \ref{fig:2} - a, b) as well as for the case where the beam propagation has been resolved within the Maxwell consistent approach (Fig. \ref{fig:2} - c, d). For the case of paraxial approximation, one can clearly see the asymmetry of the field shape in the longitudinal slice (Fig. \ref{fig:2} - b), which consequently leads to a decrease of the amplitude in focus and to the strong side-wings in the spatial beam profile, as might be seen from the transverse slice (Fig. \ref{fig:2} - a). On the other hand, Maxwell consistent approach calculates fields of perfect symmetry with respect to the focus (Fig. \ref{fig:2} - c) and no side-wings or distortions are present (Fig. \ref{fig:2} - d).
 
-In Fig. \ref{fig:3} one can examine the time evolution of transverse (Fig. \ref{fig:3} - a) and longitudinal (Fig. \ref{fig:3} - b) electric field components at boundary as computed using Maxwell consistent approach. Note, that one have to chose carefully the transverse size of the domain, since the beam width at boundary may be much larger than in focus because of a diffraction.
+In Fig. \ref{fig:3} one can examine the time evolution of transverse (Fig. \ref{fig:3} - a) and longitudinal (Fig. \ref{fig:3} - b) electric field components at boundary as computed using Maxwell consistent approach. Note, that one have to chose carefully the transverse size of the domain, since the beam width at boundary may be much larger than at focus because of a diffraction. To estimate the beam width at boundary, one has to know the beam divergence angle. In Fig. \ref{fig:7}, one can find a graph of the spot size parameter $ w $ as calculated using the Maxwell consistent approach for the beams focused to $ w_0 = 1 \: \lambda $ and $ 0.5 \: \lambda $. From the plotted lines, one can roughly estimate the beam divergence angle $ \theta $. For the beam focused to $ w_0 = 1 \: \lambda $, the beam divergence has been around $ \theta = 18.2 ^{\circ} $, whilst the Gaussian beam of the same parameters has divergence $ \theta = 17.7 ^{\circ} $. For the beam with $ w_0 = 0.5 \: \lambda $ the divergence has been estimated to $ \theta = 32.9 ^{\circ} $, while the Gaussian beam with the same size at focus has divergence $ \theta = 32.5 ^{\circ} $. Consequently, in spite of the fact that the divergence of the beams calculated using the Maxwell consistent approach is a little bit larger, both approaches are in quite a good accordance regarding this parameter.
 
 To evaluate a correctness of the beam propagation using Maxwell consistent approach, several criteria has been defined. The correctness of the amplitude and beam width at focus as well as the right focus location has already been verified. Additional criteria has been set on a beam symmetry. In Fig. \ref{fig:4}, one can find a comparison of the transverse electric laser field component when it achieves its maximal intensity at front and rear boundary. One can clearly see the exact match between the field shapes at different time steps of the simulation in transverse (Fig. \ref{fig:4} - a) and longitudinal (Fig. \ref{fig:4} - b) slices. Moreover, all the aforementioned criteria has been fulfilled also in other simulations with different input parameters that are not presented here. Consequently, these observations prove the correctness of the propagation at least of the tightly focused Gaussian laser beams.
 
@@ -164,8 +223,8 @@ In conclusion, one should be aware that propagation of tightly focused laser pul
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.44\linewidth]{./img/lbcs/beam_envelope.pdf}
-	\caption{Beam envelope shape}
+	\includegraphics[width=0.55\linewidth]{./img/lbcs/beam_divergence.pdf}
+	\caption{Graph of the spot size parameter $ w(x) $ (a radius at which the intensity values fall to $ 1/ \e^2 $ of their axial values) of the beams with $ w_0 = 1 \: \lambda $ and $ 0.5 \: \lambda $ calculated using Maxwell consistent approach. From the plotted lines, one can roughly estimate the beam divergence angle $ \theta $ (The angle between the central axis and the line along the spot size parameter $ w(x) $). The divergence angles for both beams are surprisingly in a good accordance with divergence angles of corresponding Gaussian beams.}
 	\label{fig:7}
 \end{figure}
 
