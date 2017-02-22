@@ -6,14 +6,14 @@ Several interesting solutions, how to simulate strongly focused beams, have been
 
 \section{Maxwell consistent calculation of EM fields}
 All the following calculations are reproduced from the excellent work of Illia Thiele et al. [source].
-Maxwell equations in vacuum:
+(Microscopic) Maxwell equations in vacuum (without free charges):
 \begin{equation}
 \nabla \cdot \vec{E} = 0, \qquad \nabla \cdot \vec{B} = 0
 \end{equation}
 \begin{equation}
 \nabla \times \vec{E} = - \diffp{\vec{B}}{t}, \qquad \nabla \times \vec{B} = \frac{1}{c^{2}} \diffp{\vec{E}}{t},
 \end{equation}
-Wave equation for E (analogically for B):
+Wave equation for $ \vec{E} $ (analogically for $ \vec{B} $):
 \begin{equation}
 \laplace{\vec{E}} \left(\vec{r}, t \right) - \frac{1}{c^2} \diffp[2]{}{t}\vec{E} \left(\vec{r}, t \right) = 0.
 \end{equation}
@@ -23,13 +23,13 @@ FT in time:
 \end{equation}
 FT in transverse space:
 \begin{equation}
-\left(\frac{\omega^2}{c^2} - k^2_x - k^2_y \right) \bar{\vec{E}} \left(k_x, k_y, z, \omega \right) + \diffp[2]{}{z} \bar{\vec{E}} \left(k_x, k_y, z, \omega \right) = 0.
+\left(- k^2_x - k^2_y + \diffp[2]{}{z} \right) \bar{\vec{E}} \left(k_x, k_y, z, \omega \right) + \frac{\omega^2}{c^2} \bar{\vec{E}} \left(k_x, k_y, z, \omega \right) = 0.
 \end{equation}
 after subs:
 \begin{equation}
 k^2_z \left(\vec{k}_\bot, \omega \right) \bar{\vec{E}}(\vec{k}_\bot, z, \omega) + \diffp[2]{}{z} \bar{\vec{E}} \left(\vec{k}_\bot, z, \omega \right) = 0.
 \end{equation}
-fundamental solution:
+where $ k_z \left(\vec{k}_\bot, \omega \right) = \sqrt{-k^2_x -k^2_y + \omega^2/c^2} $. Fundamental solution:
 \begin{equation}
 \bar{\vec{E}}^{\pm} \left(\vec{k}_\bot, z, \omega \right) = \bar{\vec{E}}_{0}^{\pm} \left(\vec{k}_\bot, \omega \right) \e^{\pm \i k_z \left(\vec{k}_\bot, \omega \right) \left(z - z_0 \right)}.
 \end{equation}
@@ -54,6 +54,10 @@ where:
 \end{pmatrix},
 \end{equation} 
 \endgroup
+if $ k_z \left(\vec{k}_\bot, \omega \right) $ imaginary, evanescent waves that are unphysical. Need to filter it in the transverse Fourier space:
+\begin{equation}
+k^2_x + k^2_y > \omega^2/c^2.
+\end{equation}
 Taylor series:
 \begin{equation}
 k_z \left(\vec{k}_\bot, \omega \right) \approx \frac{\abs{\omega}}{c} - \frac{c}{2 \abs{\omega}} \left( k_x^2 + k_y^2 \right)  
@@ -259,4 +263,21 @@ In conclusion, one should be aware that propagation of tightly focused laser pul
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/parax/Ey_focus_long_comparison.pdf}}}
 	\caption{Transverse \textbf{(a)} and longitudinal \textbf{(b)} slices of the transverse electric laser field ($ E_{y} $) at the time step when it reaches maximal intensity in the focal spot. Red lines correspond to the laser pulse propagating under the paraxial approximation, whilst blue lines come from the simulation where the beam propagation has been resolved within the Maxwell consistent approach. The size of the focus has been chosen to be one order of magnitude larger than the center laser wavelength. In the case of paraxial approximation, the focus is slightly shifted closer to the left boundary \textbf{(b)}, otherwise the size of the focus as well as the amplitude is correct for both cases \textbf{(a)}.}
 	\label{fig:6}
+\end{figure}
+
+\floatsetup[figure]{style=plain, subcapbesideposition=top}
+\begin{figure}[h!]
+	\centering
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/ey_05micron.pdf}}}
+	\hspace{1mm}
+	\sidesubfloat[]{{\includegraphics[width=0.44\linewidth]{./img/results/ex_05micron.pdf}}}
+	\caption{.}
+	\label{fig:8}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.55\linewidth]{./img/results/ni_05micron.pdf}
+	\caption{}
+	\label{fig:9}
 \end{figure}

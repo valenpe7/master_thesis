@@ -1,3 +1,96 @@
+\newpage
+Microscopic Maxwell's equations:
+\begin{equation}
+\div{\vec{E}\left( \vec{r}, t \right)} = \frac{\rho\left( \vec{r}, t \right)}{\varepsilon_0}
+\end{equation}
+\begin{equation}
+\div{\vec{B}\left( \vec{r}, t \right)} = 0
+\end{equation}
+\begin{equation}
+\rot{\vec{E}\left( \vec{r}, t \right)} = - \diffp{\vec{B}\left( \vec{r}, t \right)}{t}
+\end{equation}
+\begin{equation}
+\rot{\vec{B}\left( \vec{r}, t \right)} = \mu_0 \vec{J}\left( \vec{r}, t \right) + \varepsilon_0 \mu_0 \diffp{\vec{E}\left( \vec{r}, t \right)}{t}
+\end{equation}
+Macroscopic Maxwell's equations:
+\begin{equation}
+\div{\vec{D}\left( \vec{r}, t \right)} = \rho\left( \vec{r}, t \right)
+\end{equation}
+\begin{equation}
+\div{\vec{B}\left( \vec{r}, t \right)} = 0
+\end{equation}
+\begin{equation}
+\rot{\vec{E}\left( \vec{r}, t \right)} = - \diffp{\vec{B}\left( \vec{r}, t \right)}{t}
+\end{equation}
+\begin{equation}
+\rot{\vec{H}\left( \vec{r}, t \right)} = \vec{J}\left( \vec{r}, t \right) + \diffp{\vec{D}\left( \vec{r}, t \right)}{t}
+\end{equation}
+where:
+\begin{equation}
+\vec{D}\left( \vec{r}, t \right) = \varepsilon_0 \vec{E}\left( \vec{r}, t \right) + \vec{P}\left( \vec{r}, t \right) = \varepsilon \vec{E}\left( \vec{r}, t \right)
+\end{equation}
+\begin{equation}
+\vec{B}\left(\vec{r}, t \right) = \mu_0 \vec{H}\left( \vec{r}, t \right) + \vec{M}\left( \vec{r}, t \right) = \mu \vec{H}\left(\vec{r}, t \right)
+\end{equation}
+potentials:
+\begin{equation}
+\vec{B}\left( \vec{r}, t \right) = \rot{\vec{A}\left( \vec{r}, t \right)}
+\end{equation}
+\begin{equation}
+\vec{E}\left( \vec{r}, t \right) = -\grad{\phi \left( \vec{r}, t \right)} - \diffp{\vec{A}\left( \vec{r}, t \right)}{t}
+\end{equation}
+Maxwell's equations (wave equations) in terms of potentials:
+\begin{equation}
+-\laplace{\phi\left( \vec{r}, t \right)} - \diffp{}{t} \left(\div{\vec{A}\left( \vec{r}, t \right)} \right) =  \frac{\rho\left( \vec{r}, t \right)}{\varepsilon_0}
+\end{equation}
+\begin{equation}
+\left(-\laplace{} + \frac{1}{c^{2}} \diffp[2]{}{t} \right) \vec{A}\left( \vec{r}, t \right) + \grad{\left( \div{\vec{A}\left( \vec{r}, t \right) + \frac{1}{c^{2}}\diffp{\phi\left( \vec{r}, t \right)}{t}} \right)} = \mu_0 \vec{J}\left( \vec{r}, t \right)
+\end{equation}
+Lorenz gauge:
+\begin{equation}
+\div{\vec{A}\left( \vec{r}, t \right)} + \frac{1}{c^{2}} \diffp{\phi\left( \vec{r}, t \right)}{t} = 0
+\end{equation}
+then:
+\begin{equation}
+\left(-\laplace{} + \frac{1}{c^{2}} \diffp[2]{}{t} \right)\phi\left( \vec{r}, t \right) = \dalembert{\phi\left( \vec{r}, t \right)} = \frac{\rho\left( \vec{r}, t \right)}{\varepsilon_0}
+\end{equation}
+\begin{equation}
+\left(-\laplace{} + \frac{1}{c^{2}} \diffp[2]{}{t} \right)\vec{A}\left( \vec{r}, t \right) = \dalembert{\vec{A}\left( \vec{r}, t \right)} = \mu_0 \vec{J} \left( \vec{r}, t \right)
+\end{equation}
+continuity equation (conservation of charge):
+\begin{equation}
+\div{\vec{J}\left( \vec{r}, t \right)} + \diffp{\rho\left( \vec{r}, t \right)}{t} = 0
+\end{equation}
+Lorentz force:
+\begin{equation}
+\vec{F}\left( \vec{r}, t \right) = q \left(E\left( \vec{r}, t \right) + v\left( \vec{r}, t \right) \times B\left( \vec{r}, t \right) \right) 
+\end{equation}
+Ohm's law:
+\begin{equation}
+\vec{J}\left( \vec{r}, t \right) = \sigma \vec{E}\left( \vec{r}, t \right)
+\end{equation}
+\newpage
+wave equation for $ \vec{E} $ field:
+\begin{equation*}
+\laplace{\vec{E}} - \frac{1}{c^2}\diffp[2]{\vec{E}}{t} = 0
+\end{equation*}
+$ \vec{E} $ in the form of plane wave propagating along z-axis:
+\begin{equation*}
+\vec{E}\left(x, y, z, t\right)  = \vec{E_0}\left(x, y, z\right) \e^{i(k_z z - \omega t)}
+\end{equation*}
+Helmholtz equation:
+\begin{equation*}
+\laplace{\vec{E_0}} + 2 \i k_z \diffp{\vec{E_0}}{z} = 0
+\end{equation*}
+paraxial (slowly varying envelope) approximation:
+\begin{equation*}
+\left\| \diffp[2]{\vec{E_0}}{z}\right\|  \leq \left\|2 k_z \diffp{\vec{E_0}}{z}\right\|  \longrightarrow 
+\diffp[2]{\vec{E_0}}{x} + \diffp[2]{\vec{E_0}}{y} + \diffp[2]{\vec{E_0}}{z} + 2 \i k_z \diffp{\vec{E_0}}{z} = 0
+\end{equation*}
+\begin{equation*}
+\laplace_{\bot}{\vec{E}_0} + 2 \i k_z \diffp{\vec{E_0}}{z} = 0
+\end{equation*}
+
 $ \vec{E} $ and $ \vec{B} $ fields in terms of scalar potential $ \Phi $ and vector potential $ \vec{A} $:
 \begin{equation*}
 	\vec{E} = - \grad{\Phi} - \diffp{\vec{A}}{t}, \qquad \vec{B} = \rot{\vec{A}}
@@ -22,17 +115,18 @@ wave equation for vector potential $ \vec{A} $:
 \begin{equation*}
 \laplace{\vec{A}} - \frac{1}{c^2}\diffp[2]{\vec{A}}{t} = 0
 \end{equation*}
+
+
 \begin{equation*}
 \diffp[2]{\vec{A_0}}{x} + \diffp[2]{\vec{A_0}}{y} + \diffp[2]{\vec{A_0}}{z} + 2 \i k_z \diffp[]{\vec{A_0}}{z} - k_z^2 \vec{A_0} + \frac{\omega^2}{c^2}\vec{A_0} = 0
 \end{equation*}
-Helmholtz equation:
+
 \begin{equation*}
 \diffp[2]{\vec{A_0}}{x} + \diffp[2]{\vec{A_0}}{y} + \diffp[2]{\vec{A_0}}{z} + 2 \i k_z \diffp[]{\vec{A_0}}{z} = 0
 \end{equation*}
 \begin{equation*}
 \laplace{\vec{A_0}} + 2 \i k_z \diffp{\vec{A_0}}{z} = 0
 \end{equation*}
-paraxial (slowly varying envelope) approximation:
 \begin{equation*}
 \left\| \diffp[2]{\vec{A_0}}{z}\right\|  \leq \left\|2 k_z \diffp{\vec{A_0}}{z}\right\|  \longrightarrow 
 \diffp[2]{\vec{A_0}}{x} + \diffp[2]{\vec{A_0}}{y} + \diffp[2]{\vec{A_0}}{z} + 2 \i k_z \diffp{\vec{A_0}}{z} = 0
@@ -44,6 +138,20 @@ Solution - Gaussian beam:
 \vec{E}\left(x, y, z \right) = \vec{E_0} \frac{w_0}{w(z)} \exp \left( - \frac{x^2 + y^2}{w(z)^2} \right) \cos\left( \omega t - k_z \left(z + \frac{x^2 + y^2}{2R(z)} \right) + \phi_G(z) \right) 
 \end{equation*}
 where
+\begingroup
+\renewcommand*{\arraystretch}{2.0}
+\begin{table}[h!]
+\begin{flushleft}
+\begin{tabular}{ l c r }
+	$ w(z) = w_0 \sqrt{1 + \left(\frac{z}{z_R} \right)^2}  $ & \ldots & evolving beam width \\
+	$ z_r = \frac{\pi w_0^2}{\lambda} $ & \ldots & Rayleigh range \\
+	$ R(z) = z\left(1 + \left(\frac{z_R}{z} \right)^2 \right) $ & \ldots & radius of curvature \\
+	$ \phi(z) = \tan^{-1}\left(\frac{z}{z_R} \right) $ & \ldots & Guoy phase 
+	\end{tabular}
+\end{flushleft}
+\end{table}
+\endgroup
+
 \begin{flalign*}
 & w(z) = w_0 \sqrt{1 + \left(\frac{z}{z_R} \right)^2} \dots \mathrm{evolving \: beam \: width} & \\
 & z_r = \frac{\pi w_0^2}{\lambda} \dots \mathrm{Rayleigh \: range} & \\
@@ -65,6 +173,53 @@ Features:
 	\item All new parameters needed for tight-focusing (w0, focal length, etc.) may be specified via input file
 	\item Implementation works generally regardless the number of lasers in the simulation or boundaries that they are attached to
 \end{itemize}
+
+\noindent
+Laser:
+\begin{itemize}
+\item wavelength: $ \lambda $ = 1.0 $ \mu m $
+\item amplitude: $ \vec{E}_0 $ = 1e15 V/m
+\item duration: t = 20 fs (in FWHM)
+\item beam waist in focus: $ w_0 $ = 0.7 $ \mu m $
+\item focus distance from boundary: $ x_\mathrm{B} - x_0 $ = 8 $ \mu m $
+\item polarization: P
+\item boundary: left 
+\end{itemize}
+Domain:
+\begin{itemize}
+\item x min: -8 $ \mu m $
+\item x max: 8 $ \mu m $
+\item y min: -8 $ \mu m $
+\item y max: 8 $ \mu m $
+\item $ N_x $: 1600 cells ($ \delta x $ = $ \lambda/100 $ = 10 nm)
+\item $ N_y $: 1600 cells ($ \delta y $ = $ \lambda/100 $ = 10 nm)
+\item time step: $ \delta t $ = $ 1/(\sqrt{2} c) \lambda /100 \approx $ 0.05 fs 
+\item simulation time: $ \tau $ = 150 fs
+\end{itemize}
+
+\newpage
+\noindent
+The phase space distribution function  $ f_{s} \left(\vec{x}, \vec{v}, t\right) $ for a given species $ s $ is governed by the Vlasov equation:
+\begin{equation*}
+\diffp[]{f_{s}}{t} + \vec{v} \cdot \nabla f_s + \frac{q_{s}}{m_{s}}\left( \vec{E} + \vec{v} \times \vec{B} \right) \cdot \diffp[]{f_s}{\vec{v}} = 0.
+\end{equation*}
+The distribution function is approximated using finite-size quasi-particles with so-called shape functions $ S_{x} $ and $ S_{v} $, $ N_p $ is the number of physical particles: 
+\begin{equation*}
+f_{s} \left(\vec{x}, \vec{v}, t \right) =  \sum_{p} f_{p}\left(\vec{x}, \vec{v}, t \right), \quad f_{p}\left(\vec{x}, \vec{v}, t \right) = N_{p} S_{x}\left(\vec{x} - \vec{x}_{p}\left(t\right) \right)  S_{v}\left(\vec{v} - \vec{v}_{p}\left( t\right) \right).
+\end{equation*}
+Electromagnetic fields self-consistently evolved by Maxwell equations:
+\begin{equation*}
+\nabla \cdot \vec{E} = \frac{\rho}{\varepsilon_{0}}, \qquad \nabla \cdot \vec{B} = 0
+\end{equation*}
+\begin{equation*}
+\nabla \times \vec{E} = - \diffp{\vec{B}}{t}, \qquad \nabla \times \vec{B} = \mu_{0} \vec{J} + \frac{1}{c^{2}} \diffp{\vec{E}}{t},
+\end{equation*}
+where charge density and current density are obtained from distribution functions:
+\begin{equation*}
+\rho\left(\vec{x}, t \right) = \sum_s q_s \int f_s \left(\vec{x}, \vec{v}, t \right) \mathrm{d} \vec{v}, \qquad \vec{J}\left(\vec{x}, t \right) = \sum_s q_s \int f_s \left(\vec{x}, \vec{v}, t \right) \vec{v} \, \mathrm{d} \vec{v}.
+\end{equation*}
+
+
 
 \begin{lstlisting}[style=CXX, caption=Function performing forward fast Fourier transform using MKL library]
 std::vector<std::complex<double>> fft::mkl_fft_forward(std::vector<std::complex<double>> in) {
