@@ -1,86 +1,147 @@
-\newpage
-Microscopic Maxwell's equations:
+Microscopic Maxwell's equations $ \vec{E}\left( \vec{r}, t \right) $, $ \vec{B}\left( \vec{r}, t \right) $, $ \vec{H}\left( \vec{r}, t \right) $, $ \vec{D}\left( \vec{r}, t \right) $ :
 \begin{equation}
-\div{\vec{E}\left( \vec{r}, t \right)} = \frac{\rho\left( \vec{r}, t \right)}{\varepsilon_0}
+\div{\vec{E}} = \frac{\rho}{\varepsilon_0}
 \end{equation}
 \begin{equation}
-\div{\vec{B}\left( \vec{r}, t \right)} = 0
+\div{\vec{B}} = 0
 \end{equation}
 \begin{equation}
-\rot{\vec{E}\left( \vec{r}, t \right)} = - \diffp{\vec{B}\left( \vec{r}, t \right)}{t}
+\rot{\vec{E}} + \diffp{\vec{B}}{t} = 0
 \end{equation}
 \begin{equation}
-\rot{\vec{B}\left( \vec{r}, t \right)} = \mu_0 \vec{J}\left( \vec{r}, t \right) + \varepsilon_0 \mu_0 \diffp{\vec{E}\left( \vec{r}, t \right)}{t}
+\rot{\vec{B}} - \mu_0 \varepsilon_0 \diffp{\vec{E}}{t}= \mu_0 \vec{J}
 \end{equation}
 Macroscopic Maxwell's equations:
 \begin{equation}
-\div{\vec{D}\left( \vec{r}, t \right)} = \rho\left( \vec{r}, t \right)
+\div{\vec{D}} = \rho
 \end{equation}
 \begin{equation}
-\div{\vec{B}\left( \vec{r}, t \right)} = 0
+\div{\vec{B}} = 0
 \end{equation}
 \begin{equation}
-\rot{\vec{E}\left( \vec{r}, t \right)} = - \diffp{\vec{B}\left( \vec{r}, t \right)}{t}
+\rot{\vec{E}} + \diffp{\vec{B}}{t} = 0
 \end{equation}
 \begin{equation}
-\rot{\vec{H}\left( \vec{r}, t \right)} = \vec{J}\left( \vec{r}, t \right) + \diffp{\vec{D}\left( \vec{r}, t \right)}{t}
+\rot{\vec{H}} - \diffp{\vec{D}}{t} = \vec{J}
 \end{equation}
 where:
 \begin{equation}
-\vec{D}\left( \vec{r}, t \right) = \varepsilon_0 \vec{E}\left( \vec{r}, t \right) + \vec{P}\left( \vec{r}, t \right) = \varepsilon \vec{E}\left( \vec{r}, t \right)
+\vec{D} = \varepsilon_0 \vec{E} + \vec{P} = \varepsilon \vec{E}
 \end{equation}
 \begin{equation}
-\vec{B}\left(\vec{r}, t \right) = \mu_0 \vec{H}\left( \vec{r}, t \right) + \vec{M}\left( \vec{r}, t \right) = \mu \vec{H}\left(\vec{r}, t \right)
+\vec{H} = \frac{\vec{B}}{\mu_0} - \vec{M} = \frac{\vec{B}}{\mu} 
 \end{equation}
-potentials:
+and $ \vec{P}\left(\vec{r} \right) $, $ \vec{M}\left( \vec{r} \right) $
+continuity equation (conservation of charge):
 \begin{equation}
-\vec{B}\left( \vec{r}, t \right) = \rot{\vec{A}\left( \vec{r}, t \right)}
+\div{\vec{J}} + \diffp{\rho}{t} = 0
 \end{equation}
+E and B in potentials:
 \begin{equation}
-\vec{E}\left( \vec{r}, t \right) = -\grad{\phi \left( \vec{r}, t \right)} - \diffp{\vec{A}\left( \vec{r}, t \right)}{t}
-\end{equation}
-Maxwell's equations (wave equations) in terms of potentials:
-\begin{equation}
--\laplace{\phi\left( \vec{r}, t \right)} - \diffp{}{t} \left(\div{\vec{A}\left( \vec{r}, t \right)} \right) =  \frac{\rho\left( \vec{r}, t \right)}{\varepsilon_0}
+\vec{E} = -\grad{\phi} - \diffp{\vec{A}}{t}
 \end{equation}
 \begin{equation}
-\left(-\laplace{} + \frac{1}{c^{2}} \diffp[2]{}{t} \right) \vec{A}\left( \vec{r}, t \right) + \grad{\left( \div{\vec{A}\left( \vec{r}, t \right) + \frac{1}{c^{2}}\diffp{\phi\left( \vec{r}, t \right)}{t}} \right)} = \mu_0 \vec{J}\left( \vec{r}, t \right)
+\vec{B} = \rot{\vec{A}}
 \end{equation}
 Lorenz gauge:
 \begin{equation}
-\div{\vec{A}\left( \vec{r}, t \right)} + \frac{1}{c^{2}} \diffp{\phi\left( \vec{r}, t \right)}{t} = 0
+\div{\vec{A}} + \mu \varepsilon \diffp{\phi}{t} = 0
 \end{equation}
 then:
 \begin{equation}
-\left(-\laplace{} + \frac{1}{c^{2}} \diffp[2]{}{t} \right)\phi\left( \vec{r}, t \right) = \dalembert{\phi\left( \vec{r}, t \right)} = \frac{\rho\left( \vec{r}, t \right)}{\varepsilon_0}
+\left(\laplace{} - \mu \varepsilon \diffp[2]{}{t} \right)\phi = -\frac{\rho}{\varepsilon}
 \end{equation}
 \begin{equation}
-\left(-\laplace{} + \frac{1}{c^{2}} \diffp[2]{}{t} \right)\vec{A}\left( \vec{r}, t \right) = \dalembert{\vec{A}\left( \vec{r}, t \right)} = \mu_0 \vec{J} \left( \vec{r}, t \right)
+\left(\laplace{} - \mu \varepsilon \diffp[2]{}{t} \right)\vec{A} = -\mu \vec{J}
 \end{equation}
-continuity equation (conservation of charge):
+solutions:
 \begin{equation}
-\div{\vec{J}\left( \vec{r}, t \right)} + \diffp{\rho\left( \vec{r}, t \right)}{t} = 0
+\phi\left(\vec{r}, t \right) = \frac{1}{4 \pi \varepsilon} \int\limits_{V} \frac{\rho\left(\vec{\tilde{r}}, t \right)}{\abs{\vec{r} - \vec{\tilde{r}}}} \mathrm{d} \tilde{V}
+\end{equation}
+\begin{equation}
+\vec{A}\left(\vec{r}, t \right) = \frac{\mu}{4 \pi} \int\limits_{V} \frac{\vec{J}\left(\vec{\tilde{r}}, t \right)}{\abs{\vec{r} - \vec{\tilde{r}}}} \mathrm{d} \tilde{V}
+\end{equation}
+Hertz vectors (under ordinary conditions):
+\begin{equation}
+\phi = - \div{\vec{\Pi_e}}
+\end{equation}
+\begin{equation}
+\vec{A} = \mu \varepsilon \diffp{\vec{\Pi_e}}{t}
+\end{equation}
+\begin{equation}
+\phi = 0
+\end{equation}
+\begin{equation}
+\vec{A} = \rot{\vec{\Pi_m}}
+\end{equation}
+E and B in terms of electric Hertz vector:
+\begin{equation}
+\vec{E} = \grad{\left(\div{\vec{\Pi_e}}\right)} - \mu \epsilon \diffp[2]{\vec{\Pi_e}}{t}
+\end{equation}
+\begin{equation}
+\vec{B} = \mu \varepsilon \left(\rot{\diffp{\vec{\Pi_e}}{t}}\right)
+\end{equation}
+E and B in terms of magnetic Hertz vector:
+\begin{equation}
+\vec{E} = \rot{\diffp{\vec{\Pi_m}}{t}}
+\end{equation}
+\begin{equation}
+\vec{B} = \rot{\left(\rot{\vec{\Pi_m}}\right)}
+\end{equation}
+equations for Hertz vectors:
+\begin{equation}
+\left(\laplace{} - \mu \varepsilon \diffp[2]{}{t} \right) \vec{\Pi_e} = -\frac{\vec{P}\left(\vec{r} \right)}{\varepsilon}
+\end{equation}
+\begin{equation}
+\left(\laplace{} - \mu \varepsilon \diffp[2]{}{t} \right) \vec{\Pi_m} = -\mu \vec{M}\left(\vec{r} \right)
+\end{equation}
+solutions:
+\begin{equation}
+\vec{\Pi_e}\left(\vec{r}, t \right) = \frac{1}{4 \pi \varepsilon} \int\limits_{V} \frac{\vec{P}\left(\vec{\tilde{r}} \right)}{\abs{\vec{r} - \vec{\tilde{r}}}} \mathrm{d} \tilde{V}
+\end{equation}
+\begin{equation}
+\vec{\Pi_m}\left(\vec{r}, t \right) = \frac{\mu}{4 \pi} \int\limits_{V} \frac{\vec{M}\left(\vec{\tilde{r}} \right)}{\abs{\vec{r} - \vec{\tilde{r}}}} \mathrm{d} \tilde{V}
 \end{equation}
 Lorentz force:
 \begin{equation}
-\vec{F}\left( \vec{r}, t \right) = q \left(E\left( \vec{r}, t \right) + v\left( \vec{r}, t \right) \times B\left( \vec{r}, t \right) \right) 
+\vec{F} = q \left(E + v \times B \right) 
 \end{equation}
 Ohm's law:
 \begin{equation}
-\vec{J}\left( \vec{r}, t \right) = \sigma \vec{E}\left( \vec{r}, t \right)
+\vec{J} = \sigma \vec{E}
 \end{equation}
-\newpage
-wave equation for $ \vec{E} $ field:
-\begin{equation*}
-\laplace{\vec{E}} - \frac{1}{c^2}\diffp[2]{\vec{E}}{t} = 0
-\end{equation*}
+Energy (Poynting) theorem:
+\begin{equation}
+\diffp{u}{t} + \div{\vec{S}} = - \vec{E} \cdot \vec{J}
+\end{equation}
+\begin{equation}
+u = \frac{1}{2} \left(\vec{E} \cdot \vec{D} + \vec{H} \cdot \vec{B} \right)
+\end{equation}
+\begin{equation}
+\int\limits_{S} \left(\vec{E} \times \vec{H} \right) \cdot \vec{n} \: \d \tilde{S} + \int\limits_{V} \vec{E} \cdot \vec{J} \: \d \tilde{V} = - \diffp{}{t} \int\limits_{V} \frac{1}{2} \left(\vec{E} \cdot \vec{D} + \vec{H} \cdot \vec{B} \right) \: \d \tilde{V}
+\end{equation}
+\begin{equation}
+\vec{S} = \vec{E} \times \vec{H}
+\end{equation}
+\begin{equation}
+\diffp{W}{t} = \int\limits_{V} \left(\vec{E} \cdot \diffp{\vec{D}}{t} + \vec{H} \cdot \diffp{\vec{B}}{t}\right) \: \d \tilde{V}
+\end{equation}
+wave equations:
+\begin{equation}
+\laplace{\vec{E}} - \frac{1}{c^{2}} \diffp[2]{\vec{E}}{t} = 0
+\end{equation}
+\begin{equation}
+\laplace{\vec{B}} - \frac{1}{c^{2}} \diffp[2]{\vec{B}}{t} = 0
+\end{equation}
+
+\subsection{Gaussian Beam}
 $ \vec{E} $ in the form of plane wave propagating along z-axis:
 \begin{equation*}
-\vec{E}\left(x, y, z, t\right)  = \vec{E_0}\left(x, y, z\right) \e^{i(k_z z - \omega t)}
+\vec{\Psi}\left(\vec{r}_{\bot}, z, t\right)  = \vec{\Psi_0}\left(\vec{r}_{\bot}, z\right) \e^{i(k_z z - \omega t)}
 \end{equation*}
 Helmholtz equation:
 \begin{equation*}
-\laplace{\vec{E_0}} + 2 \i k_z \diffp{\vec{E_0}}{z} = 0
+\laplace{\vec{\Psi_0}} + 2 \i k_z \diffp{\vec{\Psi_0}}{z} = 0
 \end{equation*}
 paraxial (slowly varying envelope) approximation:
 \begin{equation*}
