@@ -1,4 +1,4 @@
-Microscopic Maxwell's equations $ \vec{E}\left( \vec{r}, t \right) $, $ \vec{B}\left( \vec{r}, t \right) $, $ \vec{H}\left( \vec{r}, t \right) $, $ \vec{D}\left( \vec{r}, t \right) $ :
+Microscopic Maxwell's equations $ \vec{E}\left( \vec{r}, t \right) $, $ \vec{B}\left( \vec{r}, t \right) $, $ \vec{H}\left( \vec{r}, t \right) $, $ \vec{D}\left( \vec{r}, t \right) $:
 \begin{equation}
 \div{\vec{E}} = \frac{\rho}{\varepsilon_0}
 \end{equation}
@@ -134,66 +134,47 @@ wave equations:
 \laplace{\vec{B}} - \frac{1}{c^{2}} \diffp[2]{\vec{B}}{t} = 0
 \end{equation}
 
-\subsection{Gaussian Beam}
-$ \vec{E} $ in the form of plane wave propagating along z-axis:
-\begin{equation*}
-\vec{\Psi}\left(\vec{r}_{\bot}, z, t\right)  = \vec{\Psi_0}\left(\vec{r}_{\bot}, z\right) \e^{i(k_z z - \omega t)}
-\end{equation*}
+\section{Gaussian Beam}
+vector potential:
+\begin{equation}
+\vec{A}\left(\vec{r_\bot}, z, t \right)  = A_0 \Psi\left(\vec{r_\bot}, z \right) \e^{i \left(k_z z - \omega t \right)} \mathrm{\hat{e}_x}
+\end{equation}
 Helmholtz equation:
-\begin{equation*}
-\laplace{\vec{\Psi_0}} + 2 \i k_z \diffp{\vec{\Psi_0}}{z} = 0
-\end{equation*}
-paraxial (slowly varying envelope) approximation:
-\begin{equation*}
-\left\| \diffp[2]{\vec{E_0}}{z}\right\|  \leq \left\|2 k_z \diffp{\vec{E_0}}{z}\right\|  \longrightarrow 
-\diffp[2]{\vec{E_0}}{x} + \diffp[2]{\vec{E_0}}{y} + \diffp[2]{\vec{E_0}}{z} + 2 \i k_z \diffp{\vec{E_0}}{z} = 0
-\end{equation*}
-\begin{equation*}
-\laplace_{\bot}{\vec{E}_0} + 2 \i k_z \diffp{\vec{E_0}}{z} = 0
-\end{equation*}
-
-$ \vec{E} $ and $ \vec{B} $ fields in terms of scalar potential $ \Phi $ and vector potential $ \vec{A} $:
-\begin{equation*}
-	\vec{E} = - \grad{\Phi} - \diffp{\vec{A}}{t}, \qquad \vec{B} = \rot{\vec{A}}
-\end{equation*}
-$ \Phi $ and $ \vec{A} $ in the form of plane waves propagating along z-axis:
-\begin{equation*}
-	\vec{A}\left(x, y, z, t\right)  = \vec{A_0}\left( x, y, z\right) \e^{i(k_z z - \omega t)}, \qquad \Phi\left(x, y, z, t \right) = \Phi_0\left(x, y, z\right) \e^{i(k_z z - \omega t)}
-\end{equation*}
-Lorentz gauge condition:
-\begin{equation*}
-	\div{\vec{A}} + \frac{1}{c^2} \diffp{\Phi}{t} = 0
-\end{equation*}
-scalar potential in terms of vector potential:
-\begin{equation*}
-	\diffp{\Phi}{t} = - \i \omega \Phi \qquad \longrightarrow \qquad \Phi = - \i \frac{c}{k_z} \div{\vec{A}} 
-\end{equation*}
-$ \vec{E} $ and $ \vec{B} $ fields in terms of vector potential $ \vec{A} $:
-\begin{equation*}
-	\vec{E} = \i \frac{c}{k_z} \grad{\left(\div{\vec{A}}\right)} + \i \omega \vec{A}, \qquad \vec{B} = \rot{\vec{A}}
-\end{equation*}
-wave equation for vector potential $ \vec{A} $:
-\begin{equation*}
-\laplace{\vec{A}} - \frac{1}{c^2}\diffp[2]{\vec{A}}{t} = 0
-\end{equation*}
-
-
-\begin{equation*}
-\diffp[2]{\vec{A_0}}{x} + \diffp[2]{\vec{A_0}}{y} + \diffp[2]{\vec{A_0}}{z} + 2 \i k_z \diffp[]{\vec{A_0}}{z} - k_z^2 \vec{A_0} + \frac{\omega^2}{c^2}\vec{A_0} = 0
-\end{equation*}
-
-\begin{equation*}
-\diffp[2]{\vec{A_0}}{x} + \diffp[2]{\vec{A_0}}{y} + \diffp[2]{\vec{A_0}}{z} + 2 \i k_z \diffp[]{\vec{A_0}}{z} = 0
-\end{equation*}
-\begin{equation*}
-\laplace{\vec{A_0}} + 2 \i k_z \diffp{\vec{A_0}}{z} = 0
-\end{equation*}
-\begin{equation*}
-\left\| \diffp[2]{\vec{A_0}}{z}\right\|  \leq \left\|2 k_z \diffp{\vec{A_0}}{z}\right\|  \longrightarrow 
-\diffp[2]{\vec{A_0}}{x} + \diffp[2]{\vec{A_0}}{y} + \diffp[2]{\vec{A_0}}{z} + 2 \i k_z \diffp{\vec{A_0}}{z} = 0
-\end{equation*}
-\newpage
-\noindent
+\begin{equation}
+\laplace{\Psi} + 2 \i k_z \diffp{\Psi}{z} = 0
+\end{equation}
+dimensionless coordinates:
+\begin{equation}
+\rho = \frac{\norm{\vec{r_\bot}}}{w_0}, \quad \zeta = \frac{z}{z_r}
+\end{equation}
+where:
+\begin{equation}
+w_0, \quad z_r = k_z w_0^2/2
+\end{equation}
+after transformation:
+\begin{equation}
+\frac{1}{\rho} \diffp{}{\rho}\left(\rho \diffp{\Psi}{\rho} \right) + 4 \i \diffp{\Psi}{\zeta}  = - \theta^2 \diffp[2]{\Psi}{\zeta}
+\end{equation}
+where:
+\begin{equation}
+\theta = \frac{w_0}{z_R}
+\end{equation}
+zero-th order with transverse laplacian in cylindrical coords:
+\begin{equation}
+\frac{1}{\rho} \diffp{}{\rho}\left(\rho \diffp{\Psi_0}{\rho} \right) + 4 \i \diffp{\Psi_0}{\zeta} = 0
+\end{equation}
+solution in dimensionless coordinates:
+\begin{equation}
+\Psi_0 \left(\rho, \zeta \right) = \frac{1}{\sqrt{1 + \zeta^2}} \exp{\left(\i \frac{\rho^2 \zeta}{1 + \zeta^2} - \frac{\rho^2}{1 + \zeta^2} - \i \arctan{\left(\zeta\right)} \right)} 
+\end{equation}
+in Cartesian coordinates:
+\begin{equation}
+\Psi_0 \left(\vec{r_\bot}, z \right) = \frac{w_0}{w\left(z\right)} \exp{\left(\i k_z \frac{\vec{r_\bot}^2}{R\left(z \right)} - \frac{\vec{r_\bot}^2}{w\left(z \right)^2} - \varphi_G \left( z\right) \right)} 
+\end{equation}
+where:
+\begin{equation}
+w\left(z\right) = w_0 \sqrt{1 + \left(\frac{z}{z_R}\right)^2}, \quad R\left(z \right) = z \left[1 + \left(\frac{z_R}{z} \right)^2\right], \quad \varphi_G = \arctan{\left(\frac{z}{z_R}\right)}
+\end{equation}
 Solution - Gaussian beam:
 \begin{equation*}
 \vec{E}\left(x, y, z \right) = \vec{E_0} \frac{w_0}{w(z)} \exp \left( - \frac{x^2 + y^2}{w(z)^2} \right) \cos\left( \omega t - k_z \left(z + \frac{x^2 + y^2}{2R(z)} \right) + \phi_G(z) \right) 
