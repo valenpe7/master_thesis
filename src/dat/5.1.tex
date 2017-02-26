@@ -38,38 +38,38 @@ continuity equation (conservation of charge):
 \end{equation}
 E and B in potentials:
 \begin{equation}
-\vec{E} = -\grad{\phi} - \diffp{\vec{A}}{t}
+\vec{E} = -\grad{\Phi} - \diffp{\vec{A}}{t}
 \end{equation}
 \begin{equation}
 \vec{B} = \rot{\vec{A}}
 \end{equation}
 Lorenz gauge:
 \begin{equation}
-\div{\vec{A}} + \mu \varepsilon \diffp{\phi}{t} = 0
+\div{\vec{A}} + \mu \varepsilon \diffp{\Phi}{t} = 0
 \end{equation}
 then:
 \begin{equation}
-\left(\laplace{} - \mu \varepsilon \diffp[2]{}{t} \right)\phi = -\frac{\rho}{\varepsilon}
+\laplace{\Phi} - \mu \varepsilon \diffp[2]{\Phi}{t} = -\frac{\rho}{\varepsilon}
 \end{equation}
 \begin{equation}
-\left(\laplace{} - \mu \varepsilon \diffp[2]{}{t} \right)\vec{A} = -\mu \vec{J}
+\laplace{\vec{A}} - \mu \varepsilon \diffp[2]{\vec{A}}{t} = -\mu \vec{J}
 \end{equation}
 solutions:
 \begin{equation}
-\phi\left(\vec{r}, t \right) = \frac{1}{4 \pi \varepsilon} \int\limits_{V} \frac{\rho\left(\vec{\tilde{r}}, t \right)}{\abs{\vec{r} - \vec{\tilde{r}}}} \mathrm{d} \tilde{V}
+\Phi\left(\vec{r}, t \right) = \frac{1}{4 \pi \varepsilon} \int\limits_{V} \frac{\rho\left(\vec{\tilde{r}}, t \right)}{\abs{\vec{r} - \vec{\tilde{r}}}} \mathrm{d} \tilde{V}
 \end{equation}
 \begin{equation}
 \vec{A}\left(\vec{r}, t \right) = \frac{\mu}{4 \pi} \int\limits_{V} \frac{\vec{J}\left(\vec{\tilde{r}}, t \right)}{\abs{\vec{r} - \vec{\tilde{r}}}} \mathrm{d} \tilde{V}
 \end{equation}
 Hertz vectors (under ordinary conditions):
 \begin{equation}
-\phi = - \div{\vec{\Pi_e}}
+\Phi = - \div{\vec{\Pi_e}}
 \end{equation}
 \begin{equation}
 \vec{A} = \mu \varepsilon \diffp{\vec{\Pi_e}}{t}
 \end{equation}
 \begin{equation}
-\phi = 0
+\Phi = 0
 \end{equation}
 \begin{equation}
 \vec{A} = \rot{\vec{\Pi_m}}
@@ -90,10 +90,10 @@ E and B in terms of magnetic Hertz vector:
 \end{equation}
 equations for Hertz vectors:
 \begin{equation}
-\left(\laplace{} - \mu \varepsilon \diffp[2]{}{t} \right) \vec{\Pi_e} = -\frac{\vec{P}\left(\vec{r} \right)}{\varepsilon}
+\laplace{\vec{\Pi_e}} - \mu \varepsilon \diffp[2]{\vec{\Pi_e}}{t} = -\frac{\vec{P}\left(\vec{r} \right)}{\varepsilon}
 \end{equation}
 \begin{equation}
-\left(\laplace{} - \mu \varepsilon \diffp[2]{}{t} \right) \vec{\Pi_m} = -\mu \vec{M}\left(\vec{r} \right)
+\laplace{\vec{\Pi_m}} - \mu \varepsilon \diffp[2]{\vec{\Pi_m}}{t} = -\mu \vec{M}\left(\vec{r} \right)
 \end{equation}
 solutions:
 \begin{equation}
@@ -135,50 +135,55 @@ wave equations:
 \end{equation}
 
 \section{Gaussian Beam}
+Laser beams are represented by Gaussian beams.
+The simplest mathematical description of the essential features of a focused optical beam is provided by Gaussian beams.
+All components of the electric and magnetic fields can be deduced from a single scalar wave function.
+In general, the forms of laser beams can be usefully deduced from a vector potential that has a single Cartesian coordinate.
 vector potential:
 \begin{equation}
-\vec{A}\left(\vec{r_\bot}, z, t \right)  = A_0 \Psi\left(\vec{r_\bot}, z \right) \e^{i \left(k_z z - \omega t \right)} \mathrm{\hat{e}_x}
+\vec{E}\left(\vec{r_\bot}, z, t \right)  = E_0 \Psi \left(\vec{r_\bot}, z \right) \e^{i \left(k_z z - \omega t \right)} \mathrm{\hat{e}_x}
 \end{equation}
+angular frequency $ \omega $, wave number $ k_z = \omega/c $, 
 Helmholtz equation:
 \begin{equation}
-\laplace{\Psi} + 2 \i k_z \diffp{\Psi}{z} = 0
+\laplace{\Psi \left(\vec{r_\bot}, z \right)} + 2 \i k_z \diffp{\Psi \left(\vec{r_\bot}, z \right)}{z} = 0
+\end{equation}
+parameters (w0 radius of the beam waist):
+\begin{equation}
+w_0, \quad z_r = \frac{k_z w_0^2}{2} = \frac{\pi w_0^2}{\lambda}, \quad \Theta = \frac{w_0}{z_R} = \frac{\lambda}{\pi w_0}
 \end{equation}
 dimensionless coordinates:
 \begin{equation}
 \rho = \frac{\norm{\vec{r_\bot}}}{w_0}, \quad \zeta = \frac{z}{z_r}
 \end{equation}
-where:
-\begin{equation}
-w_0, \quad z_r = k_z w_0^2/2
-\end{equation}
 after transformation:
 \begin{equation}
-\frac{1}{\rho} \diffp{}{\rho}\left(\rho \diffp{\Psi}{\rho} \right) + 4 \i \diffp{\Psi}{\zeta}  = - \theta^2 \diffp[2]{\Psi}{\zeta}
+\frac{1}{\rho} \diffp{}{\rho}\left(\rho \diffp{\Psi \left(\rho, \zeta \right)}{\rho} \right) + 4 \i \diffp{\Psi \left(\rho, \zeta \right)}{\zeta}  = - \Theta^2 \diffp[2]{\Psi \left(\rho, \zeta \right)}{\zeta}
 \end{equation}
-where:
+expansion (assume $ \Theta \ll 1 $ and consequently $  w_0 \gg \lambda $):
 \begin{equation}
-\theta = \frac{w_0}{z_R}
+\Psi = \sum_{n = 0}^{+\infty} \Theta^{2n} \Psi_{2n}
 \end{equation}
 zero-th order with transverse laplacian in cylindrical coords:
 \begin{equation}
-\frac{1}{\rho} \diffp{}{\rho}\left(\rho \diffp{\Psi_0}{\rho} \right) + 4 \i \diffp{\Psi_0}{\zeta} = 0
+\frac{1}{\rho} \diffp{}{\rho}\left(\rho \diffp{\Psi_0 \left(\rho, \zeta \right)}{\rho} \right) + 4 \i \diffp{\Psi_0\left(\rho, \zeta \right)}{\zeta} = 0
 \end{equation}
 solution in dimensionless coordinates:
 \begin{equation}
-\Psi_0 \left(\rho, \zeta \right) = \frac{1}{\sqrt{1 + \zeta^2}} \exp{\left(\i \frac{\rho^2 \zeta}{1 + \zeta^2} - \frac{\rho^2}{1 + \zeta^2} - \i \arctan{\left(\zeta\right)} \right)} 
+\Psi_0 \left(\rho, \zeta \right) = \frac{1}{\sqrt{1 + \zeta^2}} \exp{\left[- \frac{\rho^2}{1 + \zeta^2} + \i \left(\frac{\rho^2 \zeta}{1 + \zeta^2} - \arctan{\zeta} \right) \right]} 
 \end{equation}
 in Cartesian coordinates:
 \begin{equation}
-\Psi_0 \left(\vec{r_\bot}, z \right) = \frac{w_0}{w\left(z\right)} \exp{\left(\i k_z \frac{\vec{r_\bot}^2}{R\left(z \right)} - \frac{\vec{r_\bot}^2}{w\left(z \right)^2} - \varphi_G \left( z\right) \right)} 
+\Psi_0 \left(\vec{r_\bot}, z \right) = \frac{w_0}{w\left(z\right)} \exp{\left[- \frac{\vec{r_\bot}^2}{w\left(z \right)^2} + \i \left( k_z \frac{\vec{r_\bot}^2}{2 R\left(z \right)} - \varphi_G \left( z\right) \right) \right]}
 \end{equation}
 where:
 \begin{equation}
 w\left(z\right) = w_0 \sqrt{1 + \left(\frac{z}{z_R}\right)^2}, \quad R\left(z \right) = z \left[1 + \left(\frac{z_R}{z} \right)^2\right], \quad \varphi_G = \arctan{\left(\frac{z}{z_R}\right)}
 \end{equation}
 Solution - Gaussian beam:
-\begin{equation*}
-\vec{E}\left(x, y, z \right) = \vec{E_0} \frac{w_0}{w(z)} \exp \left( - \frac{x^2 + y^2}{w(z)^2} \right) \cos\left( \omega t - k_z \left(z + \frac{x^2 + y^2}{2R(z)} \right) + \phi_G(z) \right) 
-\end{equation*}
+\begin{equation}
+\vec{E}\left(\vec{r_\bot}, z, t \right) = E_0 \frac{w_0}{w(z)} \exp\left(-\frac{\vec{r_\bot}^2}{w(z)^2}\right) \cos\left(\omega t - k_z \left(z + \frac{\vec{r_\bot}^2}{2 R(z)} \right) + \varphi_G(z) \right) \mathrm{\hat{e}_x}
+\end{equation}
 where
 \begingroup
 \renewcommand*{\arraystretch}{2.0}
