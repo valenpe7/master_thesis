@@ -1,17 +1,30 @@
-Microscopic Maxwell's equations $ \vec{E}\left( \vec{r}, t \right) $, $ \vec{B}\left( \vec{r}, t \right) $, $ \vec{H}\left( \vec{r}, t \right) $, $ \vec{D}\left( \vec{r}, t \right) $:
+The electromagnetic field is in general theory represented by two vectors, the intensity of the electric field $ \vec{E}\left( \vec{r}, t \right) $ and the magnetic induction $ \vec{B}\left( \vec{r}, t \right) $. These vectors are considered to be finite and continuous functions of position $ \vec{r} $ and time $ t $. The description of electromagnetic phenomena in classical electrodynamics is provided by the set of well-known Maxwell's equations,
 \begin{equation}
-\div{\vec{E}} = \frac{\rho}{\varepsilon_0}
+\label{1.1}
+\div{\vec{E}} = \frac{\rho}{\varepsilon_0},
 \end{equation}
 \begin{equation}
-\div{\vec{B}} = 0
+\label{1.2}
+\div{\vec{B}} = 0,
 \end{equation}
 \begin{equation}
-\rot{\vec{E}} + \diffp{\vec{B}}{t} = 0
+\label{1.3}
+\rot{\vec{E}} + \diffp{\vec{B}}{t} = 0,
 \end{equation}
 \begin{equation}
-\rot{\vec{B}} - \mu_0 \varepsilon_0 \diffp{\vec{E}}{t}= \mu_0 \vec{J}
+\label{1.4}
+\rot{\vec{B}} - \mu_0 \varepsilon_0 \diffp{\vec{E}}{t}= \mu_0 \vec{J},
 \end{equation}
-Macroscopic Maxwell's equations:
+where $ \rho\left( \vec{r}, t \right) $ is distribution of total electric charge density and $ \vec{J}\left( \vec{r}, t \right) $ is total electric current density, which is constituted by the motion of the charge. These distributions may be continuous as well as discrete. As might be seen from Maxwell's equations (\ref{1.1} - \ref{1.4}), the charge density is the source of the electric field, whilst the magnetic field is produced by the current density. The lack of symmetry in Maxwell's equations (equations \ref{1.2} and \ref{1.3} are homogeneous) is caused by the experimental absence of magnetic charges and currents.
+
+The way in which charges and currents interact with the electromagnetic field is described by Lorentz force.
+Electric and magnetic fields can be regarded as a forces produced by distribution of charge and currents
+essential to electrodynamic is the speed of light in vacuum (universal constant), given by ...
+Electromagnetic fields - forces produced by distribution of charge and currents - can exist in regions of space where there are no sources (they can carry energy, momentum , have existence totally independent of charge and currents) 
+Equations of classical electrodynamics valid for arbitrary variations in time and space
+called microscopic Maxwell's equations (for external sources in vacuum), :
+
+To describe the effects of the field on material objects, it is necessary to define a second set of auxiliary vectors, the electric displacement and the magnetic vector $ \vec{H}\left( \vec{r}, t \right) $, $ \vec{D}\left( \vec{r}, t \right) $
 \begin{equation}
 \div{\vec{D}} = \rho
 \end{equation}
@@ -32,7 +45,9 @@ where:
 \vec{H} = \frac{\vec{B}}{\mu_0} - \vec{M} = \frac{\vec{B}}{\mu} 
 \end{equation}
 and $ \vec{P}\left(\vec{r} \right) $, $ \vec{M}\left( \vec{r} \right) $
-continuity equation (conservation of charge):
+Combining the time derivative of the first equation with the divergence of the fourth equation.
+frequently referred to as the equation of continuity (expresses the conservation of charge):
+the time rate of change of electric charge is balanced by a divergence in the electric current density
 \begin{equation}
 \div{\vec{J}} + \diffp{\rho}{t} = 0
 \end{equation}
