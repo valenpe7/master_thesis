@@ -1,4 +1,4 @@
-The electromagnetic field is in general theory represented by two vectors, the intensity of the electric field $ \vec{E}\left( \vec{r}, t \right) $ and the magnetic induction $ \vec{B}\left( \vec{r}, t \right) $. These vectors are considered to be finite and continuous functions of position $ \vec{r} $ and time $ t $. The description of electromagnetic phenomena in classical electrodynamics is provided by the set of well-known Maxwell's equations,
+The electromagnetic field is in general theory represented by two vectors, the intensity of the electric field $ \vec{E}\left( \vec{r}, t \right) $ and the magnetic induction $ \vec{B}\left( \vec{r}, t \right) $. These vectors are considered to be finite and continuous functions of position $ \vec{r} $ and time $ t $. The description of electromagnetic phenomena in classical electrodynamics is provided by the set of well-known Maxwell's equations. The microscopic variant for external sources in vacuum is formulated as follows,
 \begin{equation}
 \label{1.1}
 \div{\vec{E}} = \frac{\rho}{\varepsilon_0},
@@ -15,42 +15,42 @@ The electromagnetic field is in general theory represented by two vectors, the i
 \label{1.4}
 \rot{\vec{B}} - \mu_0 \varepsilon_0 \diffp{\vec{E}}{t}= \mu_0 \vec{J},
 \end{equation}
-where $ \rho\left( \vec{r}, t \right) $ is distribution of total electric charge density and $ \vec{J}\left( \vec{r}, t \right) $ is total electric current density, which is constituted by the motion of the charge. These distributions may be continuous as well as discrete. As might be seen from Maxwell's equations (\ref{1.1} - \ref{1.4}), the charge density is the source of the electric field, whilst the magnetic field is produced by the current density. The lack of symmetry in Maxwell's equations (equations \ref{1.2} and \ref{1.3} are homogeneous) is caused by the experimental absence of magnetic charges and currents.
+where $ \rho\left( \vec{r}, t \right) $ is the distribution of total electric charge density and $ \vec{J}\left( \vec{r}, t \right) $ is total electric current density, which is constituted by the motion of the charge. These distributions may be continuous as well as discrete. As might be seen from Maxwell's equations (\ref{1.1} - \ref{1.4}), the charge density is the source of the electric field, whilst the magnetic field is produced by the current density. The lack of symmetry in Maxwell's equations (\ref{1.2}, \ref{1.3} are homogeneous) is caused by the experimental absence of magnetic charges and currents. The universal constants appearing in the Maxwell's equations (\ref{1.1}, \ref{1.4}) are the electric permittivity of vacuum $ \varepsilon_0 $ and the magnetic permeability of vacuum $ \mu_0 $. 
 
-The way in which charges and currents interact with the electromagnetic field is described by Lorentz force.
-Electric and magnetic fields can be regarded as a forces produced by distribution of charge and currents
-essential to electrodynamic is the speed of light in vacuum (universal constant), given by ...
-Electromagnetic fields - forces produced by distribution of charge and currents - can exist in regions of space where there are no sources (they can carry energy, momentum , have existence totally independent of charge and currents) 
-Equations of classical electrodynamics valid for arbitrary variations in time and space
-called microscopic Maxwell's equations (for external sources in vacuum), :
-
-To describe the effects of the field on material objects, it is necessary to define a second set of auxiliary vectors, the electric displacement and the magnetic vector $ \vec{H}\left( \vec{r}, t \right) $, $ \vec{D}\left( \vec{r}, t \right) $
+To describe the effects of an electromagnetic field in the presence of macroscopic substances, the complicated distribution of charges and currents in matter over the atomic scale is not relevant. Thus one shall define a second set of auxiliary vectors that represent fields in which the material properties are already included in an average sense, the electric displacement $ \vec{D}\left( \vec{r}, t \right) $ and the magnetic vector $ \vec{H}\left( \vec{r}, t \right) $,
 \begin{equation}
+\label{1.5}
+\vec{D} = \varepsilon_0 \vec{E} + \vec{P} = \varepsilon \vec{E},
+\end{equation}
+\begin{equation}
+\label{1.6}
+\vec{H} = \frac{\vec{B}}{\mu_0} - \vec{M} = \frac{\vec{B}}{\mu}.
+\end{equation}
+where $ \vec{P}\left( \vec{r}, t \right) $ and $ \vec{M}\left( \vec{r}, t \right) $ are the vectors of electric and magnetic polarization, respectively. Note, that these vectors are definitely associated with the state of a matter and vanish in vacuum. Similarly as in the case of free space, the factors $ \varepsilon $ and $ \mu $ are called electric permittivity of medium and magnetic permeability of medium. In general case, $ \varepsilon $ and $ \mu $ are tensors. The constitutive relations above (\ref{1.5}, \ref{1.6}) hold only if the relations between derived and primary fields are linear. The macroscopic variant of Maxwell's equations is formulated as follows,
+\begin{equation}
+\label{1.7}
 \div{\vec{D}} = \rho
 \end{equation}
 \begin{equation}
+\label{1.8}
 \div{\vec{B}} = 0
 \end{equation}
 \begin{equation}
+\label{1.9}
 \rot{\vec{E}} + \diffp{\vec{B}}{t} = 0
 \end{equation}
 \begin{equation}
+\label{1.10}
 \rot{\vec{H}} - \diffp{\vec{D}}{t} = \vec{J}
 \end{equation}
-where:
+
+Combining the time derivative of the equation \ref{1.7} with the divergence of the equation \ref{1.10}, one can obtain the following relation between the electromagnetic field sources,
 \begin{equation}
-\vec{D} = \varepsilon_0 \vec{E} + \vec{P} = \varepsilon \vec{E}
-\end{equation}
-\begin{equation}
-\vec{H} = \frac{\vec{B}}{\mu_0} - \vec{M} = \frac{\vec{B}}{\mu} 
-\end{equation}
-and $ \vec{P}\left(\vec{r} \right) $, $ \vec{M}\left( \vec{r} \right) $
-Combining the time derivative of the first equation with the divergence of the fourth equation.
-frequently referred to as the equation of continuity (expresses the conservation of charge):
-the time rate of change of electric charge is balanced by a divergence in the electric current density
-\begin{equation}
+\label{1.11}
 \div{\vec{J}} + \diffp{\rho}{t} = 0
 \end{equation}
+The equation \ref{1.11}, which is frequently referred to as the equation of continuity, expresses nothing but the conservation of total electric charge in an isolated system. In other words, the time rate of change of electric charge in a fixed volume is balanced by the electric current flowing in or out of the boundary.
+
 E and B in potentials:
 \begin{equation}
 \vec{E} = -\grad{\Phi} - \diffp{\vec{A}}{t}
