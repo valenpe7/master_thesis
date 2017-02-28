@@ -31,7 +31,9 @@ To describe the effects of an electromagnetic field in the presence of macroscop
 \label{1.6}
 \vec{H} = \frac{\vec{B}}{\mu_0} - \vec{M} = \frac{\vec{B}}{\mu},
 \end{equation}
-where $ \vec{P}\left( \vec{r}, t \right) $ and $ \vec{M}\left( \vec{r}, t \right) $ are the vectors of electric and magnetic polarization, respectively. Note, that the vectors of electric and magnetic polarization are definitely associated with the state of a matter and vanish in a vacuum. Similarly as in the case of a free space, the factors $ \varepsilon $ and $ \mu $ are called electric permittivity of medium and magnetic permeability of medium. In general case, $ \varepsilon $ and $ \mu $ are tensors. The constitutive relations above (\ref{1.5}, \ref{1.6}) hold only if the relations between derived and primary fields are linear. The macroscopic variant of Maxwell's equations is formulated as follows,
+where $ \vec{P}\left( \vec{r}, t \right) $ and $ \vec{M}\left( \vec{r}, t \right) $ are the vectors of electric and magnetic polarization, respectively. Note, that the vectors of electric and magnetic polarization are definitely associated with the state of a matter and vanish in a vacuum. Similarly as in the case of a free space, the factors $ \varepsilon $ and $ \mu $ are called electric permittivity of medium and magnetic permeability of medium. In general case, $ \varepsilon $ and $ \mu $ are tensors. The constitutive relations above (\ref{1.5}, \ref{1.6}) hold only if the relations between derived and primary fields are linear.
+
+The macroscopic variant of Maxwell's equations is formulated as follows,
 \begin{equation}
 \label{1.7}
 \div{\vec{D}} = \rho,
@@ -55,21 +57,25 @@ By combining the time derivative of the equation \ref{1.7} with the divergence o
 \label{1.11}
 \div{\vec{J}} + \diffp{\rho}{t} = 0.
 \end{equation}
-The equation \ref{1.11}, which is frequently referred to as the equation of continuity, expresses nothing but the conservation of total electric charge in an isolated system. In other words, the time rate of change of electric charge in a closed surface is balanced by the electric current flowing through the surface.
+The equation \ref{1.11}, which is frequently referred to as the equation of continuity, expresses nothing but the conservation of total electric charge in an isolated system. In other words, the time rate of change of the electric charge in any closed surface is balanced by the electric current flowing through the surface.
 
-The first-order partial differential Maxwell's equations can be effectively converted to a smaller number of second-order equations by introducing electrodynamic potentials.
-E and B in potentials:
+The first-order partial differential Maxwell's equations can be effectively converted to a smaller number of second-order equations by introducing electrodynamic potentials. Hence, one can express the electric and magnetic field as follows,
 \begin{equation}
-\vec{E} = -\grad{\Phi} - \diffp{\vec{A}}{t}
+\label{1.12}
+\vec{E} = -\grad{\Phi} - \diffp{\vec{A}}{t},
 \end{equation}
 \begin{equation}
-\vec{B} = \rot{\vec{A}}
+\label{1.13}
+\vec{B} = \rot{\vec{A}},
 \end{equation}
-Lorenz gauge:
+where $ \Phi\left(\vec{r}, t \right) $ is the scalar potential and $ \vec{A}\left(\vec{r}, t \right) $ is the vector potential of the corresponding fields. One can clearly see that using the definitions \ref{1.12}, \ref{1.13}, six vector components are replaced by only four potential functions and two Maxwell's homogeneous equations (\ref{1.8}, \ref{1.9}) are fulfilled identically. 
+
+However, by definitions \ref{1.12}, \ref{1.13}, $ \Phi\left(\vec{r}, t \right) $ and $ \vec{A}\left(\vec{r}, t \right) $ are not defined uniquely, thus an infinite number of potentials which lead to the same fields may be constructed. To avoid that, one has to impose an supplementary condition, for example
 \begin{equation}
-\div{\vec{A}} + \mu \varepsilon \diffp{\Phi}{t} = 0
+\label{1.14}
+\div{\vec{A}} + \mu \varepsilon \diffp{\Phi}{t} = 0.
 \end{equation}
-then:
+The condition
 \begin{equation}
 \laplace{\Phi} - \mu \varepsilon \diffp[2]{\Phi}{t} = -\frac{\rho}{\varepsilon}
 \end{equation}
