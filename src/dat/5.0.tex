@@ -177,7 +177,9 @@ In the following paragraph, the results of the first simulation are discussed in
 
 Fig. \ref{fig:2} shows transverse and longitudinal slices of transverse electric field component in focus for the case of laser beam propagating under the paraxial approximation (Fig. \ref{fig:2} - a, b) as well as for the case where the beam propagation has been resolved within the Maxwell consistent approach (Fig. \ref{fig:2} - c, d). For the case of paraxial approximation, one can clearly see the asymmetry of the field shape in the longitudinal slice (Fig. \ref{fig:2} - b), which consequently leads to a decrease of the amplitude in focus and to the strong side-wings in the spatial beam profile, as might be seen from the transverse slice (Fig. \ref{fig:2} - a). On the other hand, Maxwell consistent approach calculates fields of perfect symmetry with respect to the focus (Fig. \ref{fig:2} - c) and no side-wings or distortions are present (Fig. \ref{fig:2} - d).
 
-In Fig. \ref{fig:3} one can examine the time evolution of transverse (Fig. \ref{fig:3} - a) and longitudinal (Fig. \ref{fig:3} - b) electric field components at boundary as computed using Maxwell consistent approach. Note, that one have to chose carefully the transverse size of the domain, since the beam width at boundary may be much larger than at focus because of a diffraction. To estimate the beam width at boundary, one has to know the beam divergence angle. In Fig. \ref{fig:7}, one can find a graph of the spot size parameter $ w $ as calculated using the Maxwell consistent approach for the beams focused to $ w_0 = 1 \: \lambda $ and $ 0.5 \: \lambda $. From the plotted lines, one can roughly estimate the beam divergence angle $ \theta $. For the beam focused to $ w_0 = 1 \: \lambda $, the beam divergence has been around $ \theta = 18.2 ^{\circ} $, whilst the Gaussian beam of the same parameters has divergence $ \theta = 17.7 ^{\circ} $. For the beam with $ w_0 = 0.5 \: \lambda $ the divergence has been estimated to $ \theta = 32.9 ^{\circ} $, while the Gaussian beam with the same size at focus has divergence $ \theta = 32.5 ^{\circ} $. Consequently, in spite of the fact that the divergence of the beams calculated using the Maxwell consistent approach is a little bit larger, both approaches are in quite a good accordance regarding this parameter.
+In Fig. \ref{fig:3} one can examine the time evolution of transverse (Fig. \ref{fig:3} - a) and longitudinal (Fig. \ref{fig:3} - b) electric field components at boundary as computed using Maxwell consistent approach. Note, that one have to chose carefully the transverse size of the domain, since the beam width at boundary may be much larger than at focus because of a diffraction. To estimate the beam width at boundary, one has to know the beam divergence angle. In Fig. \ref{fig:7} - a, one can find a graph of the spot size parameter $ w $ as calculated using the Maxwell consistent approach for the beams focused to $ w_0 = 1 \: \lambda $ and $ 0.5 \: \lambda $. From the plotted lines, one can roughly estimate the beam divergence angle $ \Theta $. For the beam focused to $ w_0 = 1 \: \lambda $, the beam divergence has been around $ \Theta = 18.2 ^{\circ} $ which is almost identical value as for the Gaussian beam of the same parameters. For the beam with $ w_0 = 0.5 \: \lambda $ the divergence has been estimated to $ \Theta = 32.9 ^{\circ} $, while the Gaussian beam with the same size at focus has divergence $ \Theta = 36.5 ^{\circ} $. Consequently, in spite of the fact that the divergence of the tightly focused beams calculated using the Maxwell consistent approach is a little bit lower, both approaches are in quite a good accordance regarding this parameter.
+
+In Fig. \ref{fig:7} - b,
 
 To evaluate a correctness of the beam propagation using Maxwell consistent approach, several criteria has been defined. The correctness of the amplitude and beam width at focus as well as the right focus location has already been verified. Additional criteria has been set on a beam symmetry. In Fig. \ref{fig:4}, one can find a comparison of the transverse electric laser field component when it achieves its maximal intensity at front and rear boundary. One can clearly see the exact match between the field shapes at different time steps of the simulation in transverse (Fig. \ref{fig:4} - a) and longitudinal (Fig. \ref{fig:4} - b) slices. Moreover, all the aforementioned criteria has been fulfilled also in other simulations with different input parameters that are not presented here. Consequently, these observations prove the correctness of the propagation at least of the tightly focused Gaussian laser beams.
 
@@ -227,8 +229,10 @@ In conclusion, one should be aware that propagation of tightly focused laser pul
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.55\linewidth]{./img/lbcs/beam_divergence.pdf}
-	\caption{Graph of the spot size parameter $ w(x) $ (a radius at which the intensity values fall to $ 1/ \e^2 $ of their axial values) of the beams with $ w_0 = 1 \: \lambda $ and $ 0.5 \: \lambda $ calculated using Maxwell consistent approach. From the plotted lines, one can roughly estimate the beam divergence angle $ \theta $ (The angle between the central axis and the line along the spot size parameter $ w(x) $). The divergence angles for both beams are surprisingly in a good accordance with divergence angles of corresponding Gaussian beams.}
+	\sidesubfloat[]{{\includegraphics[width=0.435\linewidth]{./img/lbcs/divergence.pdf}}}
+	\hspace{2mm}
+	\sidesubfloat[]{{\includegraphics[width=0.445\linewidth]{./img/lbcs/amplitude.pdf}}}
+	\caption{\textbf{(a)} Graph of the spot size parameter $ w(x) $ (a radius at which the intensity values fall to $ 1/ \e $ of their axial values) of the beams with $ w_0 = 1 \: \lambda $ and $ 0.5 \: \lambda $ calculated using Maxwell consistent approach. From the plotted lines, one can roughly estimate the beam divergence angle $ \theta $ (The angle between the central axis and the line along the spot size parameter $ w(x) $). The divergence angles for both beams are surprisingly in a good accordance with divergence angles of corresponding Gaussian beams. \textbf{(b)}}
 	\label{fig:7}
 \end{figure}
 
@@ -263,21 +267,4 @@ In conclusion, one should be aware that propagation of tightly focused laser pul
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/parax/Ey_focus_long_comparison.pdf}}}
 	\caption{Transverse \textbf{(a)} and longitudinal \textbf{(b)} slices of the transverse electric laser field ($ E_{y} $) at the time step when it reaches maximal intensity in the focal spot. Red lines correspond to the laser pulse propagating under the paraxial approximation, whilst blue lines come from the simulation where the beam propagation has been resolved within the Maxwell consistent approach. The size of the focus has been chosen to be one order of magnitude larger than the center laser wavelength. In the case of paraxial approximation, the focus is slightly shifted closer to the left boundary \textbf{(b)}, otherwise the size of the focus as well as the amplitude is correct for both cases \textbf{(a)}.}
 	\label{fig:6}
-\end{figure}
-
-\floatsetup[figure]{style=plain, subcapbesideposition=top}
-\begin{figure}[h!]
-	\centering
-	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/ey_05micron.pdf}}}
-	\hspace{1mm}
-	\sidesubfloat[]{{\includegraphics[width=0.44\linewidth]{./img/results/ex_05micron.pdf}}}
-	\caption{.}
-	\label{fig:8}
-\end{figure}
-
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.55\linewidth]{./img/results/ni_05micron.pdf}
-	\caption{}
-	\label{fig:9}
 \end{figure}
