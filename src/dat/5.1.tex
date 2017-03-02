@@ -29,7 +29,7 @@ To describe the effects of an electromagnetic field in the presence of macroscop
 \label{1.6}
 \vec{H} = \frac{\vec{B}}{\mu_0} - \vec{M} = \frac{\vec{B}}{\mu},
 \end{equation}
-where $ \vec{P}\left( \vec{r}, t \right) $ and $ \vec{M}\left( \vec{r}, t \right) $ are the vectors of polarization and magnetization, respectively. Note, that the vectors of polarization and magnetization are definitely associated with the state of a matter and vanish in vacuum. Similarly as in the case of a free space, the factors $ \varepsilon $ and $ \mu $ are called electric permittivity of medium and magnetic permeability of medium. In general case, $ \varepsilon $ and $ \mu $ are tensors. The constitutive relations above (\ref{1.5}, \ref{1.6}) hold only if the relations between derived and primary fields are linear.
+where $ \vec{P}\left( \vec{r}, t \right) $ and $ \vec{M}\left( \vec{r}, t \right) $ are the vectors of polarization and magnetization, respectively. Note that the vectors of polarization and magnetization can be interpreted as electric or magnetic dipole moment per unit volume of the medium, therefore they are definitely associated with the state of a matter and vanish in vacuum. Similarly as in the case of a free space, the factors $ \varepsilon $ and $ \mu $ are called electric permittivity of medium and magnetic permeability of medium. In general case, $ \varepsilon $ and $ \mu $ are tensors. The constitutive relations above (\ref{1.5}, \ref{1.6}) hold only if the relations between derived and primary fields are linear.
 
 The macroscopic variant of Maxwell's equations is formulated as follows,
 \begin{equation}
@@ -48,16 +48,16 @@ The macroscopic variant of Maxwell's equations is formulated as follows,
 \label{1.10}
 \rot{\vec{H}} - \diffp{\vec{D}}{t} = \vec{J},
 \end{equation}
-where $ \rho\left(\vec{r}, t \right) $ and $ \vec{J}\left(\vec{r}, t \right) $ are now macroscopic electric charge and current density, respectively.
+where $ \rho\left(\vec{r}, t \right) $ and $ \vec{J}\left(\vec{r}, t \right) $ now stand for only external electric charge and current density, respectively.
 
 By combining the time derivative of the equation \ref{1.7} with the divergence of the equation \ref{1.10}, one obtains the following relation between the electromagnetic field sources,
 \begin{equation}
 \label{1.11}
 \div{\vec{J}} + \diffp{\rho}{t} = 0.
 \end{equation}
-The equation \ref{1.11}, which is frequently referred to as the equation of continuity, expresses nothing but the conservation of total electric charge in an isolated system. In other words, the time rate of change of the electric charge in any closed surface is balanced by the electric current flowing through the surface.
+The important result \ref{1.11}, which is frequently referred to as the equation of continuity, expresses nothing but the conservation of total electric charge in an isolated system. In other words, the time rate of change of the electric charge in any closed surface is balanced by the electric current flowing through the surface.
 
-\subsection{Elecrodynamic potentials}
+\subsection{Electrodynamic potentials}
 The first-order partial differential Maxwell's equations can be effectively converted to a smaller number of second-order equations by introducing electrodynamic potentials. Hence, one can express the electric and magnetic field as follows,
 \begin{equation}
 \label{1.12}
@@ -74,7 +74,7 @@ However, by definitions \ref{1.12}, \ref{1.13}, $ \Phi\left(\vec{r}, t \right) $
 \label{1.14}
 \div{\vec{A}} + \mu \varepsilon \diffp{\Phi}{t} = 0.
 \end{equation}
-The condition \ref{1.14} is called the Lorenz gauge. Lorenz gauge is commonly used in electromagnetism because its independence of the coordinate system. Furthermore, it leads to the following equations,
+The condition \ref{1.14} is called the Lorenz gauge. Lorenz gauge is commonly used in electromagnetism because its independence of the coordinate system. Furthermore, it leads to the following uncoupled equations,
 \begin{equation}
 \label{1.15}
 \laplace{\Phi} - \mu \varepsilon \diffp[2]{\Phi}{t} = -\frac{\rho}{\varepsilon},
@@ -83,58 +83,84 @@ The condition \ref{1.14} is called the Lorenz gauge. Lorenz gauge is commonly us
 \label{1.16}
 \laplace{\vec{A}} - \mu \varepsilon \diffp[2]{\vec{A}}{t} = -\mu \vec{J},
 \end{equation}
-that are in all respects equivalent to the Maxwell's equations and in many situations much simpler to solve. Equations \ref{1.15}, \ref{1.16} correspond to the inhomogeneous wave equations for scalar potential $ \Phi\left(\vec{r}, t \right) $ and vector potential $ \vec{A}\left(\vec{r}, t \right) $. The general solution,
+that are in all respects equivalent to the Maxwell's equations and in many situations much simpler to solve.
+
+Equations \ref{1.15}, \ref{1.16} correspond to the inhomogeneous wave equations for scalar potential $ \Phi\left(\vec{r}, t \right) $ and vector potential $ \vec{A}\left(\vec{r}, t \right) $. Their general solutions are given by the following expressions,
 \begin{equation}
 \label{1.17}
-\Phi\left(\vec{r}, t \right) = \frac{1}{4 \pi \varepsilon} \int\limits_{V} \frac{\rho\left(\vec{r^{\: \prime}}, t^{\: \prime} \right)}{\norm{\vec{r} - \vec{r^{\: \prime}}}} \mathrm{d} V^{\: \prime},
+\Phi\left(\vec{r}, t \right) = \frac{1}{4 \pi \varepsilon} \int \frac{\rho\left(\vec{r^{\: \prime}}, t^{\: \prime} \right)}{\norm{\vec{r} - \vec{r^{\: \prime}}}} \mathrm{d} V,
 \end{equation}
 \begin{equation}
 \label{1.18}
-\vec{A}\left(\vec{r}, t \right) = \frac{\mu}{4 \pi} \int\limits_{V} \frac{\vec{J}\left(\vec{r^{\: \prime}}, t^{\: \prime} \right)}{\norm{\vec{r} - \vec{r^{\: \prime}}}} \mathrm{d} V^{\: \prime},
+\vec{A}\left(\vec{r}, t \right) = \frac{\mu}{4 \pi} \int \frac{\vec{J}\left(\vec{r^{\: \prime}}, t^{\: \prime} \right)}{\norm{\vec{r} - \vec{r^{\: \prime}}}} \mathrm{d} V,
 \end{equation}
-where $ t^{\: \prime} = t - \sqrt{\mu \epsilon} \norm{\vec{r} - \vec{r^{\: \prime}}} $ is retarded time.
+where $ \mathrm{d} V $ is a volume element and $ \norm{.} $ stands for the standard Euclidean norm. Note that the solutions \ref{1.17}, \ref{1.18} are dependent only on charge and current densities at position $ \vec{r^{\: \prime}} $ at so-called retarded time $ t^{\: \prime} = t - \sqrt{\mu \epsilon} \norm{\vec{r} - \vec{r^{\: \prime}}} $ which takes into account the finite velocity of the wave. In other words, the fields at the observation point $ \vec{r} $ at the time $ t $ are proportional to the sum of all the electromagnetic waves that leave the source elements at point $ \vec{r^{\: \prime}} $ at the retarded time $ t^{\: \prime} $.
 
-Hertz vectors (under ordinary conditions):
+\subsection{Hertz vectors}
+There exists also other possibilities how to express the electromagnetic field. Under ordinary conditions, an arbitrary electromagnetic field may be defined in terms of a single vector function. This may be helpful for solving of many problems of classical electromagnetic theory, particularly the wave propagation.
+
+First, let us introduce the electric Hertz vector $ {\vec{\Pi_e}}\left(\vec{r}, t \right) $ in terms of the scalar and vector potentials,
 \begin{equation}
-\Phi = - \div{\vec{\Pi_e}}
+\label{1.19}
+\Phi = - \div{\vec{\Pi_e}},
 \end{equation}
 \begin{equation}
-\vec{A} = \mu \varepsilon \diffp{\vec{\Pi_e}}{t}
+\label{1.20}
+\vec{A} = \mu \varepsilon \diffp{\vec{\Pi_e}}{t}.
+\end{equation}
+
+Note that the definitions \ref{1.19}, \ref{1.20} are consistent with the Lorenz gauge condition \ref{1.14}. In the absence of magnetization, it might be easily shown that the electric Hertz vector $ {\vec{\Pi_e}}\left(\vec{r}, t \right) $ is governed by inhomogeneous wave equation
+\begin{equation}
+\label{1.21}
+\laplace{\vec{\Pi_e}} - \mu \varepsilon \diffp[2]{\vec{\Pi_e}}{t} = -\frac{\vec{P}}{\varepsilon}.
+\end{equation}
+
+The equation \ref{1.21} is of the same type as the equations \ref{1.15}, \ref{1.16} and has therefore the familiar general solution 
+\begin{equation}
+\label{1.22}
+\vec{\Pi_e}\left(\vec{r}, t \right) = \frac{1}{4 \pi \varepsilon} \int \frac{\vec{P}\left(\vec{r^{\: \prime}}, t^{\: \prime} \right)}{\norm{\vec{r} - \vec{r^{\: \prime}}}} \mathrm{d} V.
+\end{equation}
+
+As might be seen form \ref{1.22}, the fields derived from the electric Hertz vector $ {\vec{\Pi_e}}\left(\vec{r}, t \right) $ can be interpreted as being due to a density distribution of electric dipoles. Every solution of \ref{1.22} then uniquely determines the electromagnetic field through
+\begin{equation}
+\label{1.23}
+\vec{E} = \grad{\left(\div{\vec{\Pi_e}}\right)} - \mu \epsilon \diffp[2]{\vec{\Pi_e}}{t},
 \end{equation}
 \begin{equation}
-\Phi = 0
+\label{1.24}
+\vec{B} = \mu \varepsilon \left(\rot{\diffp{\vec{\Pi_e}}{t}}\right).
+\end{equation}
+
+Second, one may introduce the magnetic Hertz vector $ {\vec{\Pi_m}}\left(\vec{r}, t \right) $ in terms of the scalar and vector potentials by the following expressions,
+\begin{equation}
+\label{1.25}
+\Phi = 0,
 \end{equation}
 \begin{equation}
-\vec{A} = \rot{\vec{\Pi_m}}
+\label{1.26}
+\vec{A} = \rot{\vec{\Pi_m}}.
 \end{equation}
-E and B in terms of electric Hertz vector:
+In the absence of polarization, the magnetic Hertz vector $ {\vec{\Pi_m}}\left(\vec{r}, t \right) $ defined by \ref{1.25} and \ref{1.26} fulfills an inhomogeneous wave equation
 \begin{equation}
-\vec{E} = \grad{\left(\div{\vec{\Pi_e}}\right)} - \mu \epsilon \diffp[2]{\vec{\Pi_e}}{t}
+\label{1.27}
+\laplace{\vec{\Pi_m}} - \mu \varepsilon \diffp[2]{\vec{\Pi_m}}{t} = -\mu \vec{M}.
 \end{equation}
+As for the previous cases, one may find the solution of \ref{1.27},
 \begin{equation}
-\vec{B} = \mu \varepsilon \left(\rot{\diffp{\vec{\Pi_e}}{t}}\right)
+\label{1.28}
+\vec{\Pi_m}\left(\vec{r}, t \right) = \frac{\mu}{4 \pi} \int \frac{\vec{M}\left(\vec{r^{\: \prime}}, t^{\: \prime} \right)}{\norm{\vec{r} - \vec{r^{\: \prime}}}} \mathrm{d} V.
 \end{equation}
-E and B in terms of magnetic Hertz vector:
+Thus the fields derived from the magnetic Hertz vector $ {\vec{\Pi_m}}\left(\vec{r}, t \right) $ are due to a density distribution of magnetic dipoles. Again, every solution of \ref{1.28} uniquely determines the electromagnetic field via
 \begin{equation}
-\vec{E} = \rot{\diffp{\vec{\Pi_m}}{t}}
-\end{equation}
-\begin{equation}
-\vec{B} = \rot{\left(\rot{\vec{\Pi_m}}\right)}
-\end{equation}
-equations for Hertz vectors:
-\begin{equation}
-\laplace{\vec{\Pi_e}} - \mu \varepsilon \diffp[2]{\vec{\Pi_e}}{t} = -\frac{\vec{P}\left(\vec{r} \right)}{\varepsilon}
+\vec{E} = \rot{\diffp{\vec{\Pi_m}}{t}},
 \end{equation}
 \begin{equation}
-\laplace{\vec{\Pi_m}} - \mu \varepsilon \diffp[2]{\vec{\Pi_m}}{t} = -\mu \vec{M}\left(\vec{r} \right)
+\vec{B} = \rot{\left(\rot{\vec{\Pi_m}}\right)}.
 \end{equation}
-solutions:
-\begin{equation}
-\vec{\Pi_e}\left(\vec{r}, t \right) = \frac{1}{4 \pi \varepsilon} \int\limits_{V} \frac{\vec{P}\left(\vec{\tilde{r}} \right)}{\abs{\vec{r} - \vec{\tilde{r}}}} \mathrm{d} \tilde{V}
-\end{equation}
-\begin{equation}
-\vec{\Pi_m}\left(\vec{r}, t \right) = \frac{\mu}{4 \pi} \int\limits_{V} \frac{\vec{M}\left(\vec{\tilde{r}} \right)}{\abs{\vec{r} - \vec{\tilde{r}}}} \mathrm{d} \tilde{V}
-\end{equation}
+
+The above derivations considered electric and magnetic Hertz vectors as a separate quantities. It is also possible, however, to introduce them together in the form of one six-vector [source].
+
+\subsection{Energy flow}
 Lorentz force:
 \begin{equation}
 \vec{F} = q \left(E + v \times B \right) 
