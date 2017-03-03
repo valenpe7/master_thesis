@@ -1,4 +1,5 @@
-\subsection{Maxwell's equations}
+intro...
+\section{Maxwell's equations}
 The electromagnetic field is in general theory represented by two vectors, the intensity of the electric field $ \vec{E}\left( \vec{r}, t \right) $ and the magnetic induction $ \vec{B}\left( \vec{r}, t \right) $. These vectors are considered to be finite and continuous functions of position $ \vec{r} $ and time $ t $. The description of electromagnetic phenomena in classical electrodynamics is provided by the set of well-known Maxwell's equations. The microscopic variant for external sources in vacuum is formulated as follows,
 \begin{equation}
 \label{1.1}
@@ -57,7 +58,7 @@ By combining the time derivative of the equation \ref{1.7} with the divergence o
 \end{equation}
 The important result \ref{1.11}, which is frequently referred to as the equation of continuity, expresses nothing but the conservation of total electric charge in an isolated system. In other words, the time rate of change of the electric charge in any closed surface is balanced by the electric current flowing through the surface.
 
-\subsection{Electrodynamic potentials}
+\section{Electrodynamic potentials}
 The first-order partial differential Maxwell's equations can be effectively converted to a smaller number of second-order equations by introducing electrodynamic potentials. Hence, one can express the electric and magnetic field as follows,
 \begin{equation}
 \label{1.12}
@@ -96,7 +97,7 @@ Equations \ref{1.15}, \ref{1.16} correspond to the inhomogeneous wave equations 
 \end{equation}
 where $ \mathrm{d} V $ is a volume element and $ \norm{.} $ stands for the standard Euclidean norm. Note that the solutions \ref{1.17}, \ref{1.18} are dependent only on charge and current densities at position $ \vec{r^{\: \prime}} $ at so-called retarded time $ t^{\: \prime} = t - \sqrt{\mu \epsilon} \norm{\vec{r} - \vec{r^{\: \prime}}} $ which takes into account the finite velocity of the wave. In other words, the fields at the observation point $ \vec{r} $ at the time $ t $ are proportional to the sum of all the electromagnetic waves that leave the source elements at point $ \vec{r^{\: \prime}} $ at the retarded time $ t^{\: \prime} $.
 
-\subsection{Hertz vectors}
+\section{Hertz vectors}
 There exists also other possibilities how to express the electromagnetic field. Under ordinary conditions, an arbitrary electromagnetic field may be defined in terms of a single vector function. This may be helpful for solving of many problems of classical electromagnetic theory, particularly the wave propagation.
 
 First, let us introduce the electric Hertz vector $ {\vec{\Pi_e}}\left(\vec{r}, t \right) $ in terms of the scalar and vector potentials,
@@ -152,42 +153,38 @@ As for the previous cases, one may find the solution of \ref{1.27},
 \end{equation}
 thus the fields derived from the magnetic Hertz vector $ {\vec{\Pi_m}}\left(\vec{r}, t \right) $ are now due to a density distribution of magnetic dipoles. Again, every solution of \ref{1.28} uniquely determines the electromagnetic field via
 \begin{equation}
+\label{1.29}
 \vec{E} = \rot{\diffp{\vec{\Pi_m}}{t}},
 \end{equation}
 \begin{equation}
+\label{1.30}
 \vec{B} = \rot{\left(\rot{\vec{\Pi_m}}\right)}.
 \end{equation}
 
 The above derivations considered electric and magnetic Hertz vectors as a separate quantities. It is also possible, however, to introduce them together in the form of one six-vector [source].
 
-\subsection{Energy density and energy flow}
-By scalar multiplications of \ref{1.10} by $ \vec{E}\left( \vec{r}, t \right) $, of \ref{1.9} by $ \vec{H}\left( \vec{r}, t \right) $ and following subtraction of both obtained equations, one gets 
+\section{Energy and momentum}
+To be able to describe the interaction of electromagnetic field with matter, one has to know the energy distribution throughout the field as well as the momentum balance.
+
+By scalar multiplications of \ref{1.9} by $ \vec{H}\left( \vec{r}, t \right) $, of \ref{1.10} by $ \vec{E}\left( \vec{r}, t \right) $, following subtraction of both obtained equations and using standard vector identities, one gets the expression 
 \begin{equation}
- \vec{E} \cdot \diffp{\vec{D}}{t} + \vec{H} \cdot \diffp{\vec{B}}{t} + \div{\left(\vec{E} \times \vec{H} \right)} = -\vec{E} \cdot \vec{J}
+\label{1.31}
+\vec{E} \cdot \diffp{\vec{D}}{t} + \vec{H} \cdot \diffp{\vec{B}}{t} + \div{\left(\vec{E} \times \vec{H} \right)} = -\vec{E} \cdot \vec{J}.
 \end{equation}
-in the form of conservation law - conservation of energy (the field energy alone is not conserved, only the total energy in the world—there is also the energy of matter. The field energy will change if there is some work being done by matter on the field or by the field on matter.)
+The equation \ref{1.31} can be rewritten in the form of conservation law,
 \begin{equation}
-\diffp{u}{t} + \div{\vec{S}} = - \vec{E} \cdot \vec{J}
+\label{1.32}
+\diffp{u}{t} + \div{\vec{S}} = - \vec{E} \cdot \vec{J},
 \end{equation}
 where
 \begin{equation}
-u = \frac{1}{2} \left(\vec{E} \cdot \vec{D} + \vec{H} \cdot \vec{B} \right), \quad \vec{S} = \vec{E} \times \vec{H}
+\label{1.33}
+u = \frac{1}{2} \left(\vec{E} \cdot \vec{D} + \vec{H} \cdot \vec{B} \right), \quad \vec{S} = \vec{E} \times \vec{H}.
 \end{equation}
-In stands for the total energy density in the field (that is, the amount of energy per unit volume in space), S Poynting's vector representing the energy flow of the field (that is, the flow of energy
-per unit time across a unit area perpendicular to the flow).
-The physical meaning - time rate of change of the electromagnetic energy within a certain volume and the energy flowing out through the boundary surfaces of the volume per unit time is equal to the negative of the total work done by the fields on the sources within the volume - conversion of em energy into mechanical or heat energy 
-The results shall be discussed. The conservation of energy for the electromagnetic field is given by Poynting's theorem
-Energy (Poynting) theorem:
-\begin{equation}
-\diffp{W}{t} = \int\limits_{V} \left(\vec{E} \cdot \diffp{\vec{D}}{t} + \vec{H} \cdot \diffp{\vec{B}}{t}\right) \: \d \tilde{V}
-\end{equation}
-wave equations:
-\begin{equation}
-\laplace{\vec{E}} - \frac{1}{c^{2}} \diffp[2]{\vec{E}}{t} = 0
-\end{equation}
-\begin{equation}
-\laplace{\vec{B}} - \frac{1}{c^{2}} \diffp[2]{\vec{B}}{t} = 0
-\end{equation}
+The quantity $ u\left( \vec{r}, t \right) $ in \ref{1.33} describes the total energy density in the field and $ \vec{S}\left( \vec{r}, t \right) $ is so-called Poynting vector which represents the energy flow of the field.
+
+The important statement \ref{1.32}, also referred to as the Poynting theorem, expresses the conservation of energy for the electromagnetic field. In other words, the time rate of change of the field energy within a certain region and the energy flowing out of that region is balanced by the conversion of the electromagnetic energy into mechanical or heat energy and vice-versa.
+
 Lorentz force:
 \begin{equation}
 \vec{F} = q \left(E + v \times B \right) 
@@ -197,7 +194,14 @@ Ohm's law:
 \vec{J} = \sigma \vec{E}
 \end{equation}
 
-\subsection{Gaussian Beam}
+\section{Electromagnetic waves and Gaussian beam}
+wave equations:
+\begin{equation}
+\laplace{\vec{E}} - \frac{1}{c^{2}} \diffp[2]{\vec{E}}{t} = 0
+\end{equation}
+\begin{equation}
+\laplace{\vec{B}} - \frac{1}{c^{2}} \diffp[2]{\vec{B}}{t} = 0
+\end{equation}
 Laser beams are represented by Gaussian beams.
 The simplest mathematical description of the essential features of a focused optical beam is provided by Gaussian beams.
 All components of the electric and magnetic fields can be deduced from a single scalar wave function.
