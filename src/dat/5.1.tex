@@ -30,7 +30,7 @@ To describe the effects of an electromagnetic field in the presence of macroscop
 \label{1.6}
 \vec{H} = \frac{\vec{B}}{\mu_0} - \vec{M} = \frac{\vec{B}}{\mu},
 \end{equation}
-where $ \vec{P}\left( \vec{r}, t \right) $ and $ \vec{M}\left( \vec{r}, t \right) $ are the vectors of polarization and magnetization, respectively. Note that the vectors of polarization and magnetization can be interpreted as electric or magnetic dipole moment per unit volume of the medium, therefore they are definitely associated with the state of a matter and vanish in vacuum. Similarly as in the case of a free space, the factors $ \varepsilon $ and $ \mu $ are called electric permittivity of medium and magnetic permeability of medium. In general case, $ \varepsilon $ and $ \mu $ are tensors. The constitutive relations above (\ref{1.5}, \ref{1.6}) hold only if the relations between derived and primary fields are linear.
+where $ \vec{P}\left( \vec{r}, t \right) $ and $ \vec{M}\left( \vec{r}, t \right) $ are the vectors of polarization and magnetization, respectively. Note that the vectors of polarization and magnetization can be interpreted as a density of electric or magnetic dipole moment of the medium, therefore they are definitely associated with the state of a matter and vanish in vacuum. Similarly as in the case of a free space, the factors $ \varepsilon $ and $ \mu $ are called electric permittivity of medium and magnetic permeability of medium. In general case, $ \varepsilon $ and $ \mu $ are tensors. The constitutive relations above (\ref{1.5}, \ref{1.6}) hold only if the medium is homogeneous and isotropic. For the sake of simplicity, only such materials will be considered in the following text.
 
 The macroscopic variant of Maxwell's equations is formulated as follows,
 \begin{equation}
@@ -110,7 +110,7 @@ First, let us introduce the electric Hertz vector $ {\vec{\Pi_e}}\left(\vec{r}, 
 \vec{A} = \mu \varepsilon \diffp{\vec{\Pi_e}}{t}.
 \end{equation}
 
-Note that the definitions \ref{1.19}, \ref{1.20} are consistent with the Lorenz gauge condition \ref{1.14}. In the absence of magnetization, it might be easily shown that the electric Hertz vector $ {\vec{\Pi_e}}\left(\vec{r}, t \right) $ is governed by inhomogeneous wave equation
+Note that the definitions \ref{1.19}, \ref{1.20} are consistent with the Lorenz gauge condition \ref{1.14}. In the absence of magnetization, it might be easily shown that $ \vec{J} = \partial{\vec{P}}/\partial{t} $ and the electric Hertz vector $ {\vec{\Pi_e}}\left(\vec{r}, t \right) $ is governed by inhomogeneous wave equation
 \begin{equation}
 \label{1.21}
 \laplace{\vec{\Pi_e}} - \mu \varepsilon \diffp[2]{\vec{\Pi_e}}{t} = -\frac{\vec{P}}{\varepsilon}.
@@ -141,7 +141,7 @@ Second, one may introduce the magnetic Hertz vector $ {\vec{\Pi_m}}\left(\vec{r}
 \label{1.26}
 \vec{A} = \rot{\vec{\Pi_m}}.
 \end{equation}
-In the absence of polarization, the magnetic Hertz vector $ {\vec{\Pi_m}}\left(\vec{r}, t \right) $ defined by \ref{1.25} and \ref{1.26} fulfills an inhomogeneous wave equation
+In the absence of polarization, $ \vec{J} = \rot{\vec{M}} $ and the magnetic Hertz vector $ {\vec{\Pi_m}}\left(\vec{r}, t \right) $ defined by \ref{1.25} and \ref{1.26} fulfills an inhomogeneous wave equation
 \begin{equation}
 \label{1.27}
 \laplace{\vec{\Pi_m}} - \mu \varepsilon \diffp[2]{\vec{\Pi_m}}{t} = -\mu \vec{M}.
@@ -151,7 +151,7 @@ As for the previous cases, one may find the solution of \ref{1.27},
 \label{1.28}
 \vec{\Pi_m}\left(\vec{r}, t \right) = \frac{\mu}{4 \pi} \int \frac{\vec{M}\left(\vec{r^{\: \prime}}, t^{\: \prime} \right)}{\norm{\vec{r} - \vec{r^{\: \prime}}}} \mathrm{d} V,
 \end{equation}
-thus the fields derived from the magnetic Hertz vector $ {\vec{\Pi_m}}\left(\vec{r}, t \right) $ are now due to a density distribution of magnetic dipoles. Again, every solution of \ref{1.28} uniquely determines the electromagnetic field via
+thus the fields derived from the magnetic Hertz vector $ {\vec{\Pi_m}}\left(\vec{r}, t \right) $ may be imagined to be due to a density distribution of magnetic dipoles. Again, every solution of \ref{1.28} uniquely determines the electromagnetic field via
 \begin{equation}
 \label{1.29}
 \vec{E} = \rot{\diffp{\vec{\Pi_m}}{t}},
@@ -195,46 +195,60 @@ Ohm's law:
 \end{equation}
 
 \section{Electromagnetic waves and Gaussian beam}
-wave equations:
+In this section, the simplest mathematical description of a focused laser beam based on approximations to the wave equation is deduced. Since in numerical codes it is a common practice to prescribe the laser beams by their propagation in free space, the set of the microscopic Maxwell's equations \ref{1.1} - \ref{1.4} will be exploited.
+
+In the absence of external sources, it might be easily shown that the equations \ref{1.1} - \ref{1.4} may be alternatively formulated as an uncoupled homogeneous wave equations for electric field $ \vec{E}\left( \vec{r}, t \right) $ and magnetic field $ \vec{B}\left( \vec{r}, t \right) $,
 \begin{equation}
-\laplace{\vec{E}} - \frac{1}{c^{2}} \diffp[2]{\vec{E}}{t} = 0
+\label{1.34}
+\laplace{\vec{E}} - \frac{1}{c^{2}} \diffp[2]{\vec{E}}{t} = 0,
 \end{equation}
 \begin{equation}
-\laplace{\vec{B}} - \frac{1}{c^{2}} \diffp[2]{\vec{B}}{t} = 0
+\label{1.35}
+\laplace{\vec{B}} - \frac{1}{c^{2}} \diffp[2]{\vec{B}}{t} = 0,
 \end{equation}
-Laser beams are represented by Gaussian beams.
-The simplest mathematical description of the essential features of a focused optical beam is provided by Gaussian beams.
-All components of the electric and magnetic fields can be deduced from a single scalar wave function.
-In general, the forms of laser beams can be usefully deduced from a vector potential that has a single Cartesian coordinate.
-vector potential:
+where the universal constant $ c = 1/\sqrt{\mu_0 \varepsilon_0} $ is the speed of light in vacuum, which leads to the essential fact, that the electromagnetic waves propagate in vacuum with the velocity of light $ c $.
+
+Consider the laser beam as an electromagnetic wave propagating toward the positive direction of the z-axis with the electric field linearly polarized along the x-axis of the Cartesian coordinate system. A common way is to describe such a wave by the evolution of electric field, therefore one has to look for the solution of the vector equation \ref{1.34}. According to the previous assumptions, the solution is expected to be in the form of the following plane wave,
 \begin{equation}
-\vec{E}\left(\vec{r_\bot}, z, t \right)  = E_0 \Psi \left(\vec{r_\bot}, z \right) \e^{i \left(k_z z - \omega t \right)} \mathrm{\hat{e}_x}
+\label{1.36}
+\vec{E}\left(\vec{r_\bot}, z, t \right)  = E_0 \Psi \left(\vec{r_\bot}, z \right) \e^{\i \left(k_z z - \omega t \right)} \mathrm{\hat{e}_x},
 \end{equation}
-angular frequency $ \omega $, wave number $ k_z = \omega/c $, 
-Helmholtz equation:
+where $ \vec{r_\bot} = (x, y)^{\mathrm{T}} $ is the vector of transverse Cartesian coordinates, $ E_0 $ is a constant amplitude, $ \Psi \left(\vec{r_\bot}, z \right) $ is the part of the wave function which is dependent only on the spatial coordinates, $ \omega $ denotes the angular frequency and $ k_z $ is the z-component of the wave vector $ \vec{k}\left(\omega \right) $.
+
+Direct substitution of expression \ref{1.36} into the equation \ref{1.34} yields the time-independent form of the scalar wave equation
 \begin{equation}
-\laplace{\Psi \left(\vec{r_\bot}, z \right)} + 2 \i k_z \diffp{\Psi \left(\vec{r_\bot}, z \right)}{z} = 0
+\label{1.37}
+\laplace{\Psi \left(\vec{r_\bot}, z \right)} + 2 \i k_z \diffp{\Psi \left(\vec{r_\bot}, z \right)}{z} = 0.
 \end{equation}
-parameters (w0 radius of the beam waist):
+The equation \ref{1.37} is called the Helmholtz equation. It turned out, that the geometry of the focused laser beam can be expressed in terms of three parameters,
 \begin{equation}
-w_0, \quad z_r = \frac{k_z w_0^2}{2} = \frac{\pi w_0^2}{\lambda}, \quad \Theta = \frac{w_0}{z_R} = \frac{\lambda}{\pi w_0}
+\label{1.38}
+w_0, \qquad z_{\mathrm{R}} = \frac{k_z w_0^2}{2} = \frac{\pi w_0^2}{\lambda}, \qquad \Theta = \frac{w_0}{z_\mathrm{R}} = \frac{\lambda}{\pi w_0}.
 \end{equation}
-dimensionless coordinates:
+The parameter $ w_0 $ in \ref{1.38} is the beam waist, defined as a radius at the focal spot at which the laser intensity fall to $ 1/\e^2 $ of its axial value. The second parameter, $ z_\mathrm{R} $, is so-called Rayleigh range, which is a distance in the longitudinal direction from the focal spot to the point where the beam radius is $ \sqrt{2} $ larger than the beam waist $ w_0 $. The last parameter, $ \Theta $, represents the divergence angle of the beam. The symbol $ \lambda $ stands for the laser wavelength.
+
+Because of the symmetry about the longitudinal axis of the equation \ref{1.37}, the following calculations may be made simpler by introducing a dimensionless cylindrical coordinates that use the parameters \ref{1.38},
 \begin{equation}
-\rho = \frac{\norm{\vec{r_\bot}}}{w_0}, \quad \zeta = \frac{z}{z_r}
+\label{1.39}
+\rho = \frac{\norm{\vec{r_\bot}}}{w_0}, \qquad \zeta = \frac{z}{z_r}.
 \end{equation}
-after transformation:
+After performing a transformation of coordinates, the Helmholtz equation \ref{1.37} becomes 
 \begin{equation}
-\frac{1}{\rho} \diffp{}{\rho}\left(\rho \diffp{\Psi \left(\rho, \zeta \right)}{\rho} \right) + 4 \i \diffp{\Psi \left(\rho, \zeta \right)}{\zeta}  = - \Theta^2 \diffp[2]{\Psi \left(\rho, \zeta \right)}{\zeta}
+\label{1.40}
+\frac{1}{\rho} \diffp{}{\rho}\left(\rho \diffp{\Psi \left(\rho, \zeta \right)}{\rho} \right) + 4 \i \diffp{\Psi \left(\rho, \zeta \right)}{\zeta}  = - \Theta^2 \diffp[2]{\Psi \left(\rho, \zeta \right)}{\zeta}.
 \end{equation}
-expansion (assume $ \Theta \ll 1 $ and consequently $  w_0 \gg \lambda $):
+In the following calculations, the beam divergence angle $ \Theta $ is assumed to be small ($ \Theta \ll 1 $), thus it can be used as an expansion parameter for $ \Psi $ and the solution of \ref{1.40} will always be consistent,
 \begin{equation}
-\Psi = \sum_{n = 0}^{+\infty} \Theta^{2n} \Psi_{2n}
+\label{1.41}
+\Psi = \sum_{n = 0}^{+\infty} \Theta^{2n} \Psi_{2n}.
 \end{equation}
-zero-th order with transverse laplacian in cylindrical coords:
+Next, one shall insert \ref{1.41} into \ref{1.40} and collect the terms with the same power of $ \Theta $. Then the zero-th order function $ \Psi_0 $ obeys
 \begin{equation}
-\frac{1}{\rho} \diffp{}{\rho}\left(\rho \diffp{\Psi_0 \left(\rho, \zeta \right)}{\rho} \right) + 4 \i \diffp{\Psi_0\left(\rho, \zeta \right)}{\zeta} = 0
+\label{1.42}
+\frac{1}{\rho} \diffp{}{\rho}\left(\rho \diffp{\Psi_0 \left(\rho, \zeta \right)}{\rho} \right) + 4 \i \diffp{\Psi_0\left(\rho, \zeta \right)}{\zeta} = 0.
 \end{equation}
+consequently $  w_0 \gg \lambda $
+which is paraxial approximation, paraxial Helmholtz equation. 
 solution in dimensionless coordinates:
 \begin{equation}
 \Psi_0 \left(\rho, \zeta \right) = \frac{1}{\sqrt{1 + \zeta^2}} \exp{\left[- \frac{\rho^2}{1 + \zeta^2} + \i \left(\frac{\rho^2 \zeta}{1 + \zeta^2} - \arctan{\zeta} \right) \right]} 
@@ -247,7 +261,7 @@ where:
 \begin{equation}
 w\left(z\right) = w_0 \sqrt{1 + \left(\frac{z}{z_R}\right)^2}, \quad R\left(z \right) = z \left[1 + \left(\frac{z_R}{z} \right)^2\right], \quad \varphi_G = \arctan{\left(\frac{z}{z_R}\right)}
 \end{equation}
-Solution - Gaussian beam:
+Solution - paraxial Gaussian beam:
 \begin{equation}
 \vec{E}\left(\vec{r_\bot}, z, t \right) = E_0 \frac{w_0}{w(z)} \exp\left(-\frac{\vec{r_\bot}^2}{w(z)^2}\right) \cos\left(\omega t - k_z \left(z + \frac{\vec{r_\bot}^2}{2 R(z)} \right) + \varphi_G(z) \right) \mathrm{\hat{e}_x}
 \end{equation}
