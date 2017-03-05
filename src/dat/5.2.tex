@@ -20,6 +20,29 @@ Electric and magnetic fields can be regarded as a forces produced by distributio
 essential to electrodynamic is the speed of light in vacuum (universal constant), given by ...
 Electromagnetic fields - forces produced by distribution of charge and currents - can exist in regions of space where there are no sources (they can carry energy, momentum , have existence totally independent of charge and currents) 
 
+All components of the electric and magnetic fields of the laser beam that are consistent with Maxwell's equations are deduced. Afterwards, one may evaluate these fields at the boundary of simulation domain and prescribe the laser beam correctly. 
+
+Taylor series:
+\begin{equation}
+k_z \left(\vec{k}_\bot, \omega \right) \approx \frac{\abs{\omega}}{c} - \frac{c}{2 \abs{\omega}} \left( k_x^2 + k_y^2 \right)  
+\end{equation}
+by subs. get back paraxial approximation:
+\begin{equation}
+\bar{\vec{E}}^{\pm}_{\bot} \left(\vec{k}_\bot, z, \omega \right) \approx \bar{\vec{E}}^{\pm}_{0, \bot} \left(\vec{k}_\bot, \omega \right) \e^{\pm \i \left[ \frac{\abs{\omega}}{c} - \frac{c}{2 \abs{\omega}} \left( k_x^2 + k_y^2 \right) \right] \left(z - z_0 \right)}
+\end{equation}
+\begin{equation}
+\bar{E}^{\pm}_z \left(\vec{k}_\bot, z, \omega \right) \approx 0
+\end{equation}
+\begin{equation}
+\bar{B}^{\pm}_x \left(\vec{k}_\bot, z, \omega \right) \approx \mp \frac{1}{c} \bar{E}^{\pm}_y \left(\vec{k}_\bot, z, \omega \right)
+\end{equation}
+\begin{equation}
+\bar{B}^{\pm}_y \left(\vec{k}_\bot, z, \omega \right) \approx \pm \frac{1}{c} \bar{E}^{\pm}_x \left(\vec{k}_\bot, z, \omega \right)
+\end{equation}
+\begin{equation}
+\bar{B}^{\pm}_z \left(\vec{k}_\bot, z, \omega \right) \approx 0
+\end{equation}
+
 where
 \begingroup
 \renewcommand*{\arraystretch}{2.0}
