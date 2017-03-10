@@ -1,9 +1,37 @@
-The first attempts to make the fusion reaction in terrestrial conditions are heading into the 1930s. The idea was to collide deuteron beams with heavy water vapor using a particle accelerator. This approach is referred to as beam fusion \cite{oliphant}. The resulting reaction led to the release of a large number of particles including among other a helium nuclei. However, it was soon revealed that this would not be a feasible way for power production. Even though the process also releases heat, much more energy is consumed for accelerating the particles. The deuteron beams lose their energy by the ionization or elastic Coulomb collisions with target nuclides whose cross-section is several orders of magnitude higher. Thus the probability of nuclear fusion is almost negligible.
+The first-order partial differential Maxwell's equations can be effectively converted to a smaller number of second-order equations by introducing electrodynamic potentials. Hence, one can express the electric and magnetic field as follows,
+\begin{equation}
+\label{1.12}
+\vec{E} = -\grad{\Phi} - \diffp{\vec{A}}{t},
+\end{equation}
+\begin{equation}
+\label{1.13}
+\vec{B} = \rot{\vec{A}},
+\end{equation}
+where $ \Phi\left(\vec{r}, t \right) $ is the scalar potential and $ \vec{A}\left(\vec{r}, t \right) $ is the vector potential of the corresponding fields. One can clearly see that using the definitions \ref{1.12}, \ref{1.13}, six vector components are replaced by only four potential functions and two Maxwell's homogeneous equations (\ref{1.8}, \ref{1.9}) are fulfilled identically. 
 
-After the worldwide declassification of fusion research in 1956, J. D. Lawson submitted his article for publication \cite{lawson}. In it, the conditions that have to be fulfilled in order to reach ignition in thermonuclear reactor were demonstrated. As originally formulated, the Lawson criterion gives a minimum required value for the product of the plasma density and the confinement time. This value depends on the plasma temperature which has to be significantly high for all kinds of reactants. It is obvious, since the involved particles have to acquire sufficient kinetic energy to overcome electric repulsion, as mentioned before, and thus increase the rate of fusion reactions.
+However, by definitions \ref{1.12}, \ref{1.13}, $ \Phi\left(\vec{r}, t \right) $ and $ \vec{A}\left(\vec{r}, t \right) $ are not defined uniquely, thus an infinite number of potentials which lead to the same fields may be constructed. To avoid that, one has to impose a supplementary condition, for example
+\begin{equation}
+\label{1.14}
+\div{\vec{A}} + \mu \varepsilon \diffp{\Phi}{t} = 0.
+\end{equation}
+The condition \ref{1.14} is called the Lorenz gauge. Lorenz gauge is commonly used in electromagnetism because its independence of the coordinate system. Furthermore, it leads to the following uncoupled equations,
+\begin{equation}
+\label{1.15}
+\laplace{\Phi} - \mu \varepsilon \diffp[2]{\Phi}{t} = -\frac{\rho}{\varepsilon},
+\end{equation}
+\begin{equation}
+\label{1.16}
+\laplace{\vec{A}} - \mu \varepsilon \diffp[2]{\vec{A}}{t} = -\mu \vec{J},
+\end{equation}
+that are in all respects equivalent to the Maxwell's equations and in many situations much simpler to solve.
 
-Even though the Coulomb barrier is penetrated by quantum tunneling, allowing the process to proceed at lower temperatures, the vast majority of substances are in the state of a fully or partially ionized plasma under that conditions. However, exposing any solid material to hot plasmas can damage the material, which then emit impurities contaminating the plasma and decreasing its temperature and confinement stability. Hence, the fundamental question is how to confine such a fusion plasma in the terrestrial conditions.
-
-Taking into account that plasma consists of charged particles, one can exploit a magnetic field of appropriate geometry to shape and confine them. The charged particles will then follow helical paths encircling the magnetic lines of force. However, the intensity of the magnetic field is limited by the structural characteristics of matter, thus it is possible to confine only low density plasmas. From Lawson's criterion, one can clearly find out that in this case fusion reactions have to take place for a relatively long time period.
-
-The second route to confine hot plasmas is to take advantage of the inertia of the mass itself. The fusion burn can occur before the plasma escapes into the surrounding environment. Mass inertia keeps it together for a certain moment given by the time depending on the velocity of an acoustic wave, thus it involves no external means of confinement. The confinement time is obviously very short in this approach, therefore it is necessary to compress the solid fuel to extremely high densities.
+Equations \ref{1.15}, \ref{1.16} correspond to the inhomogeneous wave equations for scalar potential $ \Phi\left(\vec{r}, t \right) $ and vector potential $ \vec{A}\left(\vec{r}, t \right) $. Their general solutions are given by the following expressions,
+\begin{equation}
+\label{1.17}
+\Phi\left(\vec{r}, t \right) = \frac{1}{4 \pi \varepsilon} \int \frac{\rho\left(\vec{r^{\: \prime}}, t^{\: \prime} \right)}{\norm{\vec{r} - \vec{r^{\: \prime}}}} \mathrm{d} V,
+\end{equation}
+\begin{equation}
+\label{1.18}
+\vec{A}\left(\vec{r}, t \right) = \frac{\mu}{4 \pi} \int \frac{\vec{J}\left(\vec{r^{\: \prime}}, t^{\: \prime} \right)}{\norm{\vec{r} - \vec{r^{\: \prime}}}} \mathrm{d} V,
+\end{equation}
+where $ \mathrm{d} V $ is a volume element and $ \norm{.} $ stands for the standard Euclidean norm. Note that the solutions \ref{1.17}, \ref{1.18} are dependent only on charge and current densities at position $ \vec{r^{\: \prime}} $ at so-called retarded time $ t^{\: \prime} = t - \sqrt{\mu \epsilon} \norm{\vec{r} - \vec{r^{\: \prime}}} $ which takes into account the finite velocity of the wave. In other words, the fields at the observation point $ \vec{r} $ at the time $ t $ are proportional to the sum of all the electromagnetic waves that leave the source elements at point $ \vec{r^{\: \prime}} $ at the retarded time $ t^{\: \prime} $.

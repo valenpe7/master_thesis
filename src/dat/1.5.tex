@@ -1,7 +1,104 @@
-Na podzim roku 2013 se údajně podařilo vědcům z americké Lawrence Livermore National Laboratory dosáhnout významného milníku, poprvé získali pomocí inerciálně držené termojaderné fúze více energie, než do ní vložili na vstupu. Tyto zprávy byly potvrzeny a publikovány v únoru následujícího roku. V experimentu bylo využito 192 svazků laserového zařízení National Ignition Facility o celkové energii 1{,}8 MJ \cite{hurricane}. 
+In this section, the simplest mathematical description of a focused laser beam based on approximations to the wave equation is deduced. Since in numerical codes it is a common practice to prescribe the laser beams by their propagation in free space, the set of the microscopic Maxwell's equations \ref{1.1} - \ref{1.4} will be exploited.
 
-Fúzní zisk je ovšem měřen v poměru k energii, které byla absorbována palivovým terčem, přičemž současná elektrická účinnost laserových systémů dosahuje pouze jednotek procent. Je to tedy energetická bilance z hlediska fyzikálního mechanismu na té nejnižší úrovni. Pro skutečnou produkci elektrické energie v hypotetické fúzní elektrárně bude potřeba, aby hodnota tohoto zisku byla ještě zhruba o dva řády vyšší \cite{nif}.
+In the absence of external sources, it might be easily shown that the equations \ref{1.1} - \ref{1.4} may be alternatively formulated as an uncoupled homogeneous wave equations for electric field $ \vec{E}\left( \vec{r}, t \right) $ and magnetic field $ \vec{B}\left( \vec{r}, t \right) $,
+\begin{equation}
+\label{1.34}
+\laplace{\vec{E}} - \frac{1}{c^{2}} \diffp[2]{\vec{E}}{t} = 0,
+\end{equation}
+\begin{equation}
+\label{1.35}
+\laplace{\vec{B}} - \frac{1}{c^{2}} \diffp[2]{\vec{B}}{t} = 0,
+\end{equation}
+where the universal constant $ c = 1/\sqrt{\mu_0 \varepsilon_0} $ is the speed of light in vacuum, which leads to the essential fact, that the electromagnetic waves propagate in vacuum with the velocity of light $ c $.
 
-Ač se tedy o žádnou senzaci nejedná, jsou i tyto výsledky významným průlomem v celém termojaderném výzkumu. Pro další kroky k cíli je ale zásadní kvalitnější informovanost politických představitelů široké laické veřejnosti. Výstavba velkých laserových zařízení je značně nákladná a nebýt jejich významného vojenského využití, pravděpodobně by nebyla zafinancována.
+Without any loss of generality, consider the laser beam as an electromagnetic wave propagating toward the positive direction of the z-axis with the electric field linearly polarized along the x-axis of the Cartesian coordinate system. A common way is to describe such a wave by the evolution of a single electric field component (although the more proper way would be to use the vector potential), therefore one has to look for the solution of the equation \ref{1.34}. 
 
-Nicméně velké laserové systémy jsou široce využitelné také v řadě společensky významných mezioborových aplikací, mohou sloužit například pro vývoj protonových zdrojů určených k léčbě nádorových onemocnění \cite{bin}. I kdyby se tedy nakonec nedokázalo využít energii z inerciální fúze, jsou takto vynaložené prostředky účelné a smysluplné.
+According to the previous assumptions, the solution is expected to be in the form of the following plane wave,
+\begin{equation}
+\label{1.36}
+\vec{E}\left(\vec{r_\bot}, z, t \right)  = E_0 \Psi \left(\vec{r_\bot}, z \right) \e^{\i \left(k_z z - \omega t \right)} \mathrm{\vec{\hat{e}_x}},
+\end{equation}
+where $ \vec{r_\bot} = (x, y)^{\mathrm{T}} $ is the vector of transverse Cartesian coordinates, $ E_0 $ is a constant amplitude, $ \Psi \left(\vec{r_\bot}, z \right) $ is the part of the wave function which is dependent only on the spatial coordinates, $ \omega $ denotes the angular frequency, $ k_z $ is the z-component of the wave vector $ \vec{k}\left(\omega \right) $ and $ \mathrm{\vec{\hat{e}_x}} $ is the unit vector pointing in the direction of the x-axis.
+
+Direct substitution of expression \ref{1.36} into the equation \ref{1.34} yields the time-independent form of the scalar wave equation
+\begin{equation}
+\label{1.37}
+\laplace{\Psi \left(\vec{r_\bot}, z \right)} + 2 \i k_z \diffp{\Psi \left(\vec{r_\bot}, z \right)}{z} = 0.
+\end{equation}
+The equation \ref{1.37} is called the Helmholtz equation. Note that it is sufficient to seek solutions to the equation \ref{1.37} since the wave \ref{1.36} is monochromatic.
+
+It turned out, that the geometry of the focused laser beam can be expressed in terms of the laser wavelength $ \lambda $ and the following three parameters,
+\begin{equation}
+\label{1.38}
+w_0, \qquad z_{\mathrm{R}} = \frac{k_z w_0^2}{2} = \frac{\pi w_0^2}{\lambda}, \qquad \Theta = \frac{w_0}{z_\mathrm{R}} = \frac{\lambda}{\pi w_0}.
+\end{equation}
+The parameter $ w_0 $ in \ref{1.38} is the beam waist, defined as a radius at which the laser intensity fall to $ 1/\e^2 $ of its axial value at the focal spot. The second parameter, $ z_\mathrm{R} $, is so-called Rayleigh range which is a distance in the longitudinal direction from the focal spot to the point where the beam radius is $ \sqrt{2} $ larger than the beam waist $ w_0 $. And the last parameter, $ \Theta $, is the divergence angle of the beam that represents the ratio of transverse and longitudinal extent.
+
+Because of the symmetry about the longitudinal axis of the equation \ref{1.37}, the following calculations may be made simpler by introducing a dimensionless cylindrical coordinates that use the parameters \ref{1.38},
+\begin{equation}
+\label{1.39}
+\rho = \frac{\norm{\vec{r_\bot}}}{w_0}, \qquad \zeta = \frac{z}{z_{\mathrm{R}}}.
+\end{equation}
+After performing a transformation of coordinates, the Helmholtz equation \ref{1.37} becomes 
+\begin{equation}
+\label{1.40}
+\frac{1}{\rho} \diffp{}{\rho}\left(\rho \diffp{\Psi \left(\rho, \zeta \right)}{\rho} \right) + 4 \i \diffp{\Psi \left(\rho, \zeta \right)}{\zeta}  = - \Theta^2 \diffp[2]{\Psi \left(\rho, \zeta \right)}{\zeta}.
+\end{equation}
+
+In the following calculations, the beam divergence angle $ \Theta $ is assumed to be small ($ \Theta \ll 1 $), thus it can be used as an expansion parameter for $ \Psi $ and the solution of \ref{1.40} will always be consistent,
+\begin{equation}
+\label{1.41}
+\Psi = \sum_{n = 0}^{+\infty} \Theta^{2n} \Psi_{2n}.
+\end{equation}
+Next, one shall insert \ref{1.41} into \ref{1.40} and collect the terms with the same power of $ \Theta $. Then the zeroth-order function $ \Psi_0 $ obeys the following equation,
+\begin{equation}
+\label{1.42}
+\frac{1}{\rho} \diffp{}{\rho}\left(\rho \diffp{\Psi_0 \left(\rho, \zeta \right)}{\rho} \right) + 4 \i \diffp{\Psi_0\left(\rho, \zeta \right)}{\zeta} = 0.
+\end{equation}
+
+The equation \ref{1.42}, which is called the paraxial Helmholtz equation, is the starting point of traditional Gaussian beam theory. One can expect the solution of \ref{1.42} in the form of a Gaussian function with a width varying along the longitudinal direction, thus 
+\begin{equation}
+\label{1.43}
+\Psi_0 \left(\rho, \zeta \right) = h\left(\zeta \right)\e^{-f\left(\zeta \right) \rho^2},
+\end{equation}
+where $ f\left(\zeta \right) $ and $ h\left(\zeta \right) $ are unknown complex functions that have to satisfy a condition $ f\left(0 \right) = h\left(0 \right) = 1 $. After plugging \ref{1.43} into \ref{1.42}, one gets the following equation,
+\begin{equation}
+\label{1.44}
+-f\left(\zeta \right) h\left(\zeta \right) + \i \diff{h\left(\zeta \right)}{\zeta} + \rho^2 h\left(\zeta \right) \left(f\left(\zeta \right)^2 - \i \diff{f\left(\zeta \right)}{\zeta} \right) = 0.
+\end{equation}
+Since the equation \ref{1.44} has to hold for arbitrary value of $ \rho $, one may find two independent equations that are equivalent to \ref{1.44}
+\begin{equation}
+\label{1.45}
+\frac{1}{f\left(\zeta \right)^2} \diff{f\left(\zeta \right)}{\zeta} + \i = 0, \qquad \frac{1}{f\left(\zeta \right) h\left(\zeta \right)} \diff{h\left(\zeta \right)}{\zeta} + \i = 0.
+\end{equation}
+It might be easily shown, that under specified conditions the solutions of equations \ref{1.45} have to be
+\begin{equation}
+\label{1.46}
+h\left(\zeta \right) = f\left(\zeta \right), \qquad f\left(\zeta \right) = \frac{1}{\sqrt{1 + \zeta^2}} \e^{-\i \arctan{\zeta}},
+\end{equation}
+and therefore the complete expression for the zeroth-order wave function $ \Psi_0 \left(\rho, \zeta \right) $ is
+\begin{equation}
+\label{1.47}
+\Psi_0 \left(\rho, \zeta \right) = \frac{1}{\sqrt{1 + \zeta^2}} \exp{\left[- \frac{\rho^2}{1 + \zeta^2} + \i \left(\frac{\rho^2 \zeta}{1 + \zeta^2} - \arctan{\zeta} \right) \right]}.
+\end{equation}
+
+In many situations, it is also useful to evaluate the expression \ref{1.47} in terms of Cartesian coordinates, in which the zeroth-order wave function $ \Psi_0 \left(\vec{r_\bot}, z \right) $ is
+\begin{equation}
+\label{1.48}
+\Psi_0 \left(\vec{r_\bot}, z \right) = \frac{w_0}{w\left(z\right)} \exp{\left[- \frac{\vec{r_\bot}^2}{w\left(z \right)^2} + \i \left( k_z \frac{\vec{r_\bot}^2}{2 R\left(z \right)} - \varphi_\mathrm{G} \left( z\right) \right) \right]},
+\end{equation}
+where the parameters used to simplify the expression \ref{1.48} are defined as
+\begin{equation}
+\label{1.49}
+w\left(z\right) = w_0 \sqrt{1 + \left(\frac{z}{z_\mathrm{R}}\right)^2}, \quad R\left(z \right) = z \left[1 + \left(\frac{z_\mathrm{R}}{z} \right)^2\right], \quad \varphi_\mathrm{G}\left(z\right) = \arctan{\left(\frac{z}{z_\mathrm{R}}\right)}.
+\end{equation}
+One shall discuss the physical meaning of the three parameters \ref{1.49}. The function $ w\left(z\right) $ represents the spot size parameter of the beam, that is the radius at which the laser intensity fall to $ 1/\e^2 $ of its axial value at any position $ z $ along the beam propagation. Note that the minimum of the spot size $ w(0) = w_0 $, consequently the focal spot is stationary and located at the origin of a Cartesian coordinate system. The second parameter, $ R\left(z \right) $ is known to be the radius of curvature of the beam's wavefront at any position $ z $ along the beam propagation. Note that $ \lim_{z \to 0^{\pm}} R(z) = \pm \infty $, therefore the beam behaves like a plane wave at focus as required. The last parameter, $ \varphi_\mathrm{G}\left(z\right) $, is the so-called Guoy phase of the beam at any position $ z $ along the beam propagation, which describes a phase shift in the wave as it passes through the focal spot.
+
+Finally, by substituting \ref{1.48} for $ \Psi \left(\vec{r_\bot}, z \right) $ in \ref{1.36} and taking the real part of that complex quantity, one obtains the electric field of the so-called paraxial Gaussian beam,
+\begin{equation}
+\label{1.50}
+\vec{E}\left(\vec{r_\bot}, z, t \right) = E_0 \frac{w_0}{w(z)} \exp\left(-\frac{\vec{r_\bot}^2}{w(z)^2}\right) \cos\left(\omega t - k_z \left(z + \frac{\vec{r_\bot}^2}{2 R(z)} \right) + \varphi_\mathrm{G}\left(z\right) \right) \mathrm{\vec{\hat{e}_x}}.
+\end{equation}
+Although given electric field \ref{1.50} describes the main features of the focused laser beam, it might be clearly seen that it does not satisfies the Maxwell equation \ref{1.1}. The correct electric field has to have at least two non-zero vector components. To fix that, one would have to solve the wave equation for the vector potential \ref{1.16} and afterwards exploit the solution to deduce all components of the electric and magnetic fields.   
+
+In addition, since one assumed $ \Theta \ll 1 $, the solution \ref{1.50} is not accurate for strongly diverging beams. Since the divergence angle is inversely proportional to the beam waist, the previous condition yields $ w_0 \gg \lambda $. In other words, it means that \ref{1.50} is not valid for tightly focused laser beams and the need may arise for higher-order corrections.

@@ -112,7 +112,7 @@
 \lstdefinestyle{CXX} {
 	language=C++,
 	backgroundcolor=\color{light},
-	basicstyle=\footnotesize\ttfamily,
+	basicstyle=\scriptsize\ttfamily,
 	breakatwhitespace=false,
 	breaklines=true,
 	captionpos=t,
@@ -140,7 +140,7 @@
 \lstdefinestyle{FORTRAN} {
 	language=[90]Fortran,
 	backgroundcolor=\color{light},
-	basicstyle=\footnotesize\ttfamily,
+	basicstyle=\scriptsize\ttfamily,
 	keywordstyle=\color{blue},
 	commentstyle=\color{mygreen},
 	breakatwhitespace=false,
@@ -237,8 +237,8 @@
 
 %1------------------------------------------------------------------------------
 
-\mbox{}
-\newpage
+%\mbox{}
+%\newpage
 
 \begin{titlepage}
 
@@ -374,9 +374,23 @@ Keywords: plasma-based amplification, PIC simulations, parametric instabilities
 
 %-------------------------------------------------------------------------------
 
-\chapter{The electromagnetic field}
-\input{dat/5.1.tex}
-%\input{dat/5.2.tex}
+\chapter{Electromagnetic field}
+\input{dat/1.0.tex}
+
+\section{Maxwell's equations}
+\input{dat/1.1.tex}
+
+\section{Electrodynamic potentials}
+\input{dat/1.2.tex}
+
+\section{Hertz vectors}
+\input{dat/1.3.tex}
+
+\section{Energy and momentum}
+\input{dat/1.4.tex}
+
+\section{Electromagnetic waves and Gaussian beam}
+\input{dat/1.5.tex}
 
 %-------------------------------------------------------------------------------
 
@@ -427,7 +441,7 @@ Keywords: plasma-based amplification, PIC simulations, parametric instabilities
 
 %-------------------------------------------------------------------------------
 
-\chapter{The particle-in-cell method}
+\chapter{Particle-in-cell method}
 \input{dat/3.0.tex}
 
 \section{Particle-in-cell method}
@@ -450,23 +464,29 @@ Keywords: plasma-based amplification, PIC simulations, parametric instabilities
 
 %-------------------------------------------------------------------------------
 
-%\chapter{}
-%\input{dat/4.0.tex}
-
-%\section{Boundary conditions}
-%\input{dat/4.1.tex}
-
-%\section{Two-dimensional simulations}
-%\input{dat/4.2.tex}
-
 \chapter{Tight-focusing of laser pulses}
+\input{4.0.tex}
 
-\input{dat/5.0.tex}
+\section{Laser boundary conditions}
+\input{4.1.tex}
+
+\section{Implementation}
+\input{4.2.tex}
+
+\section{Evaluation}
+\input{4.3.tex}
 
 
 %-------------------------------------------------------------------------------
 
 \chapter{Results}
+\input{dat/5.0.tex}
+
+%-------------------------------------------------------------------------------
+
+%\input{dat/6.0.tex}
+%\input{dat/5.1.tex}
+%\input{dat/5.2.tex}
 
 %-------------------------------------------------------------------------------
 
@@ -506,6 +526,7 @@ The development of the EPOCH code was funded in part by the UK EPSRC grants EP/G
 \appendix
 
 \chapter{Code listings}
+\input{appendix_a.tex}
 
 \chapter{Input files}
 
@@ -513,7 +534,7 @@ The development of the EPOCH code was funded in part by the UK EPSRC grants EP/G
 
 \section{Simulace}
 
-\chapter{CD Content}
+\chapter{CD content}
 \centering
 {\renewcommand{\arraystretch}{1.4}
 	\begin{tabular}{ll}
