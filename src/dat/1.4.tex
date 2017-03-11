@@ -1,4 +1,4 @@
-To be able to describe the interaction of electromagnetic field with matter, one has to know the energy distribution throughout the field as well as the momentum balance.
+To be able to describe the interaction of the electromagnetic field with matter, one has to know the energy distribution throughout the field as well as the momentum balance.
 
 By scalar multiplications of \ref{1.9} by $ \vec{H}\left( \vec{r}, t \right) $, of \ref{1.10} by $ \vec{E}\left( \vec{r}, t \right) $, following subtraction of both obtained equations and using standard vector identities, one gets the expression 
 \begin{equation}
@@ -15,18 +15,39 @@ where
 \label{1.33}
 u = \frac{1}{2} \left(\vec{E} \cdot \vec{D} + \vec{H} \cdot \vec{B} \right), \quad \vec{S} = \vec{E} \times \vec{H}.
 \end{equation}
-The quantity $ u\left( \vec{r}, t \right) $ in \ref{1.33} describes the total energy density in the field and $ \vec{S}\left( \vec{r}, t \right) $ is so-called Poynting vector which represents the energy flow of the field.
+The quantity $ u\left( \vec{r}, t \right) $ in \ref{1.33} describes the total energy density in the field and $ \vec{S}\left( \vec{r}, t \right) $ is so-called Poynting vector which represents, in the equation \ref{1.32}, the energy flow of the field per unit area. Note that the Poynting vector points in the same direction as the vector of the wave propagation.
 
 The important statement \ref{1.32}, also referred to as the Poynting theorem, expresses the conservation of energy for the electromagnetic field. In other words, the time rate of change of the field energy within a certain region and the energy flowing out of that region is balanced by the conversion of the electromagnetic energy into mechanical or heat energy and vice-versa.
 
-+momentum...
+Besides energy, the electromagnetic wave can carry also momentum. To derive a balance of linear momentum, one has to know the way how charges and currents interact with the electromagnetic field. This is described by the Lorentz force which density $ \vec{f}_\mathrm{L} \left( \vec{r}, t \right) $ is given by the following expression,
+\begin{equation}
+\label{1.51}
+\vec{f}_\mathrm{L} = \rho \vec{E} + \vec{J} \times \vec{B}.
+\end{equation}
+Thus the electric and magnetic fields can be regarded as a forces produced by distribution of charge and currents.
 
-\noindent
-Lorentz force:
+By replacing sources in \ref{1.51} using macroscopic Maxwell's equations \ref{1.7}, \ref{1.10}, one may express the density of Lorentz force $ \vec{f}_\mathrm{L} \left( \vec{r}, t \right) $ entirely in terms of fields,
 \begin{equation}
-\vec{F} = q \left(E + v \times B \right) 
+\label{1.52}
+\vec{f}_\mathrm{L} = \left(\div{\vec{D}} \right) \vec{E} + \left(\rot{\vec{H}} \right) \times \vec{B} - \diffp{\vec{D}}{t} \times \vec{B}.
 \end{equation}
-Ohm's law:
+Note that the last term on the right hand side of \ref{1.52} can be rewritten using the Poynting vector $ \vec{S}\left( \vec{r}, t \right) $ derived above, 
 \begin{equation}
-\vec{J} = \sigma \vec{E}
+\label{1.53}
+\diffp{\vec{D}}{t} \times \vec{B} = \varepsilon \mu \diffp{\vec{S}}{t} + \vec{D} \times \left(\rot{\vec{E}} \right).
 \end{equation}
+By plugging \ref{1.53} into \ref{1.52} and employing basic vector calculus identities, one eventually gets the expression for the linear momentum balance in the form of conservation law,
+\begin{equation}
+\label{1.54}
+\diffp{\vec{g}}{t} + \div{\mathbb{T}} = -\vec{f}_\mathrm{L},
+\end{equation}
+where
+\begin{equation}
+\label{1.55}
+\vec{g} = \varepsilon \mu \vec{S}, \qquad T_{ij} = - E_i D_j - H_i B_j + \frac{1}{2} \left(E_j D_j + H_j B_j \right) \delta_{ij}.
+\end{equation}
+The quantity $ \vec{g}\left( \vec{r}, t \right) $ in \ref{1.54} may be interpreted as the density of linear electromagnetic momentum and $ \mathbb{T}\left( \vec{r}, t \right) $ is so-called Maxwell stress tensor which represents, in the equation \ref{1.54}, the momentum flow per unit area. The symbol $ \delta_{ij} $ in \ref{1.55} stands for the Kronecker delta.
+
+The important statement \ref{1.54}, which expresses the conservation of momentum for electromagnetic field, may be used to calculate the electromagnetic forces that act on objects or particles within that field. Notice that the contribution of the electromagnetic field to energy and momentum is completely characterized by the fluxes of $ \vec{S}\left( \vec{r}, t \right) $ and $ \mathbb{T}\left( \vec{r}, t \right) $.
+
+
