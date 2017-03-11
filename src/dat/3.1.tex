@@ -1,4 +1,10 @@
-The particle-in-cell (PIC) method refers to a technique used to solve a certain class of partial differential equations. The method was proposed in the mid-fifties and it gained a great popularity in plasma physics applications early. It is based on the particle description approach, thus the evolution of the system is conducted in principle by following the trajectory of each particle.
+Laser-plasma interaction involves a collective behavior of particles and electromagnetic fields which is in general case complex and strongly non-linear problem to solve. The investigation of such systems cannot be usually carried out only through the theoretical and experimental work. Since a large amount of simultaneous interactions with many degrees of freedom may be present there, analytical modeling seems to be impractical. On the other hand, many of the significant details of laser-plasma interaction may be extremely difficult or even impossible to obtain experimentally. Hence, for the further progress in this field of research, other tools and techniques, such as numerical simulation, are required \cite{jaroszynsky}.
+
+Numerical simulations help researchers to develop models covering a wide range of physical scenarios as well as to investigate their properties. With the advent of powerful computational systems, numerical simulations now play an important role as an essential tool in developing theoretical models and understanding experimental results in various fields of modern science \cite{pang}. These so-called computer experiments are often faster and much cheaper than a single real experiment in laboratory \cite{gould}. In addition, one numerical code can solve a broad range of tasks only by modification of its initial and boundary conditions.
+
+Nowadays, it is clear that detailed understanding of the physical mechanisms in the laser-plasma interaction can be achieved only through the combination of theory, experiment and simulation. Development of parallel algorithms that are able to provide sufficiently exact solutions in reasonable time, however, belong to the most challenging fields of modern science.
+
+The PIC method refers to a technique used to solve a certain class of partial differential equations. The method was proposed in the mid-fifties and it early gained a great popularity in the field of plasma physics. It is based on the particle description approach, thus the evolution of the system is conducted in principle by following the trajectory of each particle.
 
 However, the real systems are often extremely large in terms of the number of particles they contain. In order to make simulations efficient or at all possible, so-called macro-particles are used. A macro-particle is a finite-sized computational particle that represents a group of physical particles that are near each other in the phase space. It is allowed to rescale the number of particles, because the Lorentz force depends only on the charge to mass ratio, which is invariant to this transformation. Thus, a macro-particle will follow the same trajectory as the corresponding real particles would \cite{hockney}.
 
@@ -30,7 +36,7 @@ S_{v}\left(\vec{v} - \vec{v}_{p}\left(t\right)\right) = \delta\left(\vec{v} - \v
 \end{equation}
 where $ \Delta p $ is the size of the support of the computational particles, typically the same as simulation grid cell. Stability and accuracy of the simulation strongly depend on the choice of the shape functions. The choice of higher-order basis functions results in less numerical noise interpolation of density and field quantities and reduces non-physical phenomena in simulations, obviously at the cost of increased computational time.
 
-The computational cycle of the PIC method is shown in Figure \ref{3.1.4}. Individual steps are closer described in several following sections. The influence of the choice of the time and spatial step on the stability and accuracy of the PIC method is demonstrated in the last section.
+The computational cycle of the PIC method is shown in Figure \ref{3.1.4}. Individual steps are closer described in several following sections. The influence of the choice of the time and spatial step on the stability and accuracy of the PIC method will be demonstrated as well.
 
 \begin{figure}[h!]
 \centering
@@ -39,7 +45,7 @@ The computational cycle of the PIC method is shown in Figure \ref{3.1.4}. Indivi
 \tikzstyle{line} = [draw, -triangle 45]
 \begin{tikzpicture}[node distance = 2cm, auto]
 
-\node [block] (nahore) {Particle mover\\[2mm] $ \vec{F}_p \rightarrow \left(\vec{x}, \vec{v}\,\right)_{p} $};
+\node [block] (nahore) {Particle pusher\\[2mm] $ \vec{F}_p \rightarrow \left(\vec{x}, \vec{v}\,\right)_{p} $};
     
 \node [empty, below of=nahore, node distance=2.5cm] (uprostred) {};
     
