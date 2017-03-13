@@ -7,7 +7,7 @@ The effect of the spatial grid is to smooth the interaction forces and to couple
 In the general electromagnetic case, the time step has to satisfy the Courant--Fridrichs--Levy (CFL) condition \cite{jaroszynsky},
 \begin{equation}
 \label{3.1.4.1}
-C = c^{2} \Delta t^{2} \left(\frac{1}{\Delta x^{2}} + \frac{1}{\Delta y^{2}} + \frac{1}{\Delta z^{2}}\right) .
+C = c^{2} \Delta t^{2} \left(\frac{1}{\Delta x^{2}} + \frac{1}{\Delta y^{2}} + \frac{1}{\Delta z^{2}}\right),
 \end{equation}
 where the dimensionless number $ C \leq 1 $ is called the CFL number. This condition limits the range of motion of all objects in simulation during one time step. It ensures, that these particles will not cross more than one cell in one simulation time step. When this condition is violated, the growth of non-physical effects can be very rapid. 
 

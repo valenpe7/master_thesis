@@ -8,7 +8,7 @@ The PIC method refers to a technique used to solve a certain class of partial di
 
 However, real systems are often extremely large in terms of the number of particles they contain. In order to make simulations computationally tractable, so-called macro-particles are used. The macro-particle is a finite-size computational particle representing a group of physical particles that are near each other in the phase space. It is allowed to rescale the number of particles, because the Lorentz force depends only on the charge to mass ratio, which is invariant to this transformation. Thus, the macro-particle will follow the same trajectory as the corresponding real particles would \cite{hockney}.
 
-Although this approach significantly reduces the number of computational particles, the binary interactions for every pair of a system cannot be taken into account. The cost would scales quadratically, as the number of particles increases, which makes the computational effort unmanageable in the case of larger systems. Many of the phenomena occur in high-temperature plasmas where collisional effects are very weak (see \ref{2.1.6}), thus one can neglect them. Otherwise, one may exploit other techniques to include collisional effects \cite{lapenta}.
+Although this approach significantly reduces the number of computational particles, the binary interactions for every pair of a system cannot be taken into account. The cost would scales quadratically, as the number of particles increases, which makes the computational effort unmanageable in the case of larger systems. Many of the phenomena occur in high-temperature plasmas where the collective behavior dominates and the collisional effects are very weak (see \ref{2.1.6}), thus one can neglect them. Otherwise, one may exploit other techniques to include collisional effects \cite{lapenta}.
 
 The phase space particle distribution function  $ f_{s} \left(\vec{r}, \vec{v}, t\right) $ for a given species $ s $ is governed by the Vlasov equation (\ref{2.2.1}) in the collisionless plasma. The mathematical formulation of the PIC method is obtained by assuming that the distribution function $ f_{s} \left(\vec{r}, \vec{v}, t\right) $ is given by the sum of distribution functions for macro-particles $ f_{p, s} \left(\vec{r}, \vec{v}, t\right) $,
 \begin{equation}
@@ -21,13 +21,6 @@ Index $ p $ denotes hereafter the quantities attributable to macro-particles. Th
 f_{p, s}\left(\vec{r}, \vec{v}, t \right) = w_{p} S_{r}\left(\vec{r} - \vec{r}_{p}\left(t\right) \right)  S_{v}\left(\vec{v} - \vec{v}_{p}\left( t\right) \right),
 \end{equation}
 where $ w_{p} $ is a weight depending on the number of physical particles represented by each macro-particle, and $ S_{r}\left(\vec{r} - \vec{r}_{p}\left(t\right) \right) $, $ S_{v}\left(\vec{v} - \vec{v}_{p}\left(t\right) \right) $ are the so-called shape functions for the spatial and velocity coordinate, respectively.
-
-The shape functions cannot be chosen arbitrarily. They have to fulfill several special properties. Let $ S_{\xi} $ be the shape function of the phase space coordinate $ \vec{\xi} $. Then:
-\begin{enumerate}[nolistsep, topsep=5pt]
-\item The support of the shape function is compact, $ \exists R > 0, \: \mathrm{supp} \: S_{\xi} \subset \left(-R, R\right) $.
-\item Integral of the shape function is unitary, $ \int\limits_{-\infty}^{+\infty} S_{\xi}\left(\vec{\xi}\right)  \mathrm{d} \xi = 1 $.
-\item The shape function is symmetrical, $ S_{\xi}\left(\vec{\xi}\right) = S_{\xi}\left(-\vec{\xi}\right) $.
-\end{enumerate}
 
 \begin{figure}[h!]
 	\centering
@@ -55,6 +48,13 @@ The shape functions cannot be chosen arbitrarily. They have to fulfill several s
 	\label{3.1.4}
 \end{figure}
 
+The shape functions cannot be chosen arbitrarily. They have to fulfill several special properties. Let $ S_{\xi} $ be the shape function of the phase space coordinate $ \vec{\xi} $. Then:
+\begin{enumerate}[nolistsep, topsep=5pt]
+\item The support of the shape function is compact, $ \exists R > 0, \: \mathrm{supp} \: S_{\xi} \subset \left(-R, R\right) $.
+\item Integral of the shape function is unitary, $ \int\limits_{-\infty}^{+\infty} S_{\xi}\left(\vec{\xi}\right)  \mathrm{d} \xi = 1 $.
+\item The shape function is symmetrical, $ S_{\xi}\left(\vec{\xi}\right) = S_{\xi}\left(-\vec{\xi}\right) $.
+\end{enumerate}
+
 While these restrictive conditions still offer a wide range of possibilities, the standard PIC method is essentially determined by the choice of the shape function in the velocity coordinate as a Dirac $ \delta $-function and in the spatial coordinate as a m-th order b-spline basis function $ b_{m} $.
 %\begin{equation}
 %\label{3.1.3}
@@ -79,6 +79,8 @@ The fields at the macro-particle positions $ \vec{E}_p \left( t\right) $ and $ \
 %\vec{E}_p\left( t\right) = \int \vec{E}\left( \vec{r}, t\right) S_{r}\left(\vec{r} - %\vec{r}_{p}\left(t\right) \right) \mathrm{d} \vec{r}, \qquad \vec{B}_p\left( t\right) = \int %\vec{B}\left( \vec{r}, t\right) S_{r}\left(\vec{r} - \vec{r}_{p}\left(t\right) \right) \mathrm{d} %\vec{r}
 %\end{equation}
 
-The PIC method combines Lagrangian and Eulerian frame of reference. The macro-particles are tracked in continuous phase space, whereas the electromagnetic fields are calculated only on stationary grid points. Therefore, it is necessary to perform the discretization of the spatial coordinates $ \vec{r} \rightarrow \vec{r}_{i j k} $ where $ (i,j,k) \in \mathbb{Z}^{3} $ are grid indices. It is also necessary to perform discretization of the temporal coordinate $ t \rightarrow t^{\,n} $, where $ n \in \mathbb{N} $ is the time level index. Solution will be outlined for a three-dimensional equidistant rectangular grid, thus $ \vec{r}_{i j k} = \left(i \Delta x, j \Delta y, k \Delta z\right) $ where $ \Delta x, \Delta y, \Delta z $ are the spatial steps in each direction and $ t^{\,n} = n\Delta t $ where $ \Delta t $ is the time step. Each quantity $ A \left(\vec{r}_{i j k}, t^{\,n} \right) $ will be denoted as $ A_{ijk}^{\,n} $.
+The PIC method combines Lagrangian and Eulerian frame of reference. The macro-particles are tracked in continuous phase space, whereas the electromagnetic fields are calculated only on stationary grid points. Therefore, it is necessary to perform the discretization of the spatial coordinates $ \vec{r} \rightarrow \vec{r}_{i j k} $ where $ (i,j,k) \in \mathbb{Z}^{3} $ are grid indices. It is also necessary to perform discretization of the temporal coordinate $ t \rightarrow t^{\,n} $, where $ n \in \mathbb{N} $ is the time level index. 
+
+The algorithm will be outlined for a three-dimensional equidistant rectangular grid, thus $ \vec{r}_{i j k} = \left(i \Delta x, j \Delta y, k \Delta z\right) $, where $ \Delta x, \Delta y, \Delta z $ are the spatial steps in each direction and $ t^{\,n} = n\Delta t $, where $ \Delta t $ is the time step. Each quantity $ A \left(\vec{r}_{i j k}, t^{\,n} \right) $ will be hereafter denoted as $ A_{ijk}^{\,n} $.
 
 The computational cycle of the PIC method is shown in Figure \ref{3.1.4}. Individual steps are closer described in several following sections. The influence of the choice of the time and spatial step on the stability and accuracy of the PIC method will be demonstrated as well.
