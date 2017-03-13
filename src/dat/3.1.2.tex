@@ -1,63 +1,22 @@
-The particle weighting refers to the part of the code in which the charge and current densities are assigned to the discrete grid points from the continuous particle positions. After the fields are obtained, they are assigned back at the particles to calculate the Lorentz force. This step is called field weighting. It implies some form of interpolation.
-
-First, have a look at the particle weighting. Charge density $ \rho\left(\vec{x}, t \right) $ and current density $ \vec{J}\left(\vec{x}, t \right) $ are given by the following integrals over the velocity space,
+In order to solve Maxwell's equations, as shown in the second section of this chapter, one has to know the source terms. In other words, it is necessary to assign charge and current densities from the continuous macro-particle positions to the discrete grid points. This simulation step is usually referred to as particle weighting and it involves some form of interpolation.
+ 
+According to the kinetic theory, charge density $ \rho\left(\vec{x}, t \right) $ and current density $ \vec{J}\left(\vec{x}, t \right) $ are given by the following integrals over the velocity space,
 \begin{equation}
 \label{3.1.2.1}
 \rho\left(\vec{x}, t \right) = \sum_s q_s \int f_s \left(\vec{x}, \vec{v}, t \right) \mathrm{d} \vec{v}, \qquad \vec{J}\left(\vec{x}, t \right) = \sum_s q_s \int f_s \left(\vec{x}, \vec{v}, t \right) \vec{v} \, \mathrm{d} \vec{v}.
 \end{equation}
-The interpolation function is defined as
+After discretization of \ref{3.1.2.1} using macro-particles and exploiting the properties of the shape functions, one gets immediately
 \begin{equation}
 \label{3.1.2.2}
-W_{i, j, k}\left(\vec{x}_{p}^{n}\right) =  \frac{1}{\Delta V}\int\limits_{\Omega} S_{x}\left(\vec{x} - \vec{x}_{p}^{n} \right) \mathrm{d} \vec{x}, \qquad \Delta V = \Delta x \Delta y \Delta z,
+\rho_{ijk}^{\,n} = \sum_{p} q_p S_{r}\left(\vec{r}_{ijk} - \vec{r}_{p}^{\,n}\right), \qquad \vec{J}_{ijk}^{\,n} = \sum_{p} q_p \vec{v}_p^{\,n} S_{r}\left(\vec{r}_{ijk} - \vec{r}_{p}^{\,n}\right),
 \end{equation}
-where $ \Omega = \left\lbrace \vec{x} \in \mathbb{R}^{3} : \abs{x_{1} - x_{i, j, k}} \leq \Delta x/2 \wedge \abs{x_{2} - x_{i, j, k}} \leq \Delta y/2 \wedge \abs{x_{3} - x_{i, j, k}} \leq \Delta z/2 \right\rbrace $. Then the charge density $ \rho_{i, j, k}^{n} $ in the arbitrary grid point $ x_{i, j, k} $ and time level $ t^{n} $ is constructed as
-\begin{equation}
-\label{3.1.2.3}
-\rho_{i, j, k}^{n} = \sum_{p} q_{p} W_{i, j, k}\left(\vec{x}_{p}^{n}\right), \qquad q_{p} = q_{s} N_{p},
-\end{equation}
-where the sum is taken over all computational particles.
+where $ q_p = q_s w_p $. However, using the formulas \ref{3.1.2.2} for charge and current deposition in PIC codes may violate the discrete continuity equation (\ref{3.1.1.13}) and in turn cause errors in Gauss's law (\ref{3.1.1.6}). In this case, one would have to solve Poisson's equation for correction of electric field at every simulation time step or use a numerical scheme that satisfies the continuity equation exactly. These schemes are referred to as a charge conservation methods (\cite{villasenor}, \cite{esirkepov}, [source]).
 
-By analogy, one could assign the current densities to the grid points using this interpolation function, but the discrete continuity equation for charge (\ref{3.1.1.13}) would not be satisfied exactly. In this case one have to solve Poisson's equation for correction of electric field or use one of the several numerical schemes for computing the current density satisfying the continuity equation, which are called charge conservation methods. In the next paragraph, the charge density decomposition method proposed by Esirkepov \cite{esirkepov} is described.
+Similarly, to advance macro-particle positions, as shown in the third section, one has to know the force acting on them. Hence, it is necessary to assign electric and magnetic fields that are calculated at the discrete grid points to the continuous macro-particle positions. This simulation step is usually referred to as field weighting.
 
-Due to linearity of the continuity equation (\ref{3.1.1.13}), it is sufficient to define the current density associated with the motion of a single computational particle,
+By analogy to the particle weighting, one may exploit the shape functions to calculate the spatial averages of the all electric and magnetic field components,
 \begin{equation}
-\label{3.1.2.4}
-\begin{split}
-& \left(J_{x}\right)_{i+1,\: j,\: k}^{n} = \left(J_{x}\right)_{i,\: j,\: k}^{n} - q_{p} \left(v_{x}\right)_{p}^{n} \left(\Pi_{x}\right)_{i,\: j,\: k}^{n}, \\
-& \left(J_{y}\right)_{i,\: j+1,\: k}^{n} = \left(J_{y}\right)_{i,\: j,\: k}^{n} - q_{p} \left(v_{y}\right)_{p}^{n} \left(\Pi_{y}\right)_{i,\: j,\: k}^{n}, \\
-& \left(J_{z}\right)_{i,\: j,\: k+1}^{n} = \left(J_{z}\right)_{i,\: j,\: k}^{n} - q_{p} \left(v_{z}\right)_{p}^{n} \left(\Pi_{z}\right)_{i,\: j,\: k}^{n}.
-\end{split}
+\vec{E}_{p}^{\,n} = \sum_{ijk} \vec{E}_{ijk}^{\,n} S_{r}\left(\vec{r}_{ijk} - \vec{r}_{p}^{\,n}\right), \qquad \vec{B}_{p}^{\,n} = \sum_{ijk} \vec{B}_{ijk}^{\,n} S_{r}\left(\vec{r}_{ijk} - \vec{r}_{p}^{\,n}\right).
 \end{equation}
-In accordance with continuity equation one can write
-\begin{equation}
-\label{3.1.2.7}
-\left(\Pi_{x}\right)_{i,\: j,\: k}^{n} + \left(\Pi_{y}\right)_{i,\: j,\: k}^{n} + \left(\Pi_{z}\right)_{i,\: j,\: k}^{n} = W_{i, j, k}\left(\vec{x}_{p}^{n} + \vec{\tilde{x}}\right) - W_{i, j, k}\left(\vec{x}_{p}^{n}\right),
-\end{equation}
-where $ \vec{\tilde{x}} \in \mathbb{R}^{3} $ is the motion induced position shift of the computational particle in one simulation time step. Shift of the computational particle generates eight variants of interpolation functions,
-\begin{equation}
-\label{3.1.2.8}
-\begin{split}
-& W_{i, j, k}\left(\vec{x}_{p}^{n}\right), \quad W_{i, j, k}\left(\vec{x}_{p}^{n} + \tilde{x}_{1}\right), \quad W_{i, j, k}\left(\vec{x}_{p}^{n} + \tilde{x}_{2}\right), \quad W_{i, j, k}\left(\vec{x}_{p}^{n} + \tilde{x}_{3}\right), \\
-& W_{i, j, k}\left(\vec{x}_{p}^{n} + \tilde{x}_{1} + \tilde{x}_{2}\right), \quad W_{i, j, k}\left(\vec{x}_{p}^{n} + \tilde{x}_{1} + \tilde{x}_{3}\right), \quad W_{i, j, k}\left(\vec{x}_{p}^{n} + \tilde{x}_{2} + \tilde{x}_{3}\right), \\
-& W_{i, j, k}\left(\vec{x}_{p}^{n} + \tilde{x}_{1} + \tilde{x}_{2} + \tilde{x}_{3}\right).
-\end{split}
-\end{equation}
-We assume that the vector $ \Pi_{i,\: j,\: k}^{\:n} $ is linearly dependent on the functions (\ref{3.1.2.8}). It turned out that only one linear combination exists.
+Note that it is smart to use the same weighting for both, particles and fields, in order to eliminate a self-force and ensure the conservation of momentum \cite{fehske}.
 
-Now, have a look at the field weighting. After calculating Maxwell equations at the grid points, it is necessary to assign electric and magnetic fields back at the particle positions. Recall the definition of interpolation function (\ref{3.1.2.2}). By analogy to the particle weighting, one can assign the components of electric field,
-\begin{equation}
-\begin{split}
-& \left(E_{x}\right)_{p}^{n}  = \sum_{i, j, k} \left(E_{x}\right)^{n}_{i,\: j + 1/2,\: k + 1/2} W_{i,\: j + 1/2,\: k + 1/2} \left(\vec{x}_{p}^{n} \right), \\
-& \left(E_{y}\right)_{p}^{n}  = \sum_{i, j, k} \left(E_{y}\right)^{n}_{i + 1/2,\: j,\: k + 1/2} W_{i + 1/2,\: j,\: k + 1/2} \left(\vec{x}_{p}^{n} \right), \\
-& \left(E_{z}\right)_{p}^{n}  = \sum_{i, j, k} \left(E_{z}\right)^{n}_{i + 1/2,\: j + 1/2,\: k} W_{i + 1/2,\: j + 1/2,\: k} \left(\vec{x}_{p}^{n} \right),
-\end{split}
-\end{equation}
-and the components of magnetic field,
-\begin{equation}
-\begin{split}
-& \left(B_{x}\right)_{p}^{n}  = \sum_{i, j, k} \left(B_{x}\right)^{n}_{i + 1/2,\: j,\: k} W_{i + 1/2,\: j,\: k} \left(\vec{x}_{p}^{n} \right), \\
-& \left(B_{y}\right)_{p}^{n}  = \sum_{i, j, k} \left(B_{y}\right)^{n}_{i,\: j + 1/2,\: k} W_{i,\: j + 1/2,\: k} \left(\vec{x}_{p}^{n} \right), \\
-& \left(B_{z}\right)_{p}^{n}  = \sum_{i, j, k} \left(B_{z}\right)^{n}_{i,\: j,\: k + 1/2} W_{i,\: j,\: k + 1/2} \left(\vec{x}_{p}^{n} \right).
-\end{split}
-\end{equation} 
-It is desirable to use the same interpolation function for both, density and force calculations, in order to eliminate a self-force and ensure conservation of momentum \cite{fehske}.

@@ -6,12 +6,12 @@ As one could already see from \ref{3.1.5}, the motion of macro-particles in simu
 Assume that the electric and magnetic fields are interpolated from the grid points to the particles at the time level $ t^{n} $. Then the equations of motion to be integrated are
 \begin{equation}
 \label{3.2.4.2}
-\diff[]{\vec{x}_{p}}{t} = \frac{\vec{u}_{p}}{\gamma}, \qquad \diff[]{\vec{u}_{p}}{t} = \frac{q_{s}}{m_{s}} \left(\vec{E}_{p} + \frac{\vec{u}_{p}}{\gamma} \times \vec{B}_{p} \right).
+\diff[]{\vec{r}_{p}}{t} = \frac{\vec{u}_{p}}{\gamma}, \qquad \diff[]{\vec{u}_{p}}{t} = \frac{q_{s}}{m_{s}} \left(\vec{E}_{p} + \frac{\vec{u}_{p}}{\gamma} \times \vec{B}_{p} \right).
 \end{equation}
 To discretize the equations of motion \ref{3.2.4.2}, a time-centered leap-frog scheme is used. One obtains
 \begin{equation}
 \label{3.2.4.4}
-\frac{\vec{x}_{p}^{\:n+1} - \vec{x}_{p}^{\:n}}{\Delta t} = \frac{\vec{u}_{p}^{\:n + 1/2}}{\gamma^{\:n+1/2}},
+\frac{\vec{r}_{p}^{\:n+1} - \vec{r}_{p}^{\:n}}{\Delta t} = \frac{\vec{u}_{p}^{\:n + 1/2}}{\gamma^{\:n+1/2}},
 \end{equation}
 \begin{equation}
 \label{3.2.4.5}
@@ -36,7 +36,7 @@ To implement the Boris method, first add half the electric impulse $ \vec{E}_{p}
 \end{equation}
 and construct an auxiliary vector $ \vec{u}_{p}\!' $, which is simultaneously perpendicular to $ \left(\vec{u}_{p}^{\:+} - \vec{u}_{p}^{\:-} \right) $ and to $ \vec{B}_{p}^{\:n} $,
 \begin{equation}
-\vec{u}_{p}\!' = \vec{u}_{p}^{\:-} + \vec{u}_{p}^{\:-} \times \vec{t}, \qquad \vec{t} = \frac{q_{s} \vec{B}_{p}^{\:n} \Delta t}{2 \gamma^{\:n} m_{s}}.
+\vec{u}_{p}\!' = \vec{u}_{p}^{\:-} + \vec{u}_{p}^{\:-} \times \vec{t}, \qquad \vec{t} = \frac{q_{s} \vec{B}_{p}^{\:n}}{\gamma^{\:n} m_{s}} \frac{\Delta t}{2}.
 \end{equation}
 Vector $ \vec{t} $ has to be logically parallel to $ \vec{B}_{p}^{n} $ with the length of $ \tan \left(\theta/2\right) \approx \theta/2 $ for small angles. Next, exploit the fact that the vector $ (\vec{u}_{p}\!' \times \vec{B}_{p}^{\:n}) $ is parallel to $ \left(\vec{u}_{p}^{\:+} - \vec{u}_{p}^{\:-} \right) $ and express $ \vec{u}_{p}^{\:+} $,
 \begin{equation}
@@ -60,7 +60,7 @@ Finally, substitute vector $ \vec{u}_{p}^{\:+} $ into the second from the equati
 \end{equation}
 The position of macro-particle particle is then advanced according to
 \begin{equation}
-\vec{x}_{p}^{\:n+1} = \vec{x}_{p}^{\:n} + \frac{\vec{u}_{p}^{\:n + 1/2}}{\gamma^{\:n + 1/2}} \Delta t, \qquad \gamma^{\:n + 1/2} = \sqrt{1 + \left(\frac{\vec{u}_{p}^{\:n + 1/2}}{c}\right)^{2}}.
+\vec{r}_{p}^{\:n+1} = \vec{r}_{p}^{\:n} + \frac{\vec{u}_{p}^{\:n + 1/2}}{\gamma^{\:n + 1/2}} \Delta t, \qquad \gamma^{\:n + 1/2} = \sqrt{1 + \left(\frac{\vec{u}_{p}^{\:n + 1/2}}{c}\right)^{2}}.
 \end{equation}
 
 
