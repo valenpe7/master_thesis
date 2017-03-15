@@ -1,0 +1,891 @@
+Below, one can find the most important functions and methods that has been created within this work to provide some new functionalities and features into the code EPOCH. These serve mainly for the computations of laser fields at boundaries that are consistent with the Maxwell's equations using discrete Fourier transforms. Also, one can find the methods for the data manipulation and routines that interface corresponding C++ functions into the FORTRAN simulation code. Finally, the C++ and FORTRAN adaptors for ParaView Catalyst that enable in-situ visualization and diagnostics with a sample visualization Python script pipeline are all attached.
+
+The following part is provided as it is, only with a short captions. It is mainly intended for those who are interested in the way of implementation and do not want to browse in the full source code, which can be found on the attached CD. Closer details are discussed in the third and fourth chapter of this work.
+
+\begin{lstlisting}[style=CXX, caption=Function performing forward fast Fourier transform using MKL library]
+std::vector<std::complex<double>> fft::mkl_fft_forward(std::vector<std::complex<double>> in) {
+DFTI_DESCRIPTOR_HANDLE desc;
+MKL_LONG status;
+DftiCreateDescriptor(&desc, DFTI_DOUBLE, DFTI_COMPLEX, 1, static_cast<MKL_LONG>(in.size()));
+DftiCommitDescriptor(desc);
+status = DftiComputeForward(desc, in.data());
+if(status != 0) {
+std::cerr << DftiErrorMessage(status) << std::endl;
+abort();
+}
+DftiFreeDescriptor(&desc);
+return in;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=Function performing backward fast Fourier transform using MKL library]
+std::vector<std::complex<double>> fft::mkl_fft_backward(std::vector<std::complex<double>> in) {
+DFTI_DESCRIPTOR_HANDLE desc;
+MKL_LONG status;
+DftiCreateDescriptor(&desc, DFTI_DOUBLE, DFTI_COMPLEX, 1, static_cast<MKL_LONG>(in.size()));
+DftiCommitDescriptor(desc);
+status = DftiComputeBackward(desc, in.data());
+if(status != 0) {
+std::cerr << DftiErrorMessage(status) << std::endl;
+abort();
+}
+DftiFreeDescriptor(&desc);
+return in;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=Function performing forward fast Fourier transform using FFTW library]
+std::vector<std::complex<double>> fft::fftw_fft_forward(std::vector<std::complex<double>> in) {
+fftw_plan p = fftw_plan_dft_1d(in.size(), reinterpret_cast<fftw_complex*>(in.data()), reinterpret_cast<fftw_complex*>(in.data()), FFTW_FORWARD, FFTW_ESTIMATE);
+fftw_execute(p);
+fftw_destroy_plan(p);
+return in;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=Function performing backward fast Fourier transform using FFTW library]
+std::vector<std::complex<double>> fft::fftw_fft_backward(std::vector<std::complex<double>> in) {
+fftw_plan p = fftw_plan_dft_1d(in.size(), reinterpret_cast<fftw_complex*>(in.data()), reinterpret_cast<fftw_complex*>(in.data()), FFTW_BACKWARD, FFTW_ESTIMATE);
+fftw_execute(p);
+fftw_destroy_plan(p);
+return in;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=Function performing forward discrete Fourier transform without using any library]
+std::vector<std::complex<double>> fft::fft_forward(std::vector<std::complex<double>> in) {
+std::vector<std::complex<double>> out(in.size());
+for(auto j = 0; j < out.size(); j++) {
+for(auto l = 0; l < out.size(); l++) {
+out.at(j) += in.at(l) * exp(-2.0 * constants::pi * I * l * j / in.size());
+}
+}
+return out;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=Function performing backward discrete Fourier transform without using any library]
+std::vector<std::complex<double>> fft::fft_backward(std::vector<std::complex<double>> in) {
+std::vector<std::complex<double>> out(in.size());
+for(auto j = 0; j < out.size(); j++) {
+for(auto l = 0; l < out.size(); l++) {
+out.at(j) += in.at(l) * exp(+2.0 * constants::pi * I * l * j / in.size());
+}
+}
+return out;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=Method for performing discrete Fourier transform in time]
+void laser_bcs::dft_time(field_2d<std::complex<double>>& field) const {
+#ifdef OPENMP
+#pragma omp parallel for schedule(static)
+#endif
+for(auto j = 0; j < this->domain->Nx; j++) {
+#ifdef USE_MKL
+field.add_col(fft::mkl_fft_backward(field.get_col(j)), j);
+#elif USE_FFTW
+field.add_col(fft::fftw_fft_backward(field.get_col(j)), j);
+#else
+field.add_col(fft::fft_backward(field.get_col(j)), j);
+#endif
+}
+field.multiply(this->domain->dt / (2.0 * constants::pi));
+return;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=Method for performing inverse discrete Fourier transform in time]
+void laser_bcs::idft_time(field_2d<std::complex<double>>& field) const {
+#ifdef OPENMP
+#pragma omp parallel for schedule(static)
+#endif
+for(auto j = 0; j < this->domain->Nx; j++) {
+#ifdef USE_MKL
+field.add_col(fft::mkl_fft_forward(field.get_col(j)), j);
+#elif USE_FFTW
+field.add_col(fft::fftw_fft_forward(field.get_col(j)), j);
+#else
+field.add_col(fft::fft_forward(field.get_col(j)), j);
+#endif
+}
+field.multiply(2.0 * (2.0 * constants::pi) / (this->domain->Nt * this->domain->dt));
+return;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=Method for performing discrete Fourier transform in space]
+void laser_bcs::dft_space(field_2d<std::complex<double>>& field) const {
+std::vector<std::complex<double>> row_global(this->domain->Nx_global);
+std::vector<std::complex<double>> row_local;
+for(auto j = 0; j < this->domain->Nt; j++) {
+row_local = field.get_row(j);
+MPI_Gatherv(row_local.data(), this->domain->Nx, MPI_CXX_DOUBLE_COMPLEX, row_global.data(), this->domain->counts.data(), this->domain->displs.data(), MPI_CXX_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
+if(this->domain->rank == 0) {
+#ifdef USE_MKL
+row_global = fft::mkl_fft_forward(row_global);
+#elif USE_FFTW
+row_global = fft::fftw_fft_forward(row_global);
+#else
+row_global = fft::fft_forward(row_global);
+#endif
+}
+MPI_Scatterv(row_global.data(), this->domain->counts.data(), this->domain->displs.data(), 	MPI_CXX_DOUBLE_COMPLEX, row_local.data(), this->domain->Nx, MPI_CXX_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
+field.add_row(row_local, j);
+}
+field.multiply(this->domain->dx / (2.0 * constants::pi));
+return;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=Method for performing inverse discrete Fourier transform in space]
+void laser_bcs::idft_space(field_2d<std::complex<double>>& field) const {
+std::vector<std::complex<double>> row_global(this->domain->Nx_global);
+std::vector<std::complex<double>> row_local;
+for(auto j = 0; j < this->domain->Nt; j++) {
+row_local = field.get_row(j);
+MPI_Gatherv(row_local.data(), this->domain->Nx, MPI_CXX_DOUBLE_COMPLEX, row_global.data(), this->domain->counts.data(), this->domain->displs.data(), MPI_CXX_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
+if(this->domain->rank == 0) {
+#ifdef USE_MKL
+row_global = fft::mkl_fft_backward(row_global);
+#elif USE_FFTW
+row_global = fft::fftw_fft_backward(row_global);
+#else
+row_global = fft::fft_backward(row_global);
+#endif
+}
+MPI_Scatterv(row_global.data(), this->domain->counts.data(), this->domain->displs.data(), MPI_CXX_DOUBLE_COMPLEX, row_local.data(), this->domain->Nx, MPI_CXX_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
+field.add_row(row_local, j);
+}
+field.multiply((2.0 * constants::pi) / (this->domain->Nx_global * this->domain->dx));
+return;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=Method for dumping data into shared file]
+template <typename T>
+void field_2d<T>::dump_to_shared_file(std::string name, int row_first, int row_last, int row_size_local, int row_size_global, int col_start) const {
+MPI_File file;
+MPI_Offset offset = 0;
+MPI_Status status;
+MPI_Datatype local_array;
+int col_size = row_last - row_first;
+const int ndims = 2;
+std::array<int, ndims> size_global = {col_size, row_size_global};
+std::array<int, ndims> size_local = {col_size, row_size_local};
+std::array<int, ndims> start_coords = {0, col_start};
+MPI_Type_create_subarray(2, size_global.data(), size_local.data(), start_coords.data(), MPI_ORDER_C, MPI_DOUBLE, &local_array);
+MPI_Type_commit(&local_array);
+std::vector<double> real_part(col_size * row_size_local);
+for(auto i = std::make_pair(row_first, 0); i.first < row_last; i.first++, i.second++) {
+for(auto j = 0; j < row_size_local; j++) {
+real_part[i.second * row_size_local + j] = std::real(this->data[i.first * row_size_local + j]);
+}
+}
+MPI_File_open(MPI_COMM_WORLD, name.data(), MPI_MODE_CREATE|MPI_MODE_WRONLY, MPI_INFO_NULL, &file);
+MPI_File_set_view(file, offset, MPI_DOUBLE, local_array, "native", MPI_INFO_NULL);
+MPI_File_write_all(file, real_part.data(), col_size * row_size_local, MPI_DOUBLE, &status);
+MPI_File_close(&file);
+MPI_Type_free(&local_array);
+return;
+}
+\end{lstlisting}
+
+\hspace{1cm}
+
+\begin{lstlisting}[style=CXX, caption=Extern C++ function to fill Fortran arrays with laser fields dumped in binary file]
+void populate_laser_at_boundary(double* field, int* id, const char* data_dir, int* timestep, int* size_global, int* first, int* last) {
+double num = 0.0;
+std::string laser_id = std::to_string(*id);
+std::string path(data_dir);
+std::ifstream in;
+in.open(path + "/laser_" + laser_id + ".dat", std::ios::binary);
+if(in.is_open()) {
+in.seekg(((*timestep) * (*size_global) + (*first) - 1) * sizeof(num));
+for(auto i = 0; i < *last - *first + 1; i++) {
+in.read(reinterpret_cast<char*>(&num), sizeof(num));
+field[i] = num;
+}
+in.close();
+} else {
+std::cout << "error: cannot read file " << path + "/" + filename + laser_id + ".dat" << std::endl;
+}
+return;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=FORTRAN, caption=Fortran interfaces for C++ library functions]
+INTERFACE
+
+SUBROUTINE compute_laser_at_boundary(rank, nproc, laser_start, laser_end, &
+fwhm_time, t_0, omega, pos, amp, w_0, id, L_min, L_max, L_focus, T_min, T_max, &
+T_ncells, cpml_thickness, t_end, T_cell_size, L_cell_size, dt, output_path) bind(c)
+USE, INTRINSIC :: iso_c_binding
+IMPLICIT NONE
+INTEGER(c_int), INTENT(IN) :: rank, nproc, id, T_ncells, cpml_thickness
+CHARACTER(kind=c_char), DIMENSION(*), INTENT(IN) :: output_path
+REAL(c_double), INTENT(IN) :: laser_start, laser_end, fwhm_time, t_0, omega, pos, &
+amp, w_0, L_min, L_max, L_focus, T_min, T_max, t_end, T_cell_size, L_cell_size, dt
+END SUBROUTINE compute_laser_at_boundary
+
+SUBROUTINE populate_laser_at_boundary(field, laser_id, output_path, timestep, size_global, first, last) bind(c)
+USE, INTRINSIC :: iso_c_binding
+IMPLICIT NONE
+INTEGER(c_int), INTENT(IN) :: laser_id, timestep, size_global, first, last
+CHARACTER(kind=c_char), DIMENSION(*), INTENT(IN) :: output_path
+REAL(c_double), DIMENSION(*), INTENT(OUT) :: field
+END SUBROUTINE populate_laser_at_boundary
+
+END INTERFACE
+\end{lstlisting}
+
+\begin{lstlisting}[style=FORTRAN, caption=Fortran subroutines for Maxwell consistent computation of laser fields at boundaries]
+SUBROUTINE Maxwell_consistent_computation_of_EM_fields
+
+TYPE(laser_block), POINTER :: current
+
+current => laser_x_min
+DO WHILE(ASSOCIATED(current))
+CALL compute_laser_at_boundary(rank, nproc, current%t_start, current%t_end, &
+current%fwhm_time, current%t_0, current%omega, current%pos, current%amp, current%w_0, &
+current%id, x_min, x_max, current%focus, y_min, y_max, ny_global, cpml_thickness, t_end, &
+dy, dx, dt, TRIM(data_dir)//C_NULL_CHAR)
+current => current%next
+ENDDO
+
+current => laser_x_max
+DO WHILE(ASSOCIATED(current))
+CALL compute_laser_at_boundary(rank, nproc, current%t_start, current%t_end, &
+current%fwhm_time, current%t_0, current%omega, current%pos, current%amp, current%w_0, &
+current%id, x_min, x_max, current%focus, y_min, y_max, ny_global, cpml_thickness, t_end, &
+dy, dx, dt, TRIM(data_dir)//C_NULL_CHAR)
+current => current%next
+ENDDO
+
+current => laser_y_min
+DO WHILE(ASSOCIATED(current))
+CALL compute_laser_at_boundary(rank, nproc, current%t_start, current%t_end, &
+current%fwhm_time, current%t_0, current%omega, current%pos, current%amp, current%w_0, &
+current%id, y_min, y_max, current%focus, x_min, x_max, nx_global, cpml_thickness, t_end, &
+dx, dy, dt, TRIM(data_dir)//C_NULL_CHAR)
+current => current%next
+ENDDO
+
+current => laser_y_max
+DO WHILE(ASSOCIATED(current))
+CALL compute_laser_at_boundary(rank, nproc, current%t_start, current%t_end, &
+current%fwhm_time, current%t_0, current%omega, current%pos, current%amp, current%w_0, &
+current%id, y_min, y_max, current%focus, x_min, x_max, nx_global, cpml_thickness, t_end, &
+dx, dy, dt, TRIM(data_dir)//C_NULL_CHAR)
+current => current%next
+ENDDO
+
+END SUBROUTINE Maxwell_consistent_computation_of_EM_fields
+\end{lstlisting}
+
+\begin{lstlisting}[style=FORTRAN, caption=Fortran subroutines for populating laser sources at boundaries]
+SUBROUTINE get_source_x_boundary(buffer, laser_id)
+REAL(num), DIMENSION(:), INTENT(INOUT) :: buffer
+INTEGER, INTENT(IN) :: laser_id
+CALL populate_laser_at_boundary(buffer, laser_id, TRIM(data_dir)//C_NULL_CHAR, &
+step, ny_global, ny_global_min, ny_global_max)
+END SUBROUTINE get_source_x_boundary
+  
+SUBROUTINE get_source_y_boundary(buffer, laser_id)
+REAL(num), DIMENSION(:), INTENT(INOUT) :: buffer
+INTEGER, INTENT(IN) :: laser_id
+CALL populate_laser_at_boundary(buffer, laser_id, TRIM(data_dir)//C_NULL_CHAR, &
+step, nx_global, nx_global_min, nx_global_max)
+END SUBROUTINE get_source_y_boundary
+\end{lstlisting}
+
+\begin{lstlisting}[style=FORTRAN, caption=Fortran adaptor for ParaView Catalyst]
+MODULE coprocessor
+
+USE, INTRINSIC :: iso_c_binding
+USE fields
+
+IMPLICIT NONE
+
+CONTAINS
+
+SUBROUTINE init_coproc(step, time)
+INTEGER, INTENT(in) :: step
+REAL(num), INTENT(in) :: time
+INTEGER :: ilen, i
+CHARACTER(len=200) :: arg
+CALL coprocessorinitialize()
+DO i = 1, iargc()
+CALL getarg(i, arg)
+ilen = len_trim(arg)
+arg(ilen+1:) = C_NULL_CHAR
+CALL coprocessoraddpythonscript(arg, ilen)
+ENDDO
+CALL createinputdatadescription(step, time, "essential")
+END SUBROUTINE init_coproc
+
+SUBROUTINE run_coproc(step, time)
+INTEGER, INTENT(in) :: step
+REAL(num), INTENT(in) :: time
+INTEGER :: flag, mytid, ntids, n, i, j
+INTEGER, DIMENSION(6) :: local_extent, global_extent
+INTEGER, DIMENSION(4) :: lim
+REAL(num), DIMENSION(3*nx*ny) :: e_field, b_field
+#ifdef OPENMP
+    INTEGER :: omp_get_thread_num, omp_get_num_threads, omp_get_max_threads
+    EXTERNAL :: omp_get_thread_num, omp_get_num_threads, omp_get_max_threads
+#endif
+
+local_extent = (/ nx_global_min, nx_global_max, ny_global_min, ny_global_max, 0, 0 /)
+global_extent = (/ 1, nx_global, 1, ny_global, 0, 0 /)
+lim = (/ 1 + ng, nx + ng, 1 + ng, ny + ng /)
+
+CALL requestdatadescription(step, time, flag)
+IF (flag /= 0) THEN
+CALL buildgrid(rank, nproc, step, time, local_extent, global_extent, &
+x(lim(1):lim(2)), y(lim(3):lim(4)), "essential"//C_NULL_CHAR)
+
+!$omp parallel default(none) private(mytid,i,j,n) &
+shared(ntids,lim,e_field,b_field,ex,ey,ez,bx,by,bz)
+#ifdef OPENMP
+     mytid = OMP_GET_THREAD_NUM()
+     ntids = OMP_GET_NUM_THREADS()
+#endif
+DO j = 0, lim(4) - lim(3), ntids
+n = (j+mytid)*(1 + lim(2) - lim(1))*3 + 1
+IF(j + mytid <= lim(4)) THEN
+DO i = 0, lim(2) - lim(1)
+e_field(n + 0) = ex(lim(1) + i, lim(3) + j + mytid)
+e_field(n + 1) = ey(lim(1) + i, lim(3) + j + mytid)
+e_field(n + 2) = ez(lim(1) + i, lim(3) + j + mytid)
+b_field(n + 0) = bx(lim(1) + i, lim(3) + j + mytid)
+b_field(n + 1) = by(lim(1) + i, lim(3) + j + mytid)
+b_field(n + 2) = bz(lim(1) + i, lim(3) + j + mytid)
+n = n + 3
+ENDDO
+ENDIF
+ENDDO
+!$omp end parallel
+
+CALL addfield(rank, e_field, "E (V/m)"//C_NULL_CHAR, 3, "essential"//C_NULL_CHAR)
+CALL addfield(rank, b_field, "B (T)"//C_NULL_CHAR, 3, "essential"//C_NULL_CHAR)
+CALL coprocess()
+ENDIF
+END SUBROUTINE run_coproc
+
+SUBROUTINE finalise_coproc()
+CALL coprocessorfinalize()
+END SUBROUTINE finalise_coproc
+
+END MODULE coprocessor
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=C++ adaptor for ParaView Catalyst]
+#include "vtkCPDataDescription.h"
+#include "vtkCPInputDataDescription.h"
+#include "vtkCPProcessor.h"
+#include "vtkCPPythonScriptPipeline.h"
+#include "vtkCPPythonAdaptorAPI.h"
+
+#ifdef INSITU_DOUBLE_PREC
+#include "vtkDoubleArray.h"
+#else
+#include "vtkFloatArray.h"
+#endif
+
+#include "vtkSmartPointer.h"
+#include "vtkRectilinearGrid.h"
+#include "vtkPointData.h"
+#include "vtkImageData.h"
+#include "vtkMultiBlockDataSet.h"
+#include "vtkMultiPieceDataSet.h"
+
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <array>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+void createinputdatadescription_(int* step, double* time, const char* grid_name);
+void buildgrid_(int* rank, int* size, int* step, double* time, int* local_extent, int* global_extent, double* x_coords, double* y_coords, const char* grid_name);
+void addfield_(int* rank, double* input_field, char* name, int* components, const char* grid_name);
+#ifdef __cplusplus
+}
+#endif
+
+void createinputdatadescription_(int* step, double* time, const char* grid_name) {
+if (!vtkCPPythonAdaptorAPI::GetCoProcessorData()) {
+vtkGenericWarningMacro("unable to access coprocessor data");
+return;
+}
+vtkCPPythonAdaptorAPI::GetCoProcessorData()->AddInput(grid_name);
+vtkCPPythonAdaptorAPI::GetCoProcessorData()->SetTimeData(*time, static_cast<vtkIdType>(*step));
+return;
+}
+
+void buildgrid_(int* rank, int* size, int* step, double* time, int* local_extent, int* global_extent, double* x_coords, double* y_coords, const char* grid_name) {
+if (!vtkCPPythonAdaptorAPI::GetCoProcessorData()) {
+vtkGenericWarningMacro("unable to access coprocessor data");
+return;
+}
+vtkCPPythonAdaptorAPI::GetCoProcessorData()->SetTimeData(*time, static_cast<vtkIdType>(*step));
+if(!vtkCPPythonAdaptorAPI::GetCoProcessorData()->GetInputDescriptionByName(grid_name)->GetGrid()) {
+vtkCPInputDataDescription* idd = vtkCPPythonAdaptorAPI::GetCoProcessorData()->GetInputDescriptionByName(grid_name);
+if (!idd) {
+vtkGenericWarningMacro("cannot access data description to attach grid to");
+return;
+}
+
+vtkSmartPointer<vtkRectilinearGrid> rectilinear_grid =
+vtkSmartPointer<vtkRectilinearGrid>::New();
+rectilinear_grid->SetExtent(local_extent);
+
+int* ext = rectilinear_grid->GetExtent();
+int dim[3] = {ext[1] - ext[0] + 1, ext[3] - ext[2] + 1, ext[5] - ext[4] + 1};
+
+#ifdef INSITU_DOUBLE_PREC
+vtkSmartPointer<vtkDoubleArray> x_array = vtkSmartPointer<vtkDoubleArray>::New();
+vtkSmartPointer<vtkDoubleArray> y_array = vtkSmartPointer<vtkDoubleArray>::New();
+double* x_c = x_coords;
+double* y_c = y_coords;
+#else
+vtkSmartPointer<vtkFloatArray> x_array = vtkSmartPointer<vtkFloatArray>::New();
+vtkSmartPointer<vtkFloatArray> y_array = vtkSmartPointer<vtkFloatArray>::New();
+float* x_c = new float[dim[0]];
+float* y_c = new float[dim[1]];
+for(std::size_t i = 0; i < dim[0]; i++) {
+x_c[i] = static_cast<float>(x_coords[i]);
+}
+for(std::size_t i = 0; i < dim[1]; i++) {
+y_c[i] = static_cast<float>(y_coords[i]);
+}
+#endif
+x_array->SetNumberOfComponents(1);
+y_array->SetNumberOfComponents(1);
+x_array->SetArray(x_c, static_cast<vtkIdType>(dim[0]), 1);
+y_array->SetArray(y_c, static_cast<vtkIdType>(dim[1]), 1);
+rectilinear_grid->SetXCoordinates(x_array);
+rectilinear_grid->SetYCoordinates(y_array);
+
+vtkSmartPointer<vtkMultiPieceDataSet> multi_piece = vtkSmartPointer<vtkMultiPieceDataSet>::New();
+multi_piece->SetNumberOfPieces(*size);
+multi_piece->SetPiece(*rank, rectilinear_grid);
+
+vtkSmartPointer<vtkMultiBlockDataSet> grid = vtkSmartPointer<vtkMultiBlockDataSet>::New();
+grid->SetNumberOfBlocks(1);
+grid->SetBlock(0, multi_piece);
+
+idd->SetWholeExtent(global_extent);
+idd->SetGrid(grid);
+}
+return;
+}
+
+void addfield_(int* rank, double* input_field, char* name, int* components, const char* grid_name) {
+if (!vtkCPPythonAdaptorAPI::GetCoProcessorData()) {
+vtkGenericWarningMacro("unable to access coprocessor data");
+return;
+}
+vtkCPInputDataDescription* idd = vtkCPPythonAdaptorAPI::GetCoProcessorData()->GetInputDescriptionByName(grid_name);
+vtkMultiBlockDataSet* multi_block = vtkMultiBlockDataSet::SafeDownCast(idd->GetGrid());
+vtkMultiPieceDataSet* multi_piece = vtkMultiPieceDataSet::SafeDownCast(multi_block->GetBlock(0));
+vtkRectilinearGrid* type = vtkRectilinearGrid::SafeDownCast(multi_piece->GetPiece(*rank));
+if (!type) {
+vtkGenericWarningMacro("no adaptor grid to attach field data to");
+return;
+}
+if (idd->IsFieldNeeded(name)) {
+int size = (*components)*type->GetNumberOfPoints();
+#ifdef INSITU_DOUBLE_PREC
+double* array = input_field;
+vtkSmartPointer<vtkDoubleArray> field = vtkSmartPointer<vtkDoubleArray>::New();
+#else
+float* array = new float[size];
+for(std::size_t i = 0; i < size; i++) {
+array[i] = static_cast<float>(input_field[i]);
+}
+vtkSmartPointer<vtkFloatArray> field = vtkSmartPointer<vtkFloatArray>::New();
+#endif
+field->SetName(name);
+field->SetNumberOfComponents(*components);
+field->SetArray(array, static_cast<vtkIdType>(size), 1);
+type->GetPointData()->AddArray(field);
+}
+return;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=Sample visualization pipeline using Python script]
+try: paraview.simple
+except: from paraview.simple import *
+
+from paraview import coprocessing
+
+inputs = ['essential']
+update_freq = 1
+output_freq = 10000
+
+def CreateCoProcessor():
+def _CreatePipeline(coprocessor, datadescription):
+class Pipeline:
+
+essential = coprocessor.CreateProducer(datadescription, "essential")
+
+multi_block_binary_writer = servermanager.writers.XMLMultiBlockDataWriter(Input=essential, DataMode='Appended', EncodeAppendedData=0, HeaderType='UInt32', CompressorType='ZLib')
+coprocessor.RegisterWriter(multi_block_binary_writer, filename='full_grid_%t.vtm', freq=output_freq)
+
+class CoProcessor(coprocessing.CoProcessor):
+def CreatePipeline(self, datadescription):
+self.Pipeline = _CreatePipeline(self, datadescription)
+
+coprocessor = CoProcessor()
+freqs = {}
+for name in inputs:
+freqs[name] = [update_freq]
+
+coprocessor.SetUpdateFrequencies(freqs)
+return coprocessor
+
+coprocessor = CreateCoProcessor()
+coprocessor.EnableLiveVisualization(True)
+
+def RequestDataDescription(datadescription):
+"Callback to populate the request for current timestep"
+global coprocessor
+
+if datadescription.GetForceOutput() == True:
+for i in range(datadescription.GetNumberOfInputDescriptions()):
+datadescription.GetInputDescription(i).AllFieldsOn()
+datadescription.GetInputDescription(i).GenerateMeshOn()
+return
+
+coprocessor.LoadRequestedData(datadescription)
+
+def DoCoProcessing(datadescription):
+"Callback to do co-processing for current timestep"
+global coprocessor
+
+coprocessor.UpdateProducers(datadescription)
+coprocessor.WriteData(datadescription);
+coprocessor.WriteImages(datadescription, rescale_lookuptable=False)
+coprocessor.DoLiveVisualization(datadescription, "visualization_node", 11111)
+\end{lstlisting}
+
+\begin{lstlisting}[style=FORTRAN, caption=EPOCH CMakeLists file to generate platform-specific build scripts]
+cmake_minimum_required(VERSION 3.1)
+project(EPOCH_2D)
+enable_language(CXX Fortran)
+
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+set(CMAKE_Fortran_MODULE_DIRECTORY ${CMAKE_SOURCE_DIR}/obj)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
+
+find_package(MPI REQUIRED)
+find_package(SDF REQUIRED)
+
+include_directories(${MPI_Fortran_INCLUDE_PATH})
+include_directories(${SDF_Fortran_INCLUDE_PATH})
+include_directories(src/include)
+
+execute_process(COMMAND ./src/gen_commit_string.sh)
+execute_process(COMMAND grep -oP "(?<=COMMIT=)[^ ]+" ./src/COMMIT OUTPUT_VARIABLE COMMIT)
+execute_process(COMMAND date +%s OUTPUT_VARIABLE DATE)
+execute_process(COMMAND uname -n OUTPUT_VARIABLE MACHINE)
+
+add_definitions('-D_COMMIT="${COMMIT}"')
+add_definitions('-D_DATE=${DATE}')
+add_definitions('-D_MACHINE="${MACHINE}"')
+
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+message(STATUS "Setting build type to 'Release', Debug mode was not specified.")
+set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
+# Set the possible values of build type for cmake-gui
+set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release")
+endif()
+
+if(${CMAKE_Fortran_COMPILER_ID} MATCHES "Intel")
+set(CMAKE_Fortran_FLAGS_RELEASE "-O3 -xHost -no-prec-div -fno-math-errno -unroll=3 -qopt-subscript-in-range -align all")
+set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -nothreads -traceback -fltconsistency -C -g -heap-arrays 64 -warn -fp-stack-check -check bounds -fpe0")
+elseif(${CMAKE_Fortran_COMPILER_ID} MATCHES "GNU")
+set(CMAKE_Fortran_FLAGS_RELEASE "-O2 -fimplicit-none -ffixed-line-length-132")
+set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -g -Wall -Wextra -pedantic -fbounds-check -ffpe-trap=invalid,zero,overflow -Wno-unused-parameter")
+elseif(${CMAKE_Fortran_COMPILER_ID} MATCHES "PGI")
+  set(CMAKE_Fortran_FLAGS_RELEASE "-r8 -fast -fastsse -O3 -Mipa=fast,inline -Minfo")
+  set(CMAKE_Fortran_FLAGS_DEBUG "-Mbounds -g")
+elseif(${CMAKE_Fortran_COMPILER_ID} MATCHES "G95")
+  set(CMAKE_Fortran_FLAGS_RELEASE "-O3")
+  set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -g")
+elseif(${CMAKE_Fortran_COMPILER_ID} MATCHES "XL")
+  set(CMAKE_Fortran_FLAGS_RELEASE "-O5 -qhot -qipa")
+  set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -C -g -qfullpath -qinfo -qnosmp -qxflag=dvz -Q! -qnounwind -qnounroll")
+else()
+message(STATUS "No optimized Fortran compiler flags are known")
+message(STATUS "Fortran compiler full path: " ${CMAKE_Fortran_COMPILER})
+set(CMAKE_Fortran_FLAGS_RELEASE "-O2")
+set(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -g")
+endif()
+
+if(${CMAKE_CXX_COMPILER_ID} MATCHES "Intel")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -std=c++11 -no-prec-div -ansi-alias -qopt-prefetch=4 -unroll-aggressive -m64")
+set(CMAKE_CXX_FLAGS_DEBUG "-O0 -std=c++11 -g -traceback -mp1 -fp-trap=common -fp-model strict")
+elseif(${CMAKE_CXX_COMPILER_ID} MATCHES "GNU")
+set(CMAKE_CXX_FLAGS_RELEASE "-O2 -std=c++11 -msse4 -mtune=native -march=native -funroll-loops -fno-math-errno -ffast-math")
+set(CMAKE_CXX_FLAGS_DEBUG "-O0 -std=c++11 -g -pedantic -Wall -Wextra -Wno-unused")
+elseif(${CMAKE_CXX_COMPILER_ID} MATCHES "PGI")
+  set(CMAKE_CXX_FLAGS_RELEASE "-std=c++0x")
+  set(CMAKE_CXX_FLAGS_DEBUG "-std=c++0x")
+elseif(${CMAKE_CXX_COMPILER_ID} MATCHES "G95")
+  set(CMAKE_CXX_FLAGS_RELEASE "-std=c++0x")
+  set(CMAKE_CXX_FLAGS_DEBUG "-std=c++0x")
+elseif(${CMAKE_CXX_COMPILER_ID} MATCHES "XL")
+  set(CMAKE_CXX_FLAGS_RELEASE "-qlanglvl=extended0x")
+  set(CMAKE_CXX_FLAGS_DEBUG "-qlanglvl=extended0x")
+else()
+message(STATUS "No optimized C++ compiler flags are known")
+message(STATUS "C++ compiler full path: " ${CMAKE_CXX_COMPILER})
+set(CMAKE_CXX_FLAGS_RELEASE "-O2 -std=c++11")
+set(CMAKE_CXX_FLAGS_DEBUG "-O0 -std=c++11 -g")
+endif()
+
+set(SOURCES
+${CMAKE_SOURCE_DIR}/src/epoch2d.F90
+${CMAKE_SOURCE_DIR}/src/boundary.f90
+${CMAKE_SOURCE_DIR}/src/fields.f90
+${CMAKE_SOURCE_DIR}/src/laser.F90
+${CMAKE_SOURCE_DIR}/src/particles.F90
+${CMAKE_SOURCE_DIR}/src/shared_data.F90
+)
+
+set(FOLDERS deck housekeeping io parser physics_packages user_interaction)
+foreach(FOLDER ${FOLDERS})
+file(GLOB TMP ${CMAKE_SOURCE_DIR}/src/${FOLDER}/*)
+list(APPEND SOURCES ${TMP})
+endforeach()
+
+option(OPENMP "Enable multithreading using OpenMP directives." OFF)
+option(PER_SPECIES_WEIGHT "Set every pseudoparticle in a species to represent the same number of real particles." OFF)
+option(NO_TRACER_PARTICLES "Don't enable support for tracer particles." OFF)
+option(NO_PARTICLE_PROBES "Don't enable support for particle probes." OFF)
+option(PARTICLE_SHAPE_TOPHAT "Use second order particle weighting." OFF)
+option(PARTICLE_SHAPE_BSPLINE3 "Use fifth order particle weighting." OFF)
+option(PARTICLE_ID "Include a unique global particle ID using an 8-byte integer." OFF)
+option(PARTICLE_ID4 "Include a unique global particle ID using an 4-byte integer." OFF)
+option(PARTICLE_COUNT_UPDATE "Keep global particle counts up to date." OFF)
+option(PHOTONS "Include QED routines" OFF)
+option(TRIDENT_PHOTONS "Use the Trident process for pair production." OFF)
+option(PREFETCH "Use Intel-specific 'mm_prefetch' calls to load next particle in the list into cache ahead of time." OFF)
+option(PARSER_DEBUG "Turn on debugging." OFF)
+option(PARTICLE_DEBUG "Turn on debugging." OFF)
+option(MPI_DEBUG "Turn on debugging." OFF)
+option(SIMPLIFY_DEBUG "Turn on debugging." OFF)
+option(NO_IO "Don't generate any output at all. Useful for benchmarking." OFF)
+option(COLLISIONS_TEST "Bypass the main simulation and only perform collision tests." OFF)
+option(PER_PARTICLE_CHARGE_MASS "specify charge and mass per particle rather than per species." OFF)
+option(PARSER_CHECKING "Perform checks on evaluated deck expressions." OFF)
+option(USE_INSITU "Link epoch with ParaView Catalyst." OFF)
+option(INSITU_DOUBLE_PREC "Double precision for data exported insitu." OFF)
+option(TIGHT_FOCUSING "Maxwell consistent computation of EM fields at boundary for tight-focusing." OFF)
+
+if(OPENMP)
+message(STATUS "Option 'OPENMP' enabled")
+add_definitions("-DOPENMP")
+if(${CMAKE_Fortran_COMPILER_ID} MATCHES "Intel")
+set(CMAKE_Fortran_FLAGS_RELEASE "${CMAKE_Fortran_FLAGS_RELEASE} -qopenmp")
+set(CMAKE_Fortran_FLAGS_DEBUG "${CMAKE_Fortran_FLAGS_DEBUG} -qopenmp")
+elseif(${CMAKE_Fortran_COMPILER_ID} MATCHES "GNU")
+set(CMAKE_Fortran_FLAGS_RELEASE "${CMAKE_Fortran_FLAGS_RELEASE} -fopenmp")
+set(CMAKE_Fortran_FLAGS_DEBUG "${CMAKE_Fortran_FLAGS_DEBUG} -fopenmp")
+else()
+message(STATUS "Fortran OpenMP compiler flag not known.")
+endif()
+if(${CMAKE_CXX_COMPILER_ID} MATCHES "Intel")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -qopenmp")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -qopenmp")
+elseif(${CMAKE_CXX_COMPILER_ID} MATCHES "GNU")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fopenmp")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fopenmp")
+else()
+message(STATUS "C++ OpenMP compiler flag not known.")
+endif()
+endif()
+
+if(TIGHT_FOCUSING AND NOT FFT_LIBRARY)
+message(STATUS "No FFT library specified. Setting FFT library to 'none'.")
+set(FFT_LIBRARY none CACHE STRING "Choose the FFT library." FORCE)
+set_property(CACHE FFT_LIBRARY PROPERTY STRINGS "FFTW" "MKL" "None")
+endif()
+
+if(PER_SPECIES_WEIGHT)
+message(STATUS "Option 'PER_SPECIES_WEIGHT' enabled")
+add_definitions("-DPER_SPECIES_WEIGHT")
+endif()
+
+if(NO_TRACER_PARTICLES)
+message(STATUS "Option 'NO_TRACER_PARTICLES' enabled")
+add_definitions("-DNO_TRACER_PARTICLES")
+endif()
+
+if(NO_PARTICLE_PROBES)
+message(STATUS "Option 'NO_PARTICLE_PROBES' enabled")
+add_definitions("-DNO_PARTICLE_PROBES")
+endif()
+
+if(PARTICLE_SHAPE_TOPHAT)
+message(STATUS "Option 'PARTICLE_SHAPE_TOPHAT' enabled")
+add_definitions("-DPARTICLE_SHAPE_TOPHAT")
+endif()
+
+if(PARTICLE_SHAPE_BSPLINE3)
+message(STATUS "Option 'PARTICLE_SHAPE_BSPLINE3' enabled")
+add_definitions("-DPARTICLE_SHAPE_BSPLINE3")
+endif()
+
+if(PARTICLE_ID)
+message(STATUS "Option 'PARTICLE_ID' enabled")
+add_definitions("-DPARTICLE_ID")
+endif()
+
+if(PARTICLE_ID4)
+message(STATUS "Option 'PARTICLE_ID4' enabled")
+add_definitions("-DPARTICLE_ID4")
+endif()
+
+if(PARTICLE_COUNT_UPDATE)
+message(STATUS "Option 'PARTICLE_COUNT_UPDATE' enabled")
+add_definitions("-DPARTICLE_COUNT_UPDATE")
+endif()
+
+if(PHOTONS)
+message(STATUS "Option 'PHOTONS' enabled")
+add_definitions("-DPHOTONS")
+endif()
+
+if(TRIDENT_PHOTONS)
+message(STATUS "Option 'TRIDENT_PHOTONS' enabled")
+add_definitions("-DTRIDENT_PHOTONS")
+endif()
+
+if(PREFETCH)
+message(STATUS "Option 'PREFETCH' enabled")
+add_definitions("-DPREFETCH")
+endif()
+
+if(PARSER_DEBUG)
+message(STATUS "Option 'PARSER_DEBUG' enabled")
+add_definitions("-DPARSER_DEBUG")
+endif()
+
+if(PARTICLE_DEBUG)
+message(STATUS "Option 'PARTICLE_DEBUG' enabled")
+add_definitions("-DPARTICLE_DEBUG")
+endif()
+
+if(MPI_DEBUG)
+message(STATUS "Option 'MPI_DEBUG' enabled")
+add_definitions("-DMPI_DEBUG")
+endif()
+
+if(SIMPLIFY_DEBUG)
+message(STATUS "Option 'SIMPLIFY_DEBUG' enabled")
+add_definitions("-DSIMPLIFY_DEBUG")
+endif()
+
+if(NO_IO)
+message(STATUS "Option 'NO_IO' enabled")
+add_definitions("-DNO_IO")
+endif()
+
+if(COLLISIONS_TEST)
+message(STATUS "Option 'COLLISIONS_TEST' enabled")
+add_definitions("-DCOLLISIONS_TEST")
+endif()
+
+if(PER_PARTICLE_CHARGE_MASS)
+message(STATUS "Option 'PER_PARTICLE_CHARGE_MASS' enabled")
+add_definitions("-DPER_PARTICLE_CHARGE_MASS")
+endif()
+
+if(PARSER_CHECKING)
+message(STATUS "Option 'PARSER_CHECKING' enabled")
+add_definitions("-DPARSER_CHECKING")
+endif()
+
+if(USE_INSITU)
+message(STATUS "Option 'USE_INSITU' enabled")
+find_package(ParaView 5.2 REQUIRED COMPONENTS vtkPVPythonCatalyst)
+include(${PARAVIEW_USE_FILE})
+file(GLOB ADAPTOR ${CMAKE_SOURCE_DIR}/src/adaptor/*)
+list(APPEND SOURCES ${ADAPTOR})
+add_definitions("-DINSITU")
+if(NOT PARAVIEW_USE_MPI)
+message(SEND_ERROR "ParaView must be built with MPI enabled")
+endif()
+if(INSITU_DOUBLE_PREC)
+message(STATUS "Option 'INSITU_DOUBLE_PREC' enabled")
+add_definitions("-DINSITU_DOUBLE_PREC")
+endif()
+endif()
+
+if(TIGHT_FOCUSING)
+message(STATUS "Option 'TIGHT_FOCUSING' enabled")
+file(GLOB FOCUSING ${CMAKE_SOURCE_DIR}/src/focusing/interface.f90)
+list(APPEND SOURCES ${FOCUSING})
+include_directories(${MPI_CXX_INCLUDE_PATH})
+add_definitions("-DTIGHT_FOCUSING")
+set(FOCUS_SRC
+${CMAKE_SOURCE_DIR}/src/focusing/main.cpp
+${CMAKE_SOURCE_DIR}/src/focusing/domain_param.cpp
+${CMAKE_SOURCE_DIR}/src/focusing/laser_param.cpp
+${CMAKE_SOURCE_DIR}/src/focusing/global.cpp
+${CMAKE_SOURCE_DIR}/src/focusing/laser_bcs.cpp
+)
+include_directories(${CMAKE_SOURCE_DIR}/src/focusing/inc)
+if(${FFT_LIBRARY} MATCHES "FFTW")
+if(OPENMP)
+message(SEND_ERROR "Multi-threaded FFTW routines are not supported. Disable OpenMP.")
+endif()
+message(STATUS "FFT library: FFTW")
+message(STATUS "Option 'USE_FFTW' enabled")
+add_definitions("-DUSE_FFTW")
+find_package(FFTW REQUIRED)
+include_directories(${FFTW_INCLUDES})
+endif()
+if(${FFT_LIBRARY} MATCHES "MKL")
+if(NOT ${CMAKE_CXX_COMPILER_ID} MATCHES "Intel")
+message(SEND_ERROR "MKL library can be used only with Intel compilers")
+endif()
+message(STATUS "FFT library: MKL")
+message(STATUS "Option 'USE_MKL' enabled")
+add_definitions("-DUSE_MKL")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mkl")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mkl")
+set(CMAKE_Fortran_FLAGS_RELEASE "${CMAKE_Fortran_FLAGS_RELEASE} -mkl")
+set(CMAKE_Fortran_FLAGS_DEBUG "${CMAKE_Fortran_FLAGS_DEBUG} -mkl")
+endif()
+if(${FFT_LIBRARY} MATCHES "None")
+message(STATUS "FFT library: None")
+endif()
+add_library(focus ${FOCUS_SRC})
+if(${FFT_LIBRARY} MATCHES "FFTW")
+#if(OPENMP)
+#  target_link_libraries(focus LINK_PUBLIC ${FFTW_LIBRARIES} ${FFTW_LIBRARIES_OMP})
+#else()
+target_link_libraries(focus LINK_PUBLIC ${FFTW_LIBRARIES})
+#endif()
+endif()
+set_target_properties(focus PROPERTIES LINKER_LANGUAGE CXX)
+endif()
+
+add_executable(epoch2d ${SOURCES})
+target_link_libraries(epoch2d LINK_PRIVATE ${MPI_Fortran_LIBRARIES} ${SDF_Fortran_LIBRARIES})
+if(USE_INSITU)
+target_link_libraries(epoch2d LINK_PRIVATE vtkPVPythonCatalyst vtkParallelMPI)
+endif()
+if(TIGHT_FOCUSING)
+target_link_libraries(epoch2d LINK_PRIVATE ${MPI_CXX_LIBRARIES} focus)
+endif()
+set_target_properties(epoch2d PROPERTIES LINKER_LANGUAGE Fortran)
+\end{lstlisting}
