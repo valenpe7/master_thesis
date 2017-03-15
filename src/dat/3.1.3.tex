@@ -18,19 +18,19 @@ To discretize the equations of motion \ref{3.2.4.2}, a time-centered leap-frog s
 \frac{\vec{u}_{p}^{\:n+1/2} - \vec{u}_{p}^{\:n-1/2}}{\Delta t} = \frac{q_{s}}{m_{s}} \left( \vec{E}_{p}^{\:n} + \frac{\vec{u}_{p}^{\:n+1/2} + \vec{u}_{p}^{\:n-1/2}}{2 \gamma^{\:n}} \times \vec{B}_{p}^{\:n} \right).
 \end{equation}
 
-Although these equations appear to be very simple, the solution is the most time-consuming part of the simulation, because they must be solved for every single macro-particle each time step. Standard approach for particle pushing in plasma simulation PIC codes involves elegant Boris method, which completely separates the effect of electric and magnetic fields \cite{birdsall}. Substitute
+Although these equations appear to be very simple, the solution is the most time-consuming part of the simulation, because they must be solved for every single macro-particle at each time step. Standard approach for particle pushing in plasma simulation PIC codes involves elegant Boris method, which completely separates the effect of electric and magnetic fields \cite{birdsall}. Substitute
 \begin{equation}
 \label{3.2.4.6}
 \vec{u}_{p}^{\:n-1/2} = \vec{u}_{p}^{\:-} - \frac{q_{s} \vec{E}_{p}^{\:n}}{m_{s}} \frac{\Delta t}{2}, \qquad \vec{u}_{p}^{\:n+1/2} = \vec{u}_{p}^{\:+} + \frac{q_{s} \vec{E}_{p}^{\:n}}{m_{s}} \frac{\Delta t}{2}
 \end{equation}
-into equation \ref{3.2.4.5}, then the electric field cancels entirely,
+into the equation \ref{3.2.4.5}, then the electric field cancels entirely,
 \begin{equation}
 \label{3.2.4.7}
 \frac{\vec{u}_{p}^{\:+} - \vec{u}_{p}^{\:-}}{\Delta t} = \frac{q_{s}}{2 \gamma^{\:n} m_{s}} \left(\vec{u}_{p}^{\:+} + \vec{u}_{p}^{\:-}\right)\times \vec{B}_{p}^{\:n}. 
 \end{equation}
-Equation \ref{3.2.4.7} describes a rotation of vector $ \vec{u}_{p}^{\:-} $ to $ \vec{u}_{p}^{\:+} $ in one simulation time step $ \Delta t $. The angle $ \theta $ between vector $ \vec{u}_{p}^{\:-} $ and $ \vec{u}_{p}^{\:+} $ is expected to be $ \theta = \omega_{c} \Delta t $.
+The equation \ref{3.2.4.7} describes a rotation of the vector $ \vec{u}_{p}^{\:-} $ to $ \vec{u}_{p}^{\:+} $ in one simulation time step $ \Delta t $. The angle $ \theta $ between the vector $ \vec{u}_{p}^{\:-} $ and $ \vec{u}_{p}^{\:+} $ is expected to be $ \theta = \omega_{c} \Delta t $.
 
-To implement the Boris method, first add half the electric impulse $ \vec{E}_{p}^{\:n} $ to $ \vec{u}_{p}^{\:n-1/2} $, then perform the full rotation by the angle $ \theta $, and finally, add another half the electric impulse $ \vec{E}_{p}^{n} $. From the basic geometry Boris derived following steps to obtain $ \vec{u}_{p}^{\:n + 1/2} $. From the first of equations \ref{3.2.4.6}, express vector $ \vec{u}_{p}^{\:-} $,
+To implement the Boris method, first add half the electric impulse $ \vec{E}_{p}^{\:n} $ to $ \vec{u}_{p}^{\:n-1/2} $, then perform the full rotation by the angle $ \theta $, and finally, add another half the electric impulse $ \vec{E}_{p}^{n} $. From the basic geometry Boris derived following steps to obtain $ \vec{u}_{p}^{\:n + 1/2} $. From the first of the equations \ref{3.2.4.6}, express the vector $ \vec{u}_{p}^{\:-} $,
 \begin{equation}
 \vec{u}_{p}^{\:-} = \vec{u}_{p}^{\:n-1/2} +  \frac{q_{s} \vec{E}_{p}^{\:n}}{m_{s}} \frac{\Delta t}{2}
 \end{equation}
@@ -38,23 +38,28 @@ and construct an auxiliary vector $ \vec{u}_{p}\!' $, which is simultaneously pe
 \begin{equation}
 \vec{u}_{p}\!' = \vec{u}_{p}^{\:-} + \vec{u}_{p}^{\:-} \times \vec{t}, \qquad \vec{t} = \frac{q_{s} \vec{B}_{p}^{\:n}}{\gamma^{\:n} m_{s}} \frac{\Delta t}{2}.
 \end{equation}
-Vector $ \vec{t} $ has to be logically parallel to $ \vec{B}_{p}^{n} $ with the length of $ \tan \left(\theta/2\right) \approx \theta/2 $ for small angles. Next, exploit the fact that the vector $ (\vec{u}_{p}\!' \times \vec{B}_{p}^{\:n}) $ is parallel to $ \left(\vec{u}_{p}^{\:+} - \vec{u}_{p}^{\:-} \right) $ and express $ \vec{u}_{p}^{\:+} $,
+
+The vector $ \vec{t} $ has to be logically parallel to $ \vec{B}_{p}^{n} $ with the length of $ \tan \left(\theta/2\right) \approx \theta/2 $ for small angles. Next, exploit the fact that the vector $ (\vec{u}_{p}\!' \times \vec{B}_{p}^{\:n}) $ is parallel to $ \left(\vec{u}_{p}^{\:+} - \vec{u}_{p}^{\:-} \right) $ and express the vector $ \vec{u}_{p}^{\:+} $,
 \begin{equation}
 \vec{u}_{p}^{\:+} = \vec{u}_{p}^{\:-} + \vec{u}_{p}\!' \times \vec{s}, \qquad \vec{s} = \frac{2\vec{t}}{1 + t^2}.
 \end{equation}
-Here vector $ \vec{s} $ is parallel to $ \vec{B}_{p}^{n} $ and its length has to fulfill the condition $ \norm{\vec{u}_{p}^{\:+}} = \norm{\vec{u}_{p}^{\:-}} $. The transition from $ \vec{u}_{p}^{\:-} $ to $ \vec{u}_{p}^{\:+} $ can be written more clearly using the matrix,
+Here the vector $ \vec{s} $ is parallel to $ \vec{B}_{p}^{n} $ and its length has to fulfill the condition $ \norm{\vec{u}_{p}^{\:+}} = \norm{\vec{u}_{p}^{\:-}} $. The transition from $ \vec{u}_{p}^{\:-} $ to $ \vec{u}_{p}^{\:+} $ can be written more clearly using the matrix,
+\begin{equation}
+\vec{u}_{p}^{\:+} = \mathbb{M} \: \vec{u}_{p}^{\:-},
+\end{equation}
+where
 \begingroup
 \renewcommand*{\arraystretch}{1.8}
 \begin{equation}
-\vec{u}_{p}^{\:+} =  \begin{pmatrix}
-  1 - s_{2}t_{2} - s_{3}t_{3} & s_{2}t_{1} + s_{3} & s_{3}t_{1} - s_{2} \\
-  s_{1}t_{2} - s_{3} & 1 - s_{1}t_{1} - s_{3}t_{3} & s_{3}t_{2} + s_{1} \\
-  s_{1}t_{3} + s_{2} & s_{2}t_{3} - s_{1} & 1 - s_{1}t_{1} - s_{2}t_{2}
- \end{pmatrix}
-\vec{u}_{p}^{\:-}.
+\mathbb{M} = 
+\begin{pmatrix}
+1 - s_{2}t_{2} - s_{3}t_{3} & s_{2}t_{1} + s_{3} & s_{3}t_{1} - s_{2} \\
+s_{1}t_{2} - s_{3} & 1 - s_{1}t_{1} - s_{3}t_{3} & s_{3}t_{2} + s_{1} \\
+s_{1}t_{3} + s_{2} & s_{2}t_{3} - s_{1} & 1 - s_{1}t_{1} - s_{2}t_{2}
+\end{pmatrix}.
 \end{equation}
 \endgroup
-Finally, substitute vector $ \vec{u}_{p}^{\:+} $ into the second from the equations \ref{3.2.4.6},
+Finally, substitute the vector $ \vec{u}_{p}^{\:+} $ into the second from the equations \ref{3.2.4.6},
 \begin{equation}
 \vec{u}_{p}^{\:n+1/2} = \vec{u}_{p}^{\:+} + \frac{q_{s} \vec{E}_{p}^{\:n}}{m_{s}} \frac{\Delta t}{2}.
 \end{equation}

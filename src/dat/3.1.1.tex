@@ -1,4 +1,4 @@
-As already mentioned, the behavior of the time varying electromagnetic field in free space is governed by the microscopic variant of Maxwell equations (\ref{1.1} - \ref{1.4}). Typical method to solve Maxwell's equations is finite-difference time-domain (FDTD), because it is probably the simplest technique in terms of the implementation.
+As already mentioned, the behavior of the time varying electromagnetic field in free space is governed by the microscopic variant of Maxwell equations (\ref{1.1} - \ref{1.4}). A typical numerical technique to resolve the Maxwell's equations with respect to time is finite-difference time-domain method (FDTD), because it is probably the simplest technique in terms of the implementation.
 
 The vector components of the fields $ \vec{E}_{ijk}^{\,n} $ and $ \vec{B}_{ijk}^{\,n} $ are spatially staggered about rectangular cells of the computational grid,
 \begin{equation}
@@ -30,16 +30,16 @@ For marching in time a leap-frog scheme is used, thus discretized Maxwell's equa
 \label{3.1.1.16}
 \frac{1}{c^{2}} \frac{\vec{E}_{ijk}^{\,n + 1} - \vec{E}_{ijk}^{\,n}}{\Delta t} = \nabla^{+} \times \vec{B}_{ijk}^{\,n + 1/2} - \mu_{0} \vec{J}_{ijk}^{\,n + 1/2},
 \end{equation}
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.355\paperwidth]{./img/YEE/yee.eps}
+	\caption{Standard Cartesian Yee cell used for FDTD method}
+	\label{3.1.1.14}
+\end{figure}
 \begin{equation}
 \label{3.1.1.7}
 \frac{\vec{B}_{ijk}^{\,n + 1/2} - \vec{B}_{ijk}^{\,n - 1/2}}{\Delta t} = -\nabla^{-} \times \vec{E}_{ijk}^{\,n}.
 \end{equation}
-\begin{figure}[t]
-	\centering
-	\includegraphics[width=0.385\paperwidth]{./img/YEE/yee.eps}
-	\caption{Standard Cartesian Yee cell used for FDTD method}
-	\label{3.1.1.14}
-\end{figure}
 Notice that this scheme achieves second-order accuracy in both, space and time. Discrete operators $ \left(\nabla^{+}\right) $ and $ \left(\nabla^{-}\right) $ used in \ref{3.1.1.6} - \ref{3.1.1.7} act on a scalar field $ f_{i j k} $ as follows,
 \begin{equation}
 \label{3.1.1.8}
@@ -69,4 +69,4 @@ Before trying to find the solution of discretized Maxwell equations \ref{3.1.1.6
 \label{3.1.1.13}
 \frac{\rho_{ijk}^{\,n + 1} - \rho_{ijk}^{\,n}}{\Delta t} + \nabla^{+} \cdot \vec{J}_{ijk}^{\,n + 1/2} = 0.
 \end{equation}
-It means that it is possible to solve only equations \ref{3.1.1.16} and \ref{3.1.1.7}, while the divergence equations \ref{3.1.1.6}, \ref{3.1.1.15} can be considered as the initial conditions. In this case, the continuity equation in the finite differences (\ref{3.1.1.13}) has to be fulfilled.
+It means that it is possible to solve only the equations \ref{3.1.1.16} and \ref{3.1.1.7}, while the divergence equations \ref{3.1.1.6}, \ref{3.1.1.15} can be considered as the initial conditions. Note that in this case, the continuity equation in the finite differences (\ref{3.1.1.13}) has to be fulfilled.
