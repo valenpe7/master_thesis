@@ -2,7 +2,7 @@ Below, one can find the most important functions and methods that has been creat
 
 The following part is provided as it is, only with a short captions. It is mainly intended for those who are interested in the way of implementation and do not want to browse in the full source code, which can be found on the attached CD. Closer details are discussed in the third and fourth chapter of this work.
 
-\begin{lstlisting}[style=CXX, caption=Function performing forward fast Fourier transform using MKL library]
+\begin{lstlisting}[style=CXX, caption=Function performing forward fast Fourier transform using Intel$ ^{\scriptsize \textregistered} $ MKL library]
 std::vector<std::complex<double>> fft::mkl_fft_forward(std::vector<std::complex<double>> in) {
 DFTI_DESCRIPTOR_HANDLE desc;
 MKL_LONG status;
@@ -18,7 +18,7 @@ return in;
 }
 \end{lstlisting}
 
-\begin{lstlisting}[style=CXX, caption=Function performing backward fast Fourier transform using MKL library]
+\begin{lstlisting}[style=CXX, caption=Function performing backward fast Fourier transform using Intel$ ^{\scriptsize \textregistered} $ MKL library]
 std::vector<std::complex<double>> fft::mkl_fft_backward(std::vector<std::complex<double>> in) {
 DFTI_DESCRIPTOR_HANDLE desc;
 MKL_LONG status;
