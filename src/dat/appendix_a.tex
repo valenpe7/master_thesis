@@ -1,5 +1,273 @@
 This part contains input files of several most important simulations that have been performed within this work.  
 
-\section{Simulation 1}
+%\setlength{\columnsep}{30pt}
+%\begin{multicols}{2}
+\begin{lstlisting}[style=CXX, caption=test lbcs]
+begin:control
+	nx = 1600
+	ny = 4800
+	x_min = -8 * micron
+	x_max = 8 * micron
+	y_min = -24 * micron
+	y_max = 24 * micron
+	t_end = 150 * femto
+	field_order = 2
+	stdout_frequency = 1
+	smooth_currents = T
+	dt_multiplier = 0.95
+end:control
 
-\section{Simulation 2}
+begin:boundaries
+	cpml_thickness = 16
+	cpml_kappa_max = 20
+	cpml_a_max = 0.2
+	cpml_sigma_max = 0.7
+	bc_x_min_field = cpml_laser
+	bc_x_max_field = cpml_outflow
+	bc_x_min_particle = thermal
+	bc_x_max_particle = thermal
+	bc_y_min_field = cpml_outflow
+	bc_y_max_field = cpml_outflow
+	bc_y_min_particle = thermal
+	bc_y_max_particle = thermal
+end:boundaries
+
+begin:laser
+	boundary = x_min
+	id = 1
+	fwhm_time = 20 * femto
+	t_0 = 50 * femto
+	w_0 = 0.7 * micron # 5.0 * micron
+	pos = 0.0 * micron
+	focus = 0.0 * micron
+	amp = 1.0e15
+	lambda = 1.0 * micron
+	pol_angle = 0.0 * pi
+	t_start = 0.0 * femto
+	t_end = 300 * femto
+end:laser
+
+begin:output
+	name = fields
+	file_prefix = field
+	dump_at_times = 50.00 * femto, 76.685127616 * femto, 103.370255232 * femto
+	grid = always + single
+	ex = always + single
+	ey = always + single
+	bz = always + single
+	dump_first = F
+	dump_last = F
+	restartable = F
+end:output
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=test paraxial]
+begin:control
+	nx = 1600
+	ny = 4800
+	x_min = -8 * micron
+	x_max = 8 * micron
+	y_min = -24 * micron
+	y_max = 24 * micron
+	t_end = 150 * femto
+	field_order = 2
+	stdout_frequency = 1
+	smooth_currents = T
+	dt_multiplier = 0.95
+end:control
+
+begin:boundaries
+	cpml_thickness = 16
+	cpml_kappa_max = 20
+	cpml_a_max = 0.2
+	cpml_sigma_max = 0.7
+	bc_x_min_field = cpml_laser
+	bc_x_max_field = cpml_outflow
+	bc_x_min_particle = thermal
+	bc_x_max_particle = thermal
+	bc_y_min_field = cpml_outflow
+	bc_y_max_field = cpml_outflow
+	bc_y_min_particle = thermal
+	bc_y_max_particle = thermal
+end:boundaries
+
+begin:constant
+	cell_xsize = (x_max - x_min) / nx
+	cell_ysize = (y_max - y_min) / ny
+	las_lambda0 = 1.0 * micron                            
+	las_omega = 2.0 * pi * c / las_lambda0                    
+	las_time = 2.0 * pi / las_omega                          
+	theta = 0                                                                              
+	w0 = 0.7 * micron # 5.0 * micron                                     
+	fwhm_time = 20 * femto                                         
+	w_time = fwhm_time / (2.0 * (sqrt(loge(2.0))))
+	xfocus = 8 * micron                                         
+	yc = -xfocus * tan(theta)                                      
+	zR = pi * w0^2 / las_lambda0                                  
+	lfocus = xfocus / cos(theta)                                   
+	wl = w0 * sqrt(1.0+(lfocus^2)/(zR^2))                        
+	w_y = wl / cos(theta)                                         
+	r_curv = lfocus * (1.0+(zR^2)/(lfocus^2))                
+	intensity_fac2d = 1.0 / sqrt(1.0+lfocus^2/zR^2) * cos(theta)   
+	n_crit = critical(las_omega)                                   
+end:constant
+
+begin:laser
+	boundary = x_min
+	amp = 1.8895615869e14
+	lambda = 1.0 * micron
+	pol_angle = 0.0 * pi
+	phase = -2.0*pi*(y-yc)*sin(theta)/las_lambda0 + pi/(las_lambda0)*((y-yc)*cos(theta))^2*1.0/r_curv - atan(((yc-y)*sin(theta)+lfocus)/zR)
+	profile = gauss(y, yc, sqrt(2)*w_y)
+	t_profile = gauss(time, 50*femto, w_time)
+	t_start = 0.0 * femto
+	t_end = 300 * femto
+end:laser
+
+begin:output
+	name = fields
+	file_prefix = field
+	dump_at_times = 50.00 * femto, 76.685127616 * femto, 103.370255232 * femto
+	grid = always + single
+	ex = always + single
+	ey = always + single
+	bz = always + single
+	dump_first = F
+	dump_last = F
+	restartable = F
+end:output
+\end{lstlisting}
+
+\begin{lstlisting}[style=CXX, caption=2kppc]
+begin:control
+	nx = 1875
+	ny = 5000
+	x_min = 0 * micron
+	x_max = 15 * micron
+	y_min = -20 * micron
+	y_max = 20 * micron
+	t_end = 200 * femto
+	field_order = 2
+	stdout_frequency = 1
+	smooth_currents = T
+	dt_multiplier = 0.95
+end:control
+
+begin:boundaries
+	cpml_thickness = 16
+	cpml_kappa_max = 20
+	cpml_a_max = 0.2
+	cpml_sigma_max = 0.7
+	bc_x_min_field = cpml_laser
+	bc_x_max_field = cpml_outflow
+	bc_x_min_particle = thermal
+	bc_x_max_particle = thermal
+	bc_y_min_field = cpml_outflow
+	bc_y_max_field = cpml_outflow
+	bc_y_min_particle = thermal
+	bc_y_max_particle = thermal
+end:boundaries
+
+begin:species
+	name = electron
+	charge = -1.0
+	mass = 1.0
+	npart_per_cell = 2000
+	density = if((x gt 8 * micron) and (x lt 10 * micron) and (abs(y) lt 15 * micron), 100.0 * n_crit, 0.0)
+	temp_ev = 100
+end:species
+
+begin:species
+	name = proton
+	charge = 1.0
+	mass = 1836.2
+	npart_per_cell = 100
+	density = density(electron)
+	temp_ev = 100
+end:species
+
+begin:laser
+	boundary = x_min
+	id = 1
+	fwhm_time = 30 * femto
+	t_0 = 60 * femto
+	w_0 = 0.5 * micron
+	pos = 0.0 * micron
+	focus = 8.0 * micron
+	intensity_w_cm2 = 1.0e20
+	lambda = 0.8 * micron
+	pol_angle = 0.0 * pi
+	t_start = 0.0 * femto
+	t_end = 300 * femto
+end:laser
+
+begin:subset
+	name = tenth
+	random_fraction = 0.1
+	include_species:electron
+	include_species:proton
+end:subset
+
+begin:output
+	name = particles
+	file_prefix = part
+	dt_snapshot = 10 * femto
+	particle_grid = tenth + single
+	px = tenth + single
+	py = tenth + single
+	pz = tenth + single
+	particle_weight = tenth + single
+	dump_first = F
+	dump_last = F
+	restartable = F
+end:output
+
+begin:output
+	name = fields
+	file_prefix = field
+	dt_snapshot = 10 * femto
+	grid = always + single
+	ex = always + single
+	ey = always + single
+	bz = always + single
+	dump_first = F
+	dump_last = F
+	restartable = F
+end:output
+
+begin:output
+	name = density
+	file_prefix = dens
+	dt_snapshot = 10 * femto
+	mass_density = always + single + species
+	charge_density = always + single + species
+	number_density = always + single + species
+	dump_first = F
+	dump_last = F
+	restartable = F
+end:output
+
+begin:output
+	name = diag
+	file_prefix = diag
+	dt_snapshot = 10 * femto
+	ekbar = always + single + species
+	ekflux = always + single + species
+	poynt_flux = always + single
+	temperature = always + single + species
+	total_energy_sum = always
+	dump_first = F
+	dump_last = F
+	restartable = F
+end:output
+
+begin:output
+	name = restart
+	file_prefix = r
+	dt_snapshot = 50.0 * femto
+	dump_first = F
+	dump_last = F
+	restartable = T
+end:output
+\end{lstlisting}
+%\end{multicols}
