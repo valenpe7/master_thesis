@@ -1,0 +1,21 @@
+Absorption:
+
+1) energy = const. (2.8306e+04 J), target thickness: 2.0 micron, 2000 ppc
+w_0 = 0.5 micron: 20.12 % (intensity: 2.00e20 W/cm2)
+w_0 = 1.0 micron:  9.61 % (intensity: 1.00e20 W/cm2)
+w_0 = 2.0 micron:  5.27 % (intensity: 0.50e20 W/cm2)
+w_0 = 4.0 micron:  3.50 % (intensity: 0.25e20 W/cm2)
+
+2) intensity = const. (1.00e20 W/cm2), target thickness: 2.0 micron, 2000 ppc
+w_0 = 0.5 micron: 16.38 % (energy: 1.4113e+04 J)
+w_0 = 1.0 micron:  9.61 % (energy: 2.8306e+04 J)
+w_0 = 2.0 micron:  8.26 % (energy: 5.6612e+04 J)
+w_0 = 4.0 micron:  8.29 % (energy: 1.1322e+05 J)
+
+3) intensity = const. (1.00e21 W/cm2), target thickness: 2.0 micron, 1000 ppc
+w_0 = 0.5 micron: 34.41 % (energy: 1.4113e+05 J)
+w_0 = 2.0 micron: 24.98 % (energy: 5.6612e+05 J)
+
+4) intensity = const. (1.00e21 W/cm2), target thickness: 0.25 micron, 2000 ppc
+w_0 = 0.5 micron: 36.76 % (energy: 1.4113e+05 J)
+w_0 = 2.0 micron: 25.64 % (energy: 5.6612e+05 J)
