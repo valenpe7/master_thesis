@@ -1,0 +1,22 @@
+In order to solve the Maxwell's equations, as shown in the previous section of this chapter, one has to know the source terms produced by the motion of the charged particles. In other words, it is necessary to assign charge and current densities from the continuous macro-particle positions to the discrete grid points. This simulation step is usually referred to as particle weighting and it involves some form of interpolation.
+ 
+According to the kinetic theory, charge density $ \rho\left(\vec{x}, t \right) $ and current density $ \vec{J}\left(\vec{x}, t \right) $ are given by the following integrals over the velocity space,
+\begin{equation}
+\label{3.1.2.1}
+\rho\left(\vec{x}, t \right) = \sum_s q_s \int f_s \left(\vec{x}, \vec{v}, t \right) \mathrm{d} \vec{v}, \qquad \vec{J}\left(\vec{x}, t \right) = \sum_s q_s \int f_s \left(\vec{x}, \vec{v}, t \right) \vec{v} \, \mathrm{d} \vec{v}.
+\end{equation}
+After discretization of \ref{3.1.2.1} using macro-particles and exploiting the properties of the shape functions, one gets immediately
+\begin{equation}
+\label{3.1.2.2}
+\rho_{ijk}^{\,n} = \sum_{p} q_p S_{r}\left(\vec{r}_{ijk} - \vec{r}_{p}^{\,n}\right), \qquad \vec{J}_{ijk}^{\,n} = \sum_{p} q_p \vec{v}_p^{\,n} S_{r}\left(\vec{r}_{ijk} - \vec{r}_{p}^{\,n}\right),
+\end{equation}
+where $ q_p = q_s w_p $. However, using the formulas \ref{3.1.2.2} for charge and current deposition in PIC codes may violate the discrete continuity equation (\ref{3.1.1.13}) and in turn cause errors in Gauss's law (\ref{3.1.1.6}). In this case, one would have to solve the Poisson's equation for the correction of the electric field at every simulation time step or use a numerical scheme that satisfies the continuity equation exactly. These schemes are referred to as a charge conservation methods (\cite{villasenor}, \cite{esirkepov}, [source]).
+
+Similarly, to advance macro-particle positions, as shown in the second section of this chapter, one has to know the force acting on them. Hence, it is necessary to assign electric and magnetic fields that are calculated at the discrete grid points to the continuous macro-particle positions. This simulation step is usually referred to as field weighting.
+
+By analogy to the particle weighting, one may exploit the shape functions to calculate the spatial averages of the all electric and magnetic field components,
+\begin{equation}
+\vec{E}_{p}^{\,n} = \sum_{ijk} \vec{E}_{ijk}^{\,n} S_{r}\left(\vec{r}_{ijk} - \vec{r}_{p}^{\,n}\right), \qquad \vec{B}_{p}^{\,n} = \sum_{ijk} \vec{B}_{ijk}^{\,n} S_{r}\left(\vec{r}_{ijk} - \vec{r}_{p}^{\,n}\right).
+\end{equation}
+Note that it is recommended to use the same weighting for both, particles and fields, in order to eliminate a self-force and ensure the conservation of momentum \cite{fehske}.
+

@@ -1,17 +1,17 @@
 In this section, general properties of the electromagnetic wave propagation in magnetized plasmas are described. Particularly, consider in some detail the waves traveling parallel to and perpendicular to magnetic field. 
 
-First, the dispersion relation is derived from the hydrodynamic plasma equations. Since one assume plasma response to a high frequency field, the ions are treated as a stationary, neutralizing background. Thermal motion of particles is also ignored, thus the pressure term can be neglected. Thus one shall solve the following set of equations,
+First, the dispersion relation is derived from the hydrodynamic plasma equations. Since one assume plasma response to a high frequency field, the ions are treated as a stationary, neutralizing background. Thermal motion of particles is also ignored, thus the pressure term in \ref{2.2.3} can be neglected. According to previous assumptions, one shall solve the following set of equations,
 \begin{equation}
 \label{2.3.1}
 \diffp{n_e}{t} + \nabla \cdot \left(n_e \vec{u}_e \right) = 0,
 \end{equation}
 \begin{equation}
 \label{2.3.2}
-m_e n_e \diffp{\vec{u}_e}{t} + m_e n_e\left(\vec{u}_e \cdot \nabla \right) \vec{u}_e = - e n_e \left(\vec{E} + \vec{u}_e \times \vec{B} \, \right).
+m_e n_e \left[ \diffp{\vec{u}_e}{t} + \left(\vec{u}_e \cdot \nabla \right) \vec{u}_e \right] = - e n_e \left(\vec{E} + \vec{u}_e \times \vec{B} \, \right).
 \end{equation}
 The symbol $ e $ denotes the elementary charge. 
 
-To obtain the wave equations for the oscillating electric and magnetic field, Faraday's law (\ref{1.3}) and Ampere's law (\ref{1.4}) are also needed. Next, the system of equations will be linearized by using the methods of perturbation theory. Consider a small perturbations from the stationary state denoted by the index $ 0 $,
+To obtain the wave equations for the oscillating electric and magnetic field, Faraday's law (\ref{1.3}) and Ampere's law (\ref{1.4}) are also needed. Next, the system of equations will be linearized by using the methods of perturbation theory. Consider a small perturbations from the stationary state,
 \begin{equation}
 \label{2.3.4}
 n_{e} = n_{e0} + \delta n_{e}, \quad \vec{u}_{e} = \vec{u}_{e0} + \delta \vec{u}_{e}, \quad \vec{B} = \vec{B}_{0} + \delta \vec{B}, \quad \vec{E} = \vec{E}_{0} + \delta \vec{E},
@@ -31,11 +31,10 @@ where $ \vec{u}_{e0} $ and $ \vec{E}_{0} $ are obviously identically equal to ze
 \end{equation}
 \begin{equation}
 \label{2.3.8}
-\delta \vec{E} = - \frac{1}{\varepsilon_{0} \mu_{0} \omega} \vec{k} \times \delta \vec{B} + \mathrm{i} \frac{e n_{0}}{\varepsilon_{0} \omega} \delta \vec{u}_{e},
+\delta \vec{E} = - \frac{1}{\varepsilon_{0} \mu_{0} \omega} \vec{k} \times \delta \vec{B} + \mathrm{i} \frac{e n_{0}}{\varepsilon_{0} \omega} \delta \vec{u}_{e}.
 \end{equation}
-where $ \mathrm{i} $ denotes the imaginary unit, $ \vec{k} $ is the wave vector and $ \omega $ is the angular frequency.
 
-The equation for density perturbation \ref{2.3.5} may be ignored. Eliminating $ \delta \vec{B} $ and $ \delta \vec{u}_{e} $ from the equation \ref{2.3.8} one gets the equation for perturbation of the electric field,
+Note that the equation for density perturbation \ref{2.3.5} may be ignored. Eliminating $ \delta \vec{B} $ and $ \delta \vec{u}_{e} $ from the equation \ref{2.3.8} one gets the equation for perturbation of the electric field,
 \begin{equation}
 \begin{split}
 \label{2.3.9}
@@ -102,9 +101,9 @@ Wave & Cut-offs & Resonances \\ \hline \hline
 R & $ \omega_{R} = \dfrac{1}{2} \omega_{ce} + \dfrac{1}{2} \sqrt{\omega_{ce}^{2} + 4 \omega_{pe}^{2} } $ & $ \omega_{ce} = \dfrac{e B_{0}}{m_{e}} $ \\ \hline
 L & $ \omega_{L} = - \dfrac{1}{2} \omega_{ce} + \dfrac{1}{2} \sqrt{\omega_{ce}^{2} + 4 \omega_{pe}^{2}} $ & $ \omega_{ci} = \dfrac{Z e B_{0}}{m_{i}} $ \\ \hline
 O & $ \omega = \sqrt{\omega_{pe}^{2} + \omega_{pi}^{2}} $ & - \\ \hline
-X & $ \omega = \omega_{R}, \omega_{L} $ & $ \omega_{uh} = \sqrt{\omega_{pe}^{2} + \omega_{ce}^{2}}, \  \omega_{lh} = \sqrt{\omega_{ce} \: \omega_{ci}} $ \\
+X & $ \omega = \omega_{R}, \quad \omega = \omega_{L} $ & $ \omega_{lh} = \sqrt{\omega_{ce} \: \omega_{ci}}, \quad  \omega_{uh} = \sqrt{\omega_{pe}^{2} + \omega_{ce}^{2}}  $ \\
 \end{tabular}
-\caption{Summary of cut-offs and resonances for the principal waves}
+\caption{Summary of cut-offs and resonances for all the principal waves. Note that $ \omega_{lh} $ and $ \omega_{uh} $ are so-called lower hybrid frequency and upper hybrid frequency, respectively.}
 \label{2.3.16}
 \end{table}
 \endgroup
