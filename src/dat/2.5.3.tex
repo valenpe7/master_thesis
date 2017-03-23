@@ -1,7 +1,33 @@
-The laser beam filamentation and self-focusing result from the same physical processes. These instabilities occur for densities less than the critical density where the laser beam couples to an ion acoustic perturbation. The filamentation and self-focusing correspond to the growth of zero-frequency density perturbations and are caused by variations in either the laser intensity across the beam regions or plasma density.
+The non-relativistic case is based on neglecting the term $ \vec{v} \times \vec{B} $ in the Newton's equation of motion (\ref{2.2.5}). However, this approximation is not valid for particles moving with velocities close to the velocity of light $ c $. The following derivation of relativistic ponderomotive force follows [source].
 
-In the higher laser intensity region, plasma is pushed aside in the radial direction of the beam due to the ponderomotive force. This reduces the density locally and increases the index of refraction of the plasma. The resulting index of refraction is seen by the laser pulse as a focusing lens, thus prevents it from spreading. Consequently, the laser intensity increases there still further, which completes the unstable feedback loop.
+A system containing a charged particle in an arbitrary electromagnetic field can be rigorously described using Lagrangian mechanics. The relativistic Lagrangian $ L \left( \vec{r}, \vec{v}, t \right)  $ for this case is given by the following expression,
+\begin{equation}
+\label{2.5.3.1}
+L = -\frac{m_s c^2}{\gamma} - q_s \left(\Phi - \vec{v} \cdot \vec{A} \right), \quad \gamma = \left( 1 - \frac{\vec{v}^{2}}{c} \right)^{-\frac{1}{2}}.
+\end{equation}
+For the traveling monochromatic wave, the Lagrangian $ L \left( \vec{r}, \vec{v}, t \right)  $ in \ref{2.5.3.1} can be transformed to $ L \left( \varphi \right)  $ using the wave phase $ \varphi = \vec{k} \cdot \vec{r} - \omega t $. The reason of doing this is that the transformed Lagrangian can be used to obtain the average over the wave period of motion,
+\begin{equation}
+\label{2.5.3.2}
+\mathcal{L}_0 \left( \varphi \right) = \frac{1}{2 \pi} \int \limits_{\varphi}^{\varphi + 2\pi} \mathcal{L} \left( \varphi^{\: \prime} \right) \mathrm{d} \varphi^{\: \prime}, \quad \mathcal{L} \left( \varphi \right) = L \left( \varphi \right) \left( \diff{\varphi}{t} \right)^{-1}.
+\end{equation}
+Note that the Langrangian \ref{2.5.3.2} depends only on the quantities at the center of oscillation $ \vec{r}_0 $ and $ \vec{v}_0 $ defined through $ \varphi $. Then the motion of the oscillation center is governed by the Lagrange equations,
+\begin{equation}
+\label{2.5.3.3}
+\diff{}{t} \left( \diffp[]{L_0}{\vec{v}_0} \right) -  \diffp[]{L_0}{\vec{r}_0} = 0, \quad L_0 \left( \varphi \right) = \mathcal{L}_0 \left( \varphi \right) \left( \diff{\varphi}{t} \right).
+\end{equation}
+The complete proof of assertions above can be found in [source].
 
-Notice that in addition to ponderomotive driven filamentation and self-focusing, there is a variety of mechanism that leads to a change of the refractive index in laser-plasma interactions. These include the collisions, a thermal, or relativistic effects.
-
-The undesirable effects of filamentation and self-focusing are induced instabilities which can produce hot electrons that preheat the fuel target core or reduce laser energy absorption. It is, of course, a serious problem in laser fusion research.
+The relativistic ponderomotive force in the oscillation center system can be easily found from the Lagrange equations \ref{2.5.3.3},
+\begin{equation}
+\vec{F}_{\mathrm{p}} \equiv \diff{}{t} \left( \diffp[]{L_0}{\vec{v}_0} \right) = -c^2 \grad{m_{\mathrm{eff}}},
+\end{equation}
+where the so-called effective mass $ m_{\mathrm{eff}} $ is the space and time dependent quantity that has been introduced as follows,
+\begin{equation}
+\label{2.5.3.4}
+m_{\mathrm{eff}} = - \mathcal{L}_0 \frac{\gamma_0}{c^2} \left( \diff{\varphi}{t} \right), \quad  \gamma_0 = \left(1 - \frac{\vec{v}_0^{2}}{c} \right)^{-\frac{1}{2}}.
+\end{equation}
+Note that the assertion \ref{2.5.3.4} holds for any electromagnetic field in vacuum in which it is possible to define the oscillation center. In an ordinary conditions, the effective mass $ m_{\mathrm{eff}} $ can be rewritten as
+\begin{equation}
+m_{\mathrm{eff}} = m_s \sqrt{1 + \frac{q_s \vec{A}^2}{\alpha m_s^2 c^2}}
+\end{equation}
+with $ \alpha = 1 $ for circular and $ \alpha = 2 $ for linear polarization of the electromagnetic wave. 
