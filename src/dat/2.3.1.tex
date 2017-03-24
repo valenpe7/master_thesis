@@ -1,0 +1,52 @@
+To derive the dispersion relation of electromagnetic wave propagating through unmagnetized plasmas, the hydrodynamic approach is exploited. Since one assume plasma response to a high frequency field, the ions are treated as a stationary, neutralizing background. Thermal motion of particles is also ignored, thus the pressure term in \ref{2.2.3} can be neglected. According to the previous assumptions, one shall solve the following set of equations,
+\begin{equation}
+\label{2.3.1.1}
+\diffp{n_e}{t} + \nabla \cdot \left(n_e \vec{u}_e \right) = 0,
+\end{equation}
+\begin{equation}
+\label{2.3.1.2}
+m_e n_e \left[ \diffp{\vec{u}_e}{t} + \left(\vec{u}_e \cdot \nabla \right) \vec{u}_e \right] = - e n_e \vec{E}.
+\end{equation}
+One also needs the wave equation for the electric field \ref{1.34}. However, it is now necessary to include the current density due to motion of charged particles in plasma. The hydrodynamic equations are coupled with the Maxwell's equations via $ \vec{J} = q_s n_s \vec{u}_s $, thus the wave equation yields the following form,
+\begin{equation}
+\label{2.3.1.3}
+\laplace{\vec{E}} - \frac{1}{c^{2}} \diffp[2]{\vec{E}}{t} = - \mu_0 e n_e \diffp{\vec{u}_e}{t},
+\end{equation}
+
+The system of equations above will be linearized using the methods of perturbation theory. Consider a small perturbations from the stationary state,
+\begin{equation}
+\label{2.3.1.4}
+n_{e} = n_{e0} + \delta n_{e}, \quad \vec{u}_{e} = \vec{u}_{e0} + \delta \vec{u}_{e}, \quad \vec{E} = \vec{E}_{0} + \delta \vec{E},
+\end{equation}
+where $ \vec{u}_{e0} $ and $ \vec{E}_{0} $ are obviously identically equal to zero vector. After substituting perturbed quantities \ref{2.3.1.4} into initial system of equations and performing Fourier transform one obtains
+\begin{equation}
+\label{2.3.1.5}
+\delta n_{e} = \mathrm{i} \frac{n_{e0}}{\omega} \vec{k} \cdot \delta \vec{u}_{e},
+\end{equation}
+\begin{equation}
+\label{2.3.1.6}
+\delta \vec{u}_e = -\i \frac{e}{\omega m_e} \delta \vec{E},
+\end{equation}
+\begin{equation}
+\label{2.3.1.7}
+\delta \vec{E} = \i \frac{\omega \, e \, n_{e0}}{\varepsilon_0 \left(\omega^2 - c^2 k^2 \right)} \delta \vec{u}_e.
+\end{equation}
+Note that the equation for density perturbation \ref{2.3.1.5} may be ignored. Eliminating $ \delta \vec{u}_{e} $ from the equation \ref{2.3.1.7} one gets the equation for perturbation of the electric field,
+\begin{equation}
+\label{2.3.1.8}
+\left(\omega^2 - \omega_{pe}^2 - c^2 k^2 \right) \delta \vec{E} = 0. 
+\end{equation}
+
+The dispersion relation can be immediately obtained from the equation \ref{2.3.1.8}. To describe how the electromagnetic waves propagates through given medium, it is useful to introduce the index of refraction $ N \left( \omega \right) =  c k \left( \omega \right) / \omega $. Consequently, the dispersion relation may be rewritten as
+\begin{equation}
+\label{2.3.1.9}
+N^{2} = 1 - \left(\frac{\omega_{pe}}{\omega}\right)^2.
+\end{equation} 
+The important properties of the waves are distinguished by their cut-offs ($ N \rightarrow 0 $) and resonances ($ N \rightarrow \infty $). In the vicinity of the resonance there is a total absorption, at a cut-off frequency there is a total reflection of incident waves.
+
+In the case of the electromagnetic wave propagating through unmagnetized plasma, it might be clearly seen that there are no resonances. On the other hand, the equation \ref{2.3.1.9} exhibits cut-off and the corresponding frequency (including ions) is given by the following expression,
+\begin{equation}
+\label{2.3.1.10}
+\omega = \sqrt{\omega_{pe}^{2} + \omega_{pi}^{2}}
+\end{equation}
+The condition \ref{2.3.1.10} occurs at the so-called critical plasma density $ n_c $. Note that the electromagnetic wave passing through plasma with densities larger than $ n_c $ is exponentially damped.
