@@ -1,0 +1,19 @@
+The interactions of intense laser beam with matter typically produce a population of hot electrons that may pass through the target and propagate behind its rear side. This leads to a generation of a strong electrostatic potential which accelerates the ionized particles in the direction normal to the target rear surface. Therefore, this mechanism is commonly known as target normal sheath acceleration (TNSA). TNSA can be also observed on the target front, because the majority of expelled electrons is attracted back to the target and may even reach the front side.
+
+The reasonable approximation for TNSA mechanism is provided by the model of free isothermal expansion of plasma into a vacuum. This model is based on prediction that the maximum ion energy is proportional to the hot electron temperature whereas the laser-to-ion energy conversion efficiency is rather proportional to the hot electron temperature multiplied by the hot electron density [source].
+
+First, assume an electrostatic field $ \vec{E}_{es} = -\grad{\Phi} $, where the potential $ \Phi \left(\vec{r}, t \right) $ satisfies the Poisson's equation 
+\begin{equation}
+\laplace{\Phi} = \frac{e}{\varepsilon_0} \left(n_e - Z n_i \right), \quad n_e = n_{e0} \exp{\left( \frac{e \Phi}{k_B T_e} \right)}, \quad n_i = n_{i0} H\left(x \right), \quad n_e = Z n_i
+\end{equation}
+Assume, further that electron density $ n_e $ satisfies 
+for unique ion component 
+\begin{equation}
+\diffp{n_i}{t} + \div{\left(n_i \vec{u}_i\right)} = 0,
+\end{equation}
+\begin{equation}
+\diffp{\vec{u}_i}{t} + \left(\vec{u}_i \cdot \grad{} \right) \vec{u}_i = - \frac{Z e}{m_i} \grad{\Phi}. 
+\end{equation}
+%Note that the TNSA mechanism is most efficient on protons because of their highest charge-to-mass ratio. 
+
+%The accelerated ions leave the target together with co-moving electrons forming a quasineutral plasma cloud. Because the plasma density in this volume drops dramatically after the detachment from the target and temperature stays high, recombination effects are negligible for propagation lengths in the range of several meters.
