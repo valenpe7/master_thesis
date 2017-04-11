@@ -1,10 +1,10 @@
 \noindent
-First set (8 simulations const. int or const. e, traget 2 micron, 2000 ppc):
+Zeroth set (4 simulations with const. E = 2.8306e4 J, traget 2 micron, 2000 ppc):
 \noindent
 Laser:
 \begin{itemize}
 	\item wavelength: $ \lambda $ = 0.8 $ \mu m $
-	\item const intensity: I = 1e20 W/cm2 or const. energy: E = 2.8306e4 J (corresponds to I = 1e20 W/cm2 for $ w_0 $ = 1.0 $ \mu m $)
+	\item const. energy: E = 2.8306e4 J (corresponds to I = 1e20 W/cm2 for $ w_0 $ = 1.0 $ \mu m $)
 	\item duration: t = 30 fs (in FWHM)
 	\item beam waist in focus: $ w_0 $ = 0.5, 1.0, 2.0, 4.0 $ \mu m $
 	\item focus distance from boundary: $ x_\mathrm{B} - x_0 $ = 8 $ \mu m $
@@ -35,14 +35,50 @@ Target:
 \end{itemize}
 
 \noindent
-Seconds set (2 simulations with higher intensity, 1000 ppc):
+First set (4 simulations with const. I = 1e20 W/cm2, traget 2 micron, 2000 ppc):
+\noindent
+Laser:
+\begin{itemize}
+	\item wavelength: $ \lambda $ = 0.8 $ \mu m $
+	\item const. intensity: I = 1e20 W/cm2
+	\item duration: t = 30 fs (in FWHM)
+	\item beam waist in focus: $ w_0 $ = 0.5, 1.0, 2.0, 4.0 $ \mu m $
+	\item focus distance from boundary: $ x_\mathrm{B} - x_0 $ = 8 $ \mu m $
+	\item polarization: P
+	\item boundary: left 
+\end{itemize}
+Domain:
+\begin{itemize}
+	\item x min: 0 $ \mu m $
+	\item x max: 15 $ \mu m $
+	\item y min: -20 $ \mu m $
+	\item y max: 20 $ \mu m $
+	\item $ N_x $: 1875 cells ($ \delta x $ = $ \lambda/100 $ = 8 nm)
+	\item $ N_y $: 5000 cells ($ \delta y $ = $ \lambda/100 $ = 8 nm)
+	\item time step: $ \delta t $ = $ 1/(\sqrt{2} c) \lambda /100 \approx $ 0.05 fs 
+	\item simulation time: $ \tau $ = 200 fs
+\end{itemize}
+Target:
+\begin{itemize}
+	\item x min: 8 $ \mu m $
+	\item x max: 10 $ \mu m $
+	\item y min: -15 $ \mu m $
+	\item y max: 15 $ \mu m $
+	\item electrons: 2000 ppc
+	\item protons: 100 ppc
+	\item density: 100 critical
+	\item temperature: 100 eV
+\end{itemize}
+
+\noindent
+Seconds set (4 simulations with const. I = 1e21, 1000 ppc):
 \noindent
 Laser:
 \begin{itemize}
 	\item wavelength: $ \lambda $ = 0.8 $ \mu m $
 	\item const intensity: I = 1e21 W/cm2
 	\item duration: t = 30 fs (in FWHM)
-	\item beam waist in focus: $ w_0 $ = 0.5, 2.0 $ \mu m $
+	\item beam waist in focus: $ w_0 $ = 0.5, 1.0, 2.0, 4.0 $ \mu m $
 	\item focus distance from boundary: $ x_\mathrm{B} - x_0 $ = 8 $ \mu m $
 	\item polarization: P
 	\item boundary: left 
@@ -71,7 +107,7 @@ Target:
 \end{itemize}
 
 \noindent
-Third set (2 simulations with higher intensity, thiner target (0.25 micron), 2000 ppc):
+Third set (2 simulations with I = 1e21 W/cm2, thiner target (0.25 micron), 2000 ppc):
 \noindent
 Laser:
 \begin{itemize}
@@ -210,6 +246,17 @@ Target:
 	\hspace{1mm}
 	\sidesubfloat[]{{\includegraphics[width=0.445\linewidth]{./img/results/i1e21/2/trajectories.pdf}}}
 	\caption{\textbf{(a)} electrons, w0 = 0.5 micron, t = 100 fs, I = 1e21 W/cm2 \textbf{(b)} electrons, wo = 2 micron, t = 100 fs, I = 1e21 W/cm2}
+	\label{}
+\end{figure}
+
+\floatsetup[figure]{style=plain, subcapbesideposition=top}
+\begin{figure}[h!]
+	\centering
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/05/Fpx.pdf}}}
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/05/Fpy.pdf}}}\\
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/2/Fpx.pdf}}}
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/2/Fpy.pdf}}}
+	\caption{\textbf{(a)} 5.1312e-06 \textbf{(b)} 1.5913e-06 \textbf{(c)} 5.9528e-06 \textbf{(d)} 4.6193e-07}
 	\label{}
 \end{figure}
 
