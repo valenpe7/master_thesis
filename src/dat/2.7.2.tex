@@ -1,19 +1,62 @@
-The interactions of intense laser beam with matter typically produce a population of hot electrons that may pass through the target and propagate behind its rear side. This leads to a generation of a strong electrostatic potential which accelerates the ionized particles in the direction normal to the target rear surface. Therefore, this mechanism is commonly known as target normal sheath acceleration (TNSA). TNSA can be also observed on the target front, because the majority of expelled electrons is attracted back to the target and may even reach the front side.
+The interaction of intense laser beam with matter typically produce a population of hot electrons that may pass through the target and propagate beyond its rear side. This leads to a generation of a strong electrostatic potential which accelerates the ionized particles in the direction normal to the target rear surface. Therefore, this mechanism is commonly known as a target normal sheath acceleration (TNSA). TNSA can be also observed on the target front, because the majority of expelled electrons is often attracted back to the target and may even reach the front side.
 
-The reasonable approximation for TNSA mechanism is provided by the model of free isothermal expansion of plasma into a vacuum. This model is based on prediction that the maximum ion energy is proportional to the hot electron temperature whereas the laser-to-ion energy conversion efficiency is rather proportional to the hot electron temperature multiplied by the hot electron density [source].
+The approximation for TNSA mechanism can be provided either by the static or dynamic model of the sheath. In the following, a dynamic model based on a free isothermal expansion of electron-ion plasma into vacuum is briefly described.
 
-First, assume an electrostatic field $ \vec{E}_{es} = -\grad{\Phi} $, where the potential $ \Phi \left(\vec{r}, t \right) $ satisfies the Poisson's equation 
+To find a non-linear solution that corresponds to the isothermal rarefaction wave, one may exploit the hydrodynamic equations for an unique ion component,
 \begin{equation}
-\laplace{\Phi} = \frac{e}{\varepsilon_0} \left(n_e - Z n_i \right), \quad n_e = n_{e0} \exp{\left( \frac{e \Phi}{k_B T_e} \right)}, \quad n_i = n_{i0} H\left(x \right), \quad n_e = Z n_i
-\end{equation}
-Assume, further that electron density $ n_e $ satisfies 
-for unique ion component 
-\begin{equation}
+\label{2.7.2.2}
 \diffp{n_i}{t} + \div{\left(n_i \vec{u}_i\right)} = 0,
 \end{equation}
 \begin{equation}
-\diffp{\vec{u}_i}{t} + \left(\vec{u}_i \cdot \grad{} \right) \vec{u}_i = - \frac{Z e}{m_i} \grad{\Phi}. 
+\label{2.7.2.3}
+\diffp{\vec{u}_i}{t} + \left(\vec{u}_i \cdot \grad{} \right) \vec{u}_i = \frac{Z e}{m_i} \vec{E}. 
 \end{equation}
-%Note that the TNSA mechanism is most efficient on protons because of their highest charge-to-mass ratio. 
 
-%The accelerated ions leave the target together with co-moving electrons forming a quasineutral plasma cloud. Because the plasma density in this volume drops dramatically after the detachment from the target and temperature stays high, recombination effects are negligible for propagation lengths in the range of several meters.
+Assume that at time $ t = 0 $, the electron density satisfies the Boltzmann distribution and the ion density occupies a half space with an infinitely sharp boundary, thus
+\begin{equation}
+\label{2.7.2.1}
+n_e = n_{e0} \exp{\left( \frac{e \Phi}{k_B T_e} \right)}, \quad n_i = n_{i0} H(x).
+\end{equation}
+Assume further that the plasma is locally neutral on the scale length larger than the Debye radius, therefore $ n_e = Z n_i $. However, one shall be aware that the condition for the local neutrality does not imply that there is no electrostatic field. The electrostatic field may arise due to the sources coming from the regions where the condition for quasi-neutrality does not hold. Therefore, the electric field  $ \vec{E} \left(\vec{r}, t\right) $ in the equation \ref{2.7.2.3} may be replaced by the electrostatic field $ \vec{E}_{es} \left(\vec{r}, t\right) = -\grad{\Phi} \left(\vec{r}, t\right) $, which one can obtain by taking the gradient of the electron density \ref{2.7.2.1}.
+
+After replacing the electric field $ \vec{E} \left(\vec{r}, t\right) $ in the equation \ref{2.7.2.3} one gets
+\begin{equation}
+\label{2.7.2.5}
+\diffp{\vec{u}_i}{t} + \left(\vec{u}_i \cdot \grad{} \right) \vec{u}_i = - \frac{c_s^2}{n_i} \grad{n_i}, \quad c_s = \sqrt{\frac{Z k_B T_e}{m_i}},
+\end{equation}
+where $ c_s \left(\vec{r}, t\right) $ is the ion-acoustic velocity. By performing the Fourier transforms of the equations \ref{2.7.2.2} and \ref{2.7.2.5}, one easily obtain the dispersion relation of the ion-acoustic waves. However, the system has also a non-linear self-similar solution which describes the rarefaction wave. Thus, define a self-similar variable in 1D geometry as $ \xi = x/t $. The ion fluid density and velocity then become $ n_i \left(x, t\right) = N \left( \xi \right) $ and $ u_i \left(x, t\right) = V \left( \xi \right) $, respectively. After transformation, the system of equations \ref{2.7.2.2} and \ref{2.7.2.5} yields
+\begin{equation}
+\label{2.7.2.6}
+\frac{1}{N} \diff{N}{\xi} = - \frac{V - \xi}{c_s},
+\end{equation}
+\begin{equation}
+\label{2.7.2.7}
+\diff{V}{\xi} = - \frac{1}{N} \diff{N}{\xi} \left(V - \xi \right).
+\end{equation}
+Now, the set of equations \ref{2.7.2.6}, \ref{2.7.2.7} can be solved easily. The solution in the original coordinates can be found below,
+\begin{equation}
+\label{2.7.2.8}
+n_i = n_{i0} \exp \left( -\frac{x}{c_s t} - 1 \right), \quad u_i = c_s + \frac{x}{t}.
+\end{equation}
+Note that the solution \ref{2.7.2.8} is valid only for $ x > -c_s t $ where $ u_i > 0 $. The condition $ x = - c_s t $ describes the rarefaction front propagating backwards into the target at the speed $ c_s $. Finally, the electric field at the ion front $ x = - c_s t $ can be expressed as
+\begin{equation}
+\label{2.7.2.9}
+E_x = \frac{2 E_0}{\omega_{pi} t}, \quad E_0 = c_s \sqrt{\frac{n_i m_i}{\varepsilon_0}}.
+\end{equation}
+
+The apparent drawback of formula \ref{2.7.2.9} is that it has a singularity at time $ t = 0 $. However, one may find a simple expression for the electric field at $ t = 0 $ by integration of the Poisson's equation from $ x = 0 $ to $ x = +\infty $,
+\begin{equation}
+\label{2.7.2.10}
+E_x = \sqrt{\frac{2}{e}} E_0.
+\end{equation}
+A very precise interpolation of the electric field at the ion front, which is valid for any time, has been already found [source],
+\begin{equation}
+\label{2.7.2.11}
+E_x \cong \frac{2 E_0}{\sqrt{2e + \omega_{pi}^2 t^2}}.
+\end{equation}
+As a consequence, one may find relatively accurate prediction of the corresponding ion front velocity by solving the equation of motion \ref{2.7.2.3} with the electric field \ref{2.7.2.11},
+\begin{equation}
+\label{2.7.2.12}
+u_i \cong 2 c_s \ln \left[ \frac{\omega_{pi} t}{\sqrt{2 e}} + \left(\frac{\omega_{pi}^2 t^2}{2 e} + 1 \right)^{\frac{1}{2}} \right].
+\end{equation}
+The next drawback of the model is that the derived formula for maximum velocity of ions \ref{2.7.2.12} diverges logarithmically with time, therefore the system accelerates the ions infinitely. This result leads from the isothermal assumption. This might be overcome by assuming the finite thickness of plasma or by introducing a maximum acceleration time constant at which the ion acceleration stops [source].
