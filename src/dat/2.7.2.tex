@@ -38,7 +38,7 @@ Now, the set of equations \ref{2.7.2.6}, \ref{2.7.2.7} can be solved easily. The
 \label{2.7.2.8}
 n_i = n_{i0} \exp \left( -\frac{x}{c_s t} - 1 \right), \quad u_i = c_s + \frac{x}{t}.
 \end{equation}
-Note that the solution \ref{2.7.2.8} is valid only for $ x > -c_s t $ where $ u_i > 0 $. The condition $ x = - c_s t $ describes the rarefaction front propagating backwards into the target at the speed $ c_s $. Finally, the electric field at the ion front $ x = - c_s t $ can be expressed as
+Note that the solution \ref{2.7.2.8} is valid only for $ x > -c_s t $ where $ u_i > 0 $. The condition $ x = - c_s t $ describes the rarefaction front propagating backwards into the target at the speed $ c_s $. Finally, by plugging the solution \ref{2.7.2.8} into the equation \ref{2.7.2.3}, one may find the expression for the electric field at the ion front $ x = - c_s t $,
 \begin{equation}
 \label{2.7.2.9}
 E_x = \frac{2 E_0}{\omega_{pi} t}, \quad E_0 = c_s \sqrt{\frac{n_i m_i}{\varepsilon_0}}.
@@ -54,9 +54,9 @@ A very precise interpolation of the electric field at the ion front, which is va
 \label{2.7.2.11}
 E_x \cong \frac{2 E_0}{\sqrt{2e + \omega_{pi}^2 t^2}}.
 \end{equation}
-As a consequence, one may find relatively accurate prediction of the corresponding ion front velocity by solving the equation of motion \ref{2.7.2.3} with the electric field \ref{2.7.2.11},
+As a consequence of formula \ref{2.7.2.11}, one may find relatively accurate prediction of the corresponding ion front velocity by solving the equation of motion \ref{2.7.2.3} with the electric field \ref{2.7.2.11},
 \begin{equation}
 \label{2.7.2.12}
 u_i \cong 2 c_s \ln \left[ \frac{\omega_{pi} t}{\sqrt{2 e}} + \left(\frac{\omega_{pi}^2 t^2}{2 e} + 1 \right)^{\frac{1}{2}} \right].
 \end{equation}
-The next drawback of the model is that the derived formula for maximum velocity of ions \ref{2.7.2.12} diverges logarithmically with time, therefore the system accelerates the ions infinitely. This result leads from the isothermal assumption. This might be overcome by assuming the finite thickness of plasma or by introducing a maximum acceleration time constant at which the ion acceleration stops [source].
+The next drawback of the model is that the derived formula for maximum velocity of ions \ref{2.7.2.12} diverges logarithmically with time, therefore the system accelerates the ions infinitely. This result leads from the isothermal assumption. Nevertheless, one might overcome this drawback by assuming the finite thickness of plasma or by introducing a maximum acceleration time constant at which the ion acceleration stops [source].
