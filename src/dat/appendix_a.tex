@@ -1,8 +1,8 @@
-This part contains input files of several most important simulations that have been performed for the purposes within this work.  
+This part contains input files of several most important simulations that have been performed for the purposes within this work. All the files below are accepted by the PIC simulation code EPOCH (see chapter 3). Due to the limited space, provided input files shall be taken as a templates where several parameters have been frequently changing (such as beam waist and the laser intensity).
 
-%\setlength{\columnsep}{30pt}
-%\begin{multicols}{2}
-\begin{lstlisting}[style=CXX, caption=test lbcs]
+\setlength{\columnsep}{30pt}
+\begin{multicols}{2}
+\begin{lstlisting}[style=CXX, caption={Input file for evaluation of the implemented algorithm for tight-focusing (chapter 4). In this case, the laser beam propagates according to the Maxwell consistent approach.}]
 begin:control
 	nx = 1600
 	ny = 4800
@@ -61,7 +61,7 @@ begin:output
 end:output
 \end{lstlisting}
 
-\begin{lstlisting}[style=CXX, caption=test paraxial]
+\begin{lstlisting}[style=CXX, caption={Input file for identifying the conditions for which the propagation of the laser beam under the paraxial approximation is valid (chapter 4).}]
 begin:control
 	nx = 1600
 	ny = 4800
@@ -138,7 +138,7 @@ begin:output
 end:output
 \end{lstlisting}
 
-\begin{lstlisting}[style=CXX, caption=2kppc]
+\begin{lstlisting}[style=CXX, caption={Input file for the large-scale simulations of tightly focused laser beams interacting with solid targets (chapter 5).}]
 begin:control
 	nx = 1875
 	ny = 5000
@@ -270,4 +270,4 @@ begin:output
 	restartable = T
 end:output
 \end{lstlisting}
-%\end{multicols}
+\end{multicols}
