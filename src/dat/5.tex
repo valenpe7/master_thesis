@@ -2,163 +2,25 @@ In this chapter, the results of several large-scale simulations are presented.
 
 More specifically, 2D3V PIC simulations of tightly-focused Gaussian laser beams interacting with solid targets have been performed within this work. Simulations have been computed using code EPOCH (see chapter 3). 
 
-\noindent
-Zeroth set (4 simulations with const. E = 2.8306e4 J, traget 2 micron, 2000 ppc):
-\noindent
-Laser:
-\begin{itemize}
-	\item wavelength: $ \lambda $ = 0.8 $ \mu m $
-	\item const. energy: E = 2.8306e4 J (corresponds to I = 1e20 W/cm2 for $ w_0 $ = 1.0 $ \mu m $)
-	\item duration: t = 30 fs (in FWHM)
-	\item beam waist in focus: $ w_0 $ = 0.5, 1.0, 2.0, 4.0 $ \mu m $
-	\item focus distance from boundary: $ x_\mathrm{B} - x_0 $ = 8 $ \mu m $
-	\item polarization: P
-	\item boundary: left 
-\end{itemize}
-Domain:
-\begin{itemize}
-	\item x min: 0 $ \mu m $
-	\item x max: 15 $ \mu m $
-	\item y min: -20 $ \mu m $
-	\item y max: 20 $ \mu m $
-	\item $ N_x $: 1875 cells ($ \delta x $ = $ \lambda/100 $ = 8 nm)
-	\item $ N_y $: 5000 cells ($ \delta y $ = $ \lambda/100 $ = 8 nm)
-	\item time step: $ \delta t $ = $ 1/(\sqrt{2} c) \lambda /100 \approx $ 0.05 fs 
-	\item simulation time: $ \tau $ = 200 fs
-\end{itemize}
-Target:
-\begin{itemize}
-	\item x min: 8 $ \mu m $
-	\item x max: 10 $ \mu m $
-	\item y min: -15 $ \mu m $
-	\item y max: 15 $ \mu m $
-	\item electrons: 2000 ppc
-	\item protons: 100 ppc
-	\item density: 100 critical
-	\item temperature: 100 eV
-\end{itemize}
+The results have been processed and thoroughly analyzed. Emphasis has been placed mainly on identifying the influence of the laser beam focal spot size on the energy absorption efficiency and other qualitative as well as quantitative differences.
 
-\noindent
-First set (4 simulations with const. I = 1e20 W/cm2, traget 2 micron, 2000 ppc):
-\noindent
-Laser:
-\begin{itemize}
-	\item wavelength: $ \lambda $ = 0.8 $ \mu m $
-	\item const. intensity: I = 1e20 W/cm2
-	\item duration: t = 30 fs (in FWHM)
-	\item beam waist in focus: $ w_0 $ = 0.5, 1.0, 2.0, 4.0 $ \mu m $
-	\item focus distance from boundary: $ x_\mathrm{B} - x_0 $ = 8 $ \mu m $
-	\item polarization: P
-	\item boundary: left 
-\end{itemize}
-Domain:
-\begin{itemize}
-	\item x min: 0 $ \mu m $
-	\item x max: 15 $ \mu m $
-	\item y min: -20 $ \mu m $
-	\item y max: 20 $ \mu m $
-	\item $ N_x $: 1875 cells ($ \delta x $ = $ \lambda/100 $ = 8 nm)
-	\item $ N_y $: 5000 cells ($ \delta y $ = $ \lambda/100 $ = 8 nm)
-	\item time step: $ \delta t $ = $ 1/(\sqrt{2} c) \lambda /100 \approx $ 0.05 fs 
-	\item simulation time: $ \tau $ = 200 fs
-\end{itemize}
-Target:
-\begin{itemize}
-	\item x min: 8 $ \mu m $
-	\item x max: 10 $ \mu m $
-	\item y min: -15 $ \mu m $
-	\item y max: 15 $ \mu m $
-	\item electrons: 2000 ppc
-	\item protons: 100 ppc
-	\item density: 100 critical
-	\item temperature: 100 eV
-\end{itemize}
+\section{Simulation model and initial conditions}
 
-\noindent
-Seconds set (4 simulations with const. I = 1e21, 1000 ppc):
-\noindent
-Laser:
-\begin{itemize}
-	\item wavelength: $ \lambda $ = 0.8 $ \mu m $
-	\item const intensity: I = 1e21 W/cm2
-	\item duration: t = 30 fs (in FWHM)
-	\item beam waist in focus: $ w_0 $ = 0.5, 1.0, 2.0, 4.0 $ \mu m $
-	\item focus distance from boundary: $ x_\mathrm{B} - x_0 $ = 8 $ \mu m $
-	\item polarization: P
-	\item boundary: left 
-\end{itemize}
-Domain:
-\begin{itemize}
-	\item x min: 0 $ \mu m $
-	\item x max: 15 $ \mu m $
-	\item y min: -20 $ \mu m $
-	\item y max: 20 $ \mu m $
-	\item $ N_x $: 1875 cells ($ \delta x $ = $ \lambda/100 $ = 8 nm)
-	\item $ N_y $: 5000 cells ($ \delta y $ = $ \lambda/100 $ = 8 nm)
-	\item time step: $ \delta t $ = $ 1/(\sqrt{2} c) \lambda /100 \approx $ 0.05 fs 
-	\item simulation time: $ \tau $ = 200 fs
-\end{itemize}
-Target:
-\begin{itemize}
-	\item x min: 8 $ \mu m $
-	\item x max: 10 $ \mu m $
-	\item y min: -15 $ \mu m $
-	\item y max: 15 $ \mu m $
-	\item electrons: 1000 ppc
-	\item protons: 100 ppc
-	\item density: 100 critical
-	\item temperature: 100 eV
-\end{itemize}
-
-\noindent
-Third set (2 simulations with I = 1e21 W/cm2, thiner target (0.25 micron), 2000 ppc):
-\noindent
-Laser:
-\begin{itemize}
-	\item wavelength: $ \lambda $ = 0.8 $ \mu m $
-	\item const intensity: I = 1e21 W/cm2
-	\item duration: t = 30 fs (in FWHM)
-	\item beam waist in focus: $ w_0 $ = 0.5, 2.0 $ \mu m $
-	\item focus distance from boundary: $ x_\mathrm{B} - x_0 $ = 8 $ \mu m $
-	\item polarization: P
-	\item boundary: left 
-\end{itemize}
-Domain:
-\begin{itemize}
-	\item x min: 0 $ \mu m $
-	\item x max: 15 $ \mu m $
-	\item y min: -20 $ \mu m $
-	\item y max: 20 $ \mu m $
-	\item $ N_x $: 1875 cells ($ \delta x $ = $ \lambda/100 $ = 8 nm)
-	\item $ N_y $: 5000 cells ($ \delta y $ = $ \lambda/100 $ = 8 nm)
-	\item time step: $ \delta t $ = $ 1/(\sqrt{2} c) \lambda /100 \approx $ 0.05 fs 
-	\item simulation time: $ \tau $ = 200 fs
-\end{itemize}
-Target:
-\begin{itemize}
-	\item x min: 8 $ \mu m $
-	\item x max: 8.25 $ \mu m $
-	\item y min: -15 $ \mu m $
-	\item y max: 15 $ \mu m $
-	\item electrons: 2000 ppc
-	\item protons: 100 ppc
-	\item density: 100 critical
-	\item temperature: 100 eV
-\end{itemize}
+\section{Simulation results} 
 
 \begingroup
 \renewcommand*{\arraystretch}{1.5}
 \begin{table}[h!]
 	\centering
 	\begin{tabular}{c | c | c | c}
-		\multirow{2}{*}{$ w_0 $ [$ \mu\mathrm{m} $]} & \multicolumn{3}{c}{Total absorption [\%]} \\ \cline{2-4}
+		\multirow{2}{*}{$ w_0 $ [$ \mu\mathrm{m} $]} & \multicolumn{3}{c}{Total absorption of laser energy [\%]} \\ \cline{2-4}
 		 & const. E = $ 2.83 \cdot 10^{4} $ J & const. I = $ 10^{20} $ W/cm$^2$ & const. I = $ 10^{21} $ W/cm$^2$ \\ \hline \hline
 		0.5 & 20.12 & 16.23 & 31.77 \\ \hline
 		1.0 & 9.59 & 9.59 & 23.76 \\ \hline
 		2.0 & 5.27 & 8.26 & 23.82 \\ \hline
 		4.0 & 3.49 & 8.29 & 23.71 \\
 	\end{tabular}
-	\caption{Total absorption, target thickness: 2.0 micron}
+	\caption{A summary of the values of the total laser light absorption in plasma for several different sizes of the focal spot and different laser intensities.}
 	\label{table:4}
 \end{table}
 \endgroup
@@ -170,8 +32,8 @@ Target:
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/2/absorp.pdf}}}\\
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/05/absorp.pdf}}}
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/2/absorp.pdf}}}
-	\caption{\textbf{(a)} w0 = 05 micron, I = 1e20 W/cm2 \textbf{(b)} w0 = 2 micron, I = 1e20 W/cm2 \textbf{(c)} w0 = 05 micron, I = 1e21 W/cm2 \textbf{(d)} w0 = 2 micron, I = 1e21 W/cm2}
-	\label{}
+	\caption{Laser energy absorption in time for the case of simulations with the laser intensity I = $ 10^{20} $ W/cm$^2$ and with the beam waist \textbf{(a)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(b)} $ w_0 = 2.0 \ \mu\mathrm{m} $ and for the case of simulations with the laser intensity I = $ 10^{21} $ W/cm$^2$ and with the beam waist \textbf{(c)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(d)} $ w_0 = 2.0 \ \mu\mathrm{m} $.}
+	\label{fig:10}
 \end{figure}
 
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
@@ -181,8 +43,8 @@ Target:
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/2/x_px.pdf}}}\\
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/05/x_px.pdf}}}
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/2/x_px.pdf}}}
-	\caption{\textbf{(a)} w0 = 05 micron, I = 1e20 W/cm2, t = 100 fs \textbf{(b)} w0 = 2 micron, I = 1e20 W/cm2, t = 100 fs \textbf{(c)} w0 = 05 micron, I = 1e21 W/cm2, t = 100 fs \textbf{(d)} w0 = 2 micron, I = 1e21 W/cm2, t = 100 fs}
-	\label{}
+	\caption{Dependency of the x-component of the momentum of electrons on the x-coordinate at the time $ t = 100 \ \mathrm{fs} $ for the case of simulations with the laser intensity I = $ 10^{20} $ W/cm$^2$ and with the beam waist \textbf{(a)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(b)} $ w_0 = 2.0 \ \mu\mathrm{m} $ and for the case of simulations with the laser intensity I = $ 10^{21} $ W/cm$^2$ and with the beam waist \textbf{(c)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(d)} $ w_0 = 2.0 \ \mu\mathrm{m} $. The colorbars are in logarithmic scale.}
+	\label{fig:11}
 \end{figure}
 
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
@@ -192,8 +54,8 @@ Target:
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/2/px_py.pdf}}}\\
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/05/px_py.pdf}}}
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/2/px_py.pdf}}}
-	\caption{\textbf{(a)} w0 = 05 micron, I = 1e20 W/cm2, t = 100 fs \textbf{(b)} w0 = 2 micron, I = 1e20 W/cm2, t = 100 fs \textbf{(c)} w0 = 05 micron, I = 1e21 W/cm2, t = 100 fs \textbf{(d)} w0 = 2 micron, I = 1e21 W/cm2, t = 100 fs}
-	\label{}
+	\caption{Dependency of the x-component of the momentum of electrons on the y-component of the  momentum of electrons at the time $ t = 100 \ \mathrm{fs} $ for the case of simulations with the laser intensity I = $ 10^{20} $ W/cm$^2$ and with the beam waist \textbf{(a)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(b)} $ w_0 = 2.0 \ \mu\mathrm{m} $ and for the case of simulations with the laser intensity I = $ 10^{21} $ W/cm$^2$ and with the beam waist \textbf{(c)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(d)} $ w_0 = 2.0 \ \mu\mathrm{m} $. The colorbars are in logarithmic scale.}
+	\label{fig:12}
 \end{figure}
 
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
@@ -205,8 +67,8 @@ Target:
 	\sidesubfloat[]{{\includegraphics[width=0.445\linewidth]{./img/results/i1e21/05/angles.pdf}}}
 	\hspace{1mm}
 	\sidesubfloat[]{{\includegraphics[width=0.445\linewidth]{./img/results/i1e21/2/angles.pdf}}}
-	\caption{}
-	\label{}
+	\caption{Distribution of angles determining the direction of movement of electrons (the angle 0 stands for the motion forward) at the time $ t = 100 \ \mathrm{fs} $ for the case of simulations with the laser intensity I = $ 10^{20} $ W/cm$^2$ and with the beam waist \textbf{(a)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(b)} $ w_0 = 2.0 \ \mu\mathrm{m} $ and for the case of simulations with the laser intensity I = $ 10^{21} $ W/cm$^2$ and with the beam waist \textbf{(c)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(d)} $ w_0 = 2.0 \ \mu\mathrm{m} $. Electrons are divided into three energetic intervals.}
+	\label{fig:13}
 \end{figure}
 
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
@@ -218,8 +80,8 @@ Target:
 	\sidesubfloat[]{{\includegraphics[width=0.445\linewidth]{./img/results/i1e21/dist_e.pdf}}}
 	\hspace{1mm}
 	\sidesubfloat[]{{\includegraphics[width=0.445\linewidth]{./img/results/i1e21/dist_p.pdf}}}
-	\caption{}
-	\label{}
+	\caption{Energy distribution functions of electrons for several different beam waists at the time $ t = 100 \ \mathrm{fs} $ for the case of simulations with the laser intensity \textbf{(a)} I = $ 10^{20} $ W/cm$^2$ and \textbf{(c)} I = $ 10^{21} $ W/cm$^2$. Energy distribution functions of ions for several different beam waists at the time $ t = 150 \ \mathrm{fs} $ for the case of simulations with the laser intensity \textbf{(b)} I = $ 10^{20} $ W/cm$^2$ and \textbf{(d)} I = $ 10^{21} $ W/cm$^2$.}
+	\label{fig:14}
 \end{figure}
 
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
@@ -228,8 +90,8 @@ Target:
 	\sidesubfloat[]{{\includegraphics[width=0.445\linewidth]{./img/results/i1e20/dens.pdf}}}
 	\hspace{1mm}
 	\sidesubfloat[]{{\includegraphics[width=0.445\linewidth]{./img/results/i1e21/dens.pdf}}}
-	\caption{\textbf{(a)} nc protons, t = 100 fs, I = 1e20 W/cm2 \textbf{(b)} nc protons, t = 100 fs, I = 1e21 W/cm2}
-	\label{}
+	\caption{Contours of ion critical density for several different beam waists at the time $ t = 100 \ \mathrm{fs} $ for the case of simulations with the laser intensity \textbf{(a)} I = $ 10^{20} $ W/cm$^2$ and \textbf{(b)} I = $ 10^{21} $ W/cm$^2$.}
+	\label{fig:15}
 \end{figure}
 
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
@@ -239,8 +101,8 @@ Target:
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/2/ekbar.pdf}}}\\[2mm]
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/05/ekbar.pdf}}}
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/2/ekbar.pdf}}}
-	\caption{}
-	\label{}
+	\caption{Mean kinetic energy of electrons at the time $ t = 120 \ \mathrm{fs} $ for the case of simulations with the laser intensity I = $ 10^{20} $ W/cm$^2$ and with the beam waist \textbf{(a)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(b)} $ w_0 = 2.0 \ \mu\mathrm{m} $ and for the case of simulations with the laser intensity I = $ 10^{21} $ W/cm$^2$ and with the beam waist \textbf{(c)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(d)} $ w_0 = 2.0 \ \mu\mathrm{m} $. The colorbars are in logarithmic scale.}
+	\label{fig:16}
 \end{figure}
 
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
@@ -248,8 +110,8 @@ Target:
 	\centering
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/05/ekbar_2.pdf}}}
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/2/ekbar_2.pdf}}}\\[2mm]
-	\caption{}
-	\label{}
+	\caption{Mean kinetic energy of electrons at the time $ t = 80 \ \mathrm{fs} $ for the case of simulations with the laser intensity I = $ 10^{21} $ W/cm$^2$ and with the beam waist \textbf{(a)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(b)} $ w_0 = 2.0 \ \mu\mathrm{m} $. The colorbars are in logarithmic scale.}
+	\label{fig:17}
 \end{figure}
 
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
@@ -257,8 +119,8 @@ Target:
 	\centering
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/05/jy.pdf}}}
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/2/jy.pdf}}}\\[2mm]
-	\caption{}
-	\label{}
+	\caption{The y-component of the current density $ J_{y} $ at the time $ t = 100 \ \mathrm{fs} $ for the case of simulations with the laser intensity I = $ 10^{21} $ W/cm$^2$ and with the beam waist \textbf{(a)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(b)} $ w_0 = 2.0 \ \mu\mathrm{m} $.}
+	\label{fig:18}
 \end{figure}
 
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
@@ -268,8 +130,8 @@ Target:
 	\sidesubfloat[]{{\includegraphics[width=0.4\linewidth]{./img/results/i1e20/05/traj_2.pdf}}}\\[2mm]
 	\sidesubfloat[]{{\includegraphics[width=0.4\linewidth]{./img/results/i1e20/2/traj_1.pdf}}}
 	\sidesubfloat[]{{\includegraphics[width=0.4\linewidth]{./img/results/i1e20/2/traj_2.pdf}}}
-	\caption{}
-	\label{}
+	\caption{Two types of trajectories of randomly chosen electron samples for the case of simulations with the laser intensity I = $ 10^{20} $ W/cm$^2$ and with the beam waist \textbf{(a), (b)} $ w_0 = 0.5 \ \mu\mathrm{m} $ and \textbf{(c), (d)} $ w_0 = 2.0 \ \mu\mathrm{m} $. The trajectories are colored according to the Lorentz gamma factor of corresponding particles.}
+	\label{fig:19}
 \end{figure}
 
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
@@ -279,8 +141,8 @@ Target:
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/2/abs_ex.pdf}}}\\[2mm]
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/05/abs_ex.pdf}}}
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/2/abs_ex.pdf}}}
-	\caption{}
-	\label{}
+	\caption{Longitudinal electric field ($ E_{x} $) at the time  $ t = 120 \ \mathrm{fs} $ for the case of simulations with the laser intensity I = $ 10^{20} $ W/cm$^2$ and with the beam waist \textbf{(a)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(b)} $ w_0 = 2.0 \ \mu\mathrm{m} $ and for the case of simulations with the laser intensity I = $ 10^{21} $ W/cm$^2$ and with the beam waist \textbf{(c)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(d)} $ w_0 = 2.0 \ \mu\mathrm{m} $.}
+	\label{fig:20}
 \end{figure}
 
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
@@ -290,6 +152,6 @@ Target:
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/05/fpy.pdf}}}\\
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/2/fpx.pdf}}}
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/2/fpy.pdf}}}
-	\caption{\textbf{(a)} 5.1312e-06 \textbf{(b)} 1.5913e-06 \textbf{(c)} 5.9528e-06 \textbf{(d)} 4.6193e-07}
-	\label{}
+	\caption{The x-component of ponderomotive force $ F_{p, x} $ \textbf{(a)} and the y-component of ponderomotive force $ F_{p, y} $ \textbf{(b)} for the case of the laser beam with intensity I = $ 10^{20} $ W/cm$^2$ and the beam waist $ w_0 = 0.5 \ \mu\mathrm{m} $ propagating in vacuum. The x-component of ponderomotive force $ F_{p, x} $ \textbf{(c)} and the y-component of ponderomotive force $ F_{p, y} $ \textbf{(d)} for the case of the laser beam with intensity I = $ 10^{20} $ W/cm$^2$ and the beam waist $ w_0 = 2.0 \ \mu\mathrm{m} $ propagating in vacuum. (max: \textbf{(a)} 5.1312e-06 \textbf{(b)} 1.5913e-06 ... pomer: x:y = 3.2:1 \textbf{(c)} 5.9528e-06 \textbf{(d)} 4.6193e-07 ... pomer: x:y = 12.8:1)}
+	\label{fig:21}
 \end{figure}
