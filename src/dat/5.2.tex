@@ -1,740 +1,147 @@
-wave propagation is limited to directions within a small angle of an axis.
-Since the gaussian beam model uses the paraxial approximation, it fails when wavefronts are tilted by more than about 30 from the axis of the beam
-Since this solution relies on the paraxial approximation, it is not accurate for very strongly diverging beams. In most practical cases the above form is valid
-consequently $  w_0 \gg \lambda $
-For many purposes the above form is a good enough approximation
-Paraxial approximation seems to be sufficient as long as one is interested in the region close to the beam axis and the focusing is not too tight.
-
-All components of the electric and magnetic fields can be deduced from a single scalar wave function.
-In general, the forms of laser beams can be usefully deduced from a vector potential that has a single Cartesian coordinate.
-In this section, the properties of a Gaussian beam will be presented.
-Propagation along the z axis and a stationary focus at the origin of a Cartesian coordinate system will be assumed.
-In this case E and B fields may be expressed by A alone. 
-In general, the forms of laser beams can be usefully deduced from a vector potential that
-has a single Cartesian coordinate.
-
-Since the laser radiation is nothing but the electromagnetic wave...
-Electromagnetic field because the time-varying magnetic field give rise to electric field and vice-versa. interconnection between e and b becomes clear in the framework of special relativity
-The way in which charges and currents interact with the electromagnetic field is described by Lorentz force.
-Electric and magnetic fields can be regarded as a forces produced by distribution of charge and currents
-essential to electrodynamic is the speed of light in vacuum (universal constant), given by ...
-Electromagnetic fields - forces produced by distribution of charge and currents - can exist in regions of space where there are no sources (they can carry energy, momentum , have existence totally independent of charge and currents) 
-
-All components of the electric and magnetic fields of the laser beam that are consistent with Maxwell's equations are deduced. Afterwards, one may evaluate these fields at the boundary of simulation domain and prescribe the laser beam correctly. 
-
-Taylor series:
-\begin{equation}
-k_z \left(\vec{k}_\bot, \omega \right) \approx \frac{\abs{\omega}}{c} - \frac{c}{2 \abs{\omega}} \left( k_x^2 + k_y^2 \right)  
-\end{equation}
-by subs. get back paraxial approximation:
-\begin{equation}
-\bar{\vec{E}}^{\pm}_{\bot} \left(\vec{k}_\bot, z, \omega \right) \approx \bar{\vec{E}}^{\pm}_{0, \bot} \left(\vec{k}_\bot, \omega \right) \e^{\pm \i \left[ \frac{\abs{\omega}}{c} - \frac{c}{2 \abs{\omega}} \left( k_x^2 + k_y^2 \right) \right] \left(z - z_0 \right)}
-\end{equation}
-\begin{equation}
-\bar{E}^{\pm}_z \left(\vec{k}_\bot, z, \omega \right) \approx 0
-\end{equation}
-\begin{equation}
-\bar{B}^{\pm}_x \left(\vec{k}_\bot, z, \omega \right) \approx \mp \frac{1}{c} \bar{E}^{\pm}_y \left(\vec{k}_\bot, z, \omega \right)
-\end{equation}
-\begin{equation}
-\bar{B}^{\pm}_y \left(\vec{k}_\bot, z, \omega \right) \approx \pm \frac{1}{c} \bar{E}^{\pm}_x \left(\vec{k}_\bot, z, \omega \right)
-\end{equation}
-\begin{equation}
-\bar{B}^{\pm}_z \left(\vec{k}_\bot, z, \omega \right) \approx 0
-\end{equation}
-
-where
 \begingroup
-\renewcommand*{\arraystretch}{2.0}
+\renewcommand*{\arraystretch}{1.5}
 \begin{table}[h!]
-	\begin{flushleft}
-		\begin{tabular}{ l c r }
-			$ w(z) = w_0 \sqrt{1 + \left(\frac{z}{z_R} \right)^2}  $ & \ldots & evolving beam width \\
-			$ z_r = \frac{\pi w_0^2}{\lambda} $ & \ldots & Rayleigh range \\
-			$ R(z) = z\left(1 + \left(\frac{z_R}{z} \right)^2 \right) $ & \ldots & radius of curvature \\
-			$ \phi(z) = \tan^{-1}\left(\frac{z}{z_R} \right) $ & \ldots & Guoy phase 
-		\end{tabular}
-	\end{flushleft}
+	\centering
+	\begin{tabular}{c | c | c | c}
+		\multirow{2}{*}{$ w_0 $ [$ \mu\mathrm{m} $]} & \multicolumn{3}{c}{Total absorption of laser energy [\%]} \\ \cline{2-4}
+		 & const. E = $ 2.83 \cdot 10^{4} $ J & const. I = $ 10^{20} $ W/cm$^2$ & const. I = $ 10^{21} $ W/cm$^2$ \\ \hline \hline
+		0.5 & 20.12 & 16.23 & 31.77 \\ \hline
+		1.0 & 9.59 & 9.59 & 23.76 \\ \hline
+		2.0 & 5.27 & 8.26 & 23.82 \\ \hline
+		4.0 & 3.49 & 8.29 & 23.71 \\
+	\end{tabular}
+	\caption{A summary of the values of the total laser light absorption in plasma for several different sizes of the focal spot and different laser intensities.}
+	\label{table:4}
 \end{table}
 \endgroup
 
-\begin{flalign*}
-& w(z) = w_0 \sqrt{1 + \left(\frac{z}{z_R} \right)^2} \dots \mathrm{evolving \: beam \: width} & \\
-& z_r = \frac{\pi w_0^2}{\lambda} \dots \mathrm{Rayleigh \: range} & \\
-& R(z) = z\left(1 + \left(\frac{z_R}{z} \right)^2 \right) \dots \mathrm{evolving \: radius \: of \: curvature} & \\
-& \phi(z) = \tan^{-1}\left(\frac{z}{z_R} \right) \dots \mathrm{Guoy \: phase} & \\
-& \theta = \tan^{-1}\left(\frac{w(z)}{z} \right) \simeq \frac{\lambda}{\pi w_0} \dots \mathrm{beam \: divergence \: angle} &
-\end{flalign*}
-
-\noindent
-Features:
-\begin{itemize}
-	\item 2D version of algorithm, Ey, Bx, Bz omitted (identically equal to 0) 
-	\item Code written in C++, object oriented to be easily extended to 3D, compiled to static library
-	\item Linked into EPOCH as a static library (in order not to disturb the code, for this reason also added support for CMake – machine independent)
-	\item Parallelized using hybrid techniques (OpenMP + MPI – computation time in most cases negligible in comparison with the main simulation)
-	\item Fourier transforms can be computed using Intel MKL library, FFTW library or without any library (compile time option)
-	\item Computed fields dumped into shared files using binary coding (speed up output, save disk storage)
-	\item Only transverse component of electric field (Ex) passed to the EPOCH at each time step (no significant slowdown or memory overhead), other fields computed by EPOCH
-	\item All new parameters needed for tight-focusing (w0, focal length, etc.) may be specified via input file
-	\item Implementation works generally regardless the number of lasers in the simulation or boundaries that they are attached to
-\end{itemize}
-
-\noindent
-Laser:
-\begin{itemize}
-	\item wavelength: $ \lambda $ = 1.0 $ \mu m $
-	\item amplitude: $ \vec{E}_0 $ = 1e15 V/m
-	\item duration: t = 20 fs (in FWHM)
-	\item beam waist in focus: $ w_0 $ = 0.7 $ \mu m $
-	\item focus distance from boundary: $ x_\mathrm{B} - x_0 $ = 8 $ \mu m $
-	\item polarization: P
-	\item boundary: left 
-\end{itemize}
-Domain:
-\begin{itemize}
-	\item x min: -8 $ \mu m $
-	\item x max: 8 $ \mu m $
-	\item y min: -8 $ \mu m $
-	\item y max: 8 $ \mu m $
-	\item $ N_x $: 1600 cells ($ \delta x $ = $ \lambda/100 $ = 10 nm)
-	\item $ N_y $: 1600 cells ($ \delta y $ = $ \lambda/100 $ = 10 nm)
-	\item time step: $ \delta t $ = $ 1/(\sqrt{2} c) \lambda /100 \approx $ 0.05 fs 
-	\item simulation time: $ \tau $ = 150 fs
-\end{itemize}
-
-\newpage
-\noindent
-The phase space distribution function  $ f_{s} \left(\vec{x}, \vec{v}, t\right) $ for a given species $ s $ is governed by the Vlasov equation:
-\begin{equation*}
-\diffp[]{f_{s}}{t} + \vec{v} \cdot \nabla f_s + \frac{q_{s}}{m_{s}}\left( \vec{E} + \vec{v} \times \vec{B} \right) \cdot \diffp[]{f_s}{\vec{v}} = 0.
-\end{equation*}
-The distribution function is approximated using finite-size quasi-particles with so-called shape functions $ S_{x} $ and $ S_{v} $, $ N_p $ is the number of physical particles: 
-\begin{equation*}
-f_{s} \left(\vec{x}, \vec{v}, t \right) =  \sum_{p} f_{p}\left(\vec{x}, \vec{v}, t \right), \quad f_{p}\left(\vec{x}, \vec{v}, t \right) = N_{p} S_{x}\left(\vec{x} - \vec{x}_{p}\left(t\right) \right)  S_{v}\left(\vec{v} - \vec{v}_{p}\left( t\right) \right).
-\end{equation*}
-Electromagnetic fields self-consistently evolved by Maxwell equations:
-\begin{equation*}
-\nabla \cdot \vec{E} = \frac{\rho}{\varepsilon_{0}}, \qquad \nabla \cdot \vec{B} = 0
-\end{equation*}
-\begin{equation*}
-\nabla \times \vec{E} = - \diffp{\vec{B}}{t}, \qquad \nabla \times \vec{B} = \mu_{0} \vec{J} + \frac{1}{c^{2}} \diffp{\vec{E}}{t},
-\end{equation*}
-where charge density and current density are obtained from distribution functions:
-\begin{equation*}
-\rho\left(\vec{x}, t \right) = \sum_s q_s \int f_s \left(\vec{x}, \vec{v}, t \right) \mathrm{d} \vec{v}, \qquad \vec{J}\left(\vec{x}, t \right) = \sum_s q_s \int f_s \left(\vec{x}, \vec{v}, t \right) \vec{v} \, \mathrm{d} \vec{v}.
-\end{equation*}
-
-\lstlistoflistings
-
-\begin{lstlisting}[style=CXX, caption=Function performing forward fast Fourier transform using MKL library]
-std::vector<std::complex<double>> fft::mkl_fft_forward(std::vector<std::complex<double>> in) {
-DFTI_DESCRIPTOR_HANDLE desc;
-MKL_LONG status;
-DftiCreateDescriptor(&desc, DFTI_DOUBLE, DFTI_COMPLEX, 1, static_cast<MKL_LONG>(in.size()));
-DftiCommitDescriptor(desc);
-status = DftiComputeForward(desc, in.data());
-if(status != 0) {
-std::cerr << DftiErrorMessage(status) << std::endl;
-abort();
-}
-DftiFreeDescriptor(&desc);
-return in;
-}
-\end{lstlisting}
-
-\begin{lstlisting}[style=CXX, caption=Function performing backward fast Fourier transform using MKL library]
-std::vector<std::complex<double>> fft::mkl_fft_backward(std::vector<std::complex<double>> in) {
-DFTI_DESCRIPTOR_HANDLE desc;
-MKL_LONG status;
-DftiCreateDescriptor(&desc, DFTI_DOUBLE, DFTI_COMPLEX, 1, static_cast<MKL_LONG>(in.size()));
-DftiCommitDescriptor(desc);
-status = DftiComputeBackward(desc, in.data());
-if(status != 0) {
-std::cerr << DftiErrorMessage(status) << std::endl;
-abort();
-}
-DftiFreeDescriptor(&desc);
-return in;
-}
-\end{lstlisting}
-
-\begin{lstlisting}[style=CXX, caption=Function performing forward fast Fourier transform using FFTW library]
-std::vector<std::complex<double>> fft::fftw_fft_forward(std::vector<std::complex<double>> in) {
-fftw_plan p = fftw_plan_dft_1d(in.size(), reinterpret_cast<fftw_complex*>(in.data()), reinterpret_cast<fftw_complex*>(in.data()), FFTW_FORWARD, FFTW_ESTIMATE);
-fftw_execute(p);
-fftw_destroy_plan(p);
-return in;
-}
-\end{lstlisting}
-
-\begin{lstlisting}[style=CXX, caption=Function performing backward fast Fourier transform using FFTW library]
-std::vector<std::complex<double>> fft::fftw_fft_backward(std::vector<std::complex<double>> in) {
-fftw_plan p = fftw_plan_dft_1d(in.size(), reinterpret_cast<fftw_complex*>(in.data()), reinterpret_cast<fftw_complex*>(in.data()), FFTW_BACKWARD, FFTW_ESTIMATE);
-fftw_execute(p);
-fftw_destroy_plan(p);
-return in;
-}
-\end{lstlisting}
-
-\begin{lstlisting}[style=CXX, caption=Function performing forward discrete Fourier transform without using any library]
-std::vector<std::complex<double>> fft::fft_forward(std::vector<std::complex<double>> in) {
-std::vector<std::complex<double>> out(in.size());
-for(auto j = 0; j < out.size(); j++) {
-for(auto l = 0; l < out.size(); l++) {
-out.at(j) += in.at(l) * exp(-2.0 * constants::pi * I * l * j / in.size());
-}
-}
-return out;
-}
-\end{lstlisting}
-
-\begin{lstlisting}[style=CXX, caption=Function performing backward discrete Fourier transform without using any library]
-std::vector<std::complex<double>> fft::fft_backward(std::vector<std::complex<double>> in) {
-std::vector<std::complex<double>> out(in.size());
-for(auto j = 0; j < out.size(); j++) {
-for(auto l = 0; l < out.size(); l++) {
-out.at(j) += in.at(l) * exp(+2.0 * constants::pi * I * l * j / in.size());
-}
-}
-return out;
-}
-\end{lstlisting}
-
-\begin{lstlisting}[style=CXX, caption=Method for performing discrete Fourier transform in time]
-void laser_bcs::dft_time(field_2d<std::complex<double>>& field) const {
-#ifdef OPENMP
-#pragma omp parallel for schedule(static)
-#endif
-for(auto j = 0; j < this->domain->Nx; j++) {
-#ifdef USE_MKL
-field.add_col(fft::mkl_fft_backward(field.get_col(j)), j);
-#elif USE_FFTW
-field.add_col(fft::fftw_fft_backward(field.get_col(j)), j);
-#else
-field.add_col(fft::fft_backward(field.get_col(j)), j);
-#endif
-}
-field.multiply(this->domain->dt / (2.0 * constants::pi));
-return;
-}
-\end{lstlisting}
-
-\begin{lstlisting}[style=CXX, caption=Method for performing inverse discrete Fourier transform in time]
-void laser_bcs::idft_time(field_2d<std::complex<double>>& field) const {
-#ifdef OPENMP
-#pragma omp parallel for schedule(static)
-#endif
-for(auto j = 0; j < this->domain->Nx; j++) {
-#ifdef USE_MKL
-field.add_col(fft::mkl_fft_forward(field.get_col(j)), j);
-#elif USE_FFTW
-field.add_col(fft::fftw_fft_forward(field.get_col(j)), j);
-#else
-field.add_col(fft::fft_forward(field.get_col(j)), j);
-#endif
-}
-field.multiply(2.0 * (2.0 * constants::pi) / (this->domain->Nt * this->domain->dt));
-return;
-}
-\end{lstlisting}
-
-\begin{lstlisting}[style=CXX, caption=Method for performing discrete Fourier transform in space]
-void laser_bcs::dft_space(field_2d<std::complex<double>>& field) const {
-std::vector<std::complex<double>> row_global(this->domain->Nx_global);
-std::vector<std::complex<double>> row_local;
-for(auto j = 0; j < this->domain->Nt; j++) {
-row_local = field.get_row(j);
-MPI_Gatherv(row_local.data(), this->domain->Nx, MPI_CXX_DOUBLE_COMPLEX, row_global.data(), this->domain->counts.data(), this->domain->displs.data(), MPI_CXX_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
-if(this->domain->rank == 0) {
-#ifdef USE_MKL
-row_global = fft::mkl_fft_forward(row_global);
-#elif USE_FFTW
-row_global = fft::fftw_fft_forward(row_global);
-#else
-row_global = fft::fft_forward(row_global);
-#endif
-}
-MPI_Scatterv(row_global.data(), this->domain->counts.data(), this->domain->displs.data(), 	MPI_CXX_DOUBLE_COMPLEX, row_local.data(), this->domain->Nx, MPI_CXX_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
-field.add_row(row_local, j);
-}
-field.multiply(this->domain->dx / (2.0 * constants::pi));
-return;
-}
-\end{lstlisting}
-
-\begin{lstlisting}[style=CXX, caption=Method for performing inverse discrete Fourier transform in space]
-void laser_bcs::idft_space(field_2d<std::complex<double>>& field) const {
-std::vector<std::complex<double>> row_global(this->domain->Nx_global);
-std::vector<std::complex<double>> row_local;
-for(auto j = 0; j < this->domain->Nt; j++) {
-row_local = field.get_row(j);
-MPI_Gatherv(row_local.data(), this->domain->Nx, MPI_CXX_DOUBLE_COMPLEX, row_global.data(), this->domain->counts.data(), this->domain->displs.data(), MPI_CXX_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
-if(this->domain->rank == 0) {
-#ifdef USE_MKL
-row_global = fft::mkl_fft_backward(row_global);
-#elif USE_FFTW
-row_global = fft::fftw_fft_backward(row_global);
-#else
-row_global = fft::fft_backward(row_global);
-#endif
-}
-MPI_Scatterv(row_global.data(), this->domain->counts.data(), this->domain->displs.data(), MPI_CXX_DOUBLE_COMPLEX, row_local.data(), this->domain->Nx, MPI_CXX_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
-field.add_row(row_local, j);
-}
-field.multiply((2.0 * constants::pi) / (this->domain->Nx_global * this->domain->dx));
-return;
-}
-\end{lstlisting}
-
-\begin{lstlisting}[style=CXX, caption=Method for dumping data into shared file]
-template <typename T>
-void field_2d<T>::dump_to_shared_file(std::string name, int row_first, int row_last, int row_size_local, int row_size_global, int col_start) const {
-MPI_File file;
-MPI_Offset offset = 0;
-MPI_Status status;
-MPI_Datatype local_array;
-int col_size = row_last - row_first;
-const int ndims = 2;
-std::array<int, ndims> size_global = {col_size, row_size_global};
-std::array<int, ndims> size_local = {col_size, row_size_local};
-std::array<int, ndims> start_coords = {0, col_start};
-MPI_Type_create_subarray(2, size_global.data(), size_local.data(), start_coords.data(), MPI_ORDER_C, MPI_DOUBLE, &local_array);
-MPI_Type_commit(&local_array);
-std::vector<double> real_part(col_size * row_size_local);
-for(auto i = std::make_pair(row_first, 0); i.first < row_last; i.first++, i.second++) {
-for(auto j = 0; j < row_size_local; j++) {
-real_part[i.second * row_size_local + j] = std::real(this->data[i.first * row_size_local + j]);
-}
-}
-MPI_File_open(MPI_COMM_WORLD, name.data(), MPI_MODE_CREATE|MPI_MODE_WRONLY, MPI_INFO_NULL, &file);
-MPI_File_set_view(file, offset, MPI_DOUBLE, local_array, "native", MPI_INFO_NULL);
-MPI_File_write_all(file, real_part.data(), col_size * row_size_local, MPI_DOUBLE, &status);
-MPI_File_close(&file);
-MPI_Type_free(&local_array);
-return;
-}
-\end{lstlisting}
-
-\begin{lstlisting}[style=CXX, caption=Extern C++ function to fill Fortran arrays with laser fields dumped in binary file]
-void populate_laser_at_boundary(double* field, int* id, const char* data_dir, int* timestep, int* size_global, int* first, int* last) {
-double num = 0.0;
-std::string laser_id = std::to_string(*id);
-std::string path(data_dir);
-std::ifstream in;
-in.open(path + "/laser_" + laser_id + ".dat", std::ios::binary);
-if(in.is_open()) {
-in.seekg(((*timestep) * (*size_global) + (*first) - 1) * sizeof(num));
-for(auto i = 0; i < *last - *first + 1; i++) {
-in.read(reinterpret_cast<char*>(&num), sizeof(num));
-field[i] = num;
-}
-in.close();
-} else {
-std::cout << "error: cannot read file " << path + "/" + filename + laser_id + ".dat" << std::endl;
-}
-return;
-}
-\end{lstlisting}
-
-\begin{lstlisting}[style=FORTRAN, caption=Fortran interfaces for C++ library functions]
-INTERFACE
-
-SUBROUTINE compute_laser_at_boundary(rank, nproc, laser_start, laser_end, &
-fwhm_time, t_0, omega, pos, amp, w_0, id, L_min, L_max, L_focus, T_min, T_max, &
-T_ncells, cpml_thickness, t_end, T_cell_size, L_cell_size, dt, output_path) bind(c)
-USE, INTRINSIC :: iso_c_binding
-IMPLICIT NONE
-INTEGER(c_int), INTENT(IN) :: rank, nproc, id, T_ncells, cpml_thickness
-CHARACTER(kind=c_char), DIMENSION(*), INTENT(IN) :: output_path
-REAL(c_double), INTENT(IN) :: laser_start, laser_end, fwhm_time, t_0, omega, pos, &
-amp, w_0, L_min, L_max, L_focus, T_min, T_max, t_end, T_cell_size, L_cell_size, dt
-END SUBROUTINE compute_laser_at_boundary
-
-SUBROUTINE populate_laser_at_boundary(field, laser_id, output_path, timestep, size_global, first, last) bind(c)
-USE, INTRINSIC :: iso_c_binding
-IMPLICIT NONE
-INTEGER(c_int), INTENT(IN) :: laser_id, timestep, size_global, first, last
-CHARACTER(kind=c_char), DIMENSION(*), INTENT(IN) :: output_path
-REAL(c_double), DIMENSION(*), INTENT(OUT) :: field
-END SUBROUTINE populate_laser_at_boundary
-
-END INTERFACE
-\end{lstlisting}
-
-\begin{lstlisting}[style=FORTRAN, caption=Fortran subroutines for Maxwell consistent computation of laser fields at boundaries]
-SUBROUTINE Maxwell_consistent_computation_of_EM_fields
-
-TYPE(laser_block), POINTER :: current
-
-current => laser_x_min
-DO WHILE(ASSOCIATED(current))
-CALL compute_laser_at_boundary(rank, nproc, current%t_start, current%t_end, &
-current%fwhm_time, current%t_0, current%omega, current%pos, current%amp, current%w_0, &
-current%id, x_min, x_max, current%focus, y_min, y_max, ny_global, cpml_thickness, t_end, &
-dy, dx, dt, TRIM(data_dir)//C_NULL_CHAR)
-current => current%next
-ENDDO
-
-current => laser_x_max
-DO WHILE(ASSOCIATED(current))
-CALL compute_laser_at_boundary(rank, nproc, current%t_start, current%t_end, &
-current%fwhm_time, current%t_0, current%omega, current%pos, current%amp, current%w_0, &
-current%id, x_min, x_max, current%focus, y_min, y_max, ny_global, cpml_thickness, t_end, &
-dy, dx, dt, TRIM(data_dir)//C_NULL_CHAR)
-current => current%next
-ENDDO
-
-current => laser_y_min
-DO WHILE(ASSOCIATED(current))
-CALL compute_laser_at_boundary(rank, nproc, current%t_start, current%t_end, &
-current%fwhm_time, current%t_0, current%omega, current%pos, current%amp, current%w_0, &
-current%id, y_min, y_max, current%focus, x_min, x_max, nx_global, cpml_thickness, t_end, &
-dx, dy, dt, TRIM(data_dir)//C_NULL_CHAR)
-current => current%next
-ENDDO
-
-current => laser_y_max
-DO WHILE(ASSOCIATED(current))
-CALL compute_laser_at_boundary(rank, nproc, current%t_start, current%t_end, &
-current%fwhm_time, current%t_0, current%omega, current%pos, current%amp, current%w_0, &
-current%id, y_min, y_max, current%focus, x_min, x_max, nx_global, cpml_thickness, t_end, &
-dx, dy, dt, TRIM(data_dir)//C_NULL_CHAR)
-current => current%next
-ENDDO
-
-END SUBROUTINE Maxwell_consistent_computation_of_EM_fields
-\end{lstlisting}
-
-\begin{lstlisting}[style=FORTRAN, caption=Fortran subroutines for populating laser sources at boundaries]
-SUBROUTINE get_source_x_boundary(buffer, laser_id)
-REAL(num), DIMENSION(:), INTENT(INOUT) :: buffer
-INTEGER, INTENT(IN) :: laser_id
-CALL populate_laser_at_boundary(buffer, laser_id, TRIM(data_dir)//C_NULL_CHAR, &
-step, ny_global, ny_global_min, ny_global_max)
-END SUBROUTINE get_source_x_boundary
-  
-SUBROUTINE get_source_y_boundary(buffer, laser_id)
-REAL(num), DIMENSION(:), INTENT(INOUT) :: buffer
-INTEGER, INTENT(IN) :: laser_id
-CALL populate_laser_at_boundary(buffer, laser_id, TRIM(data_dir)//C_NULL_CHAR, &
-step, nx_global, nx_global_min, nx_global_max)
-END SUBROUTINE get_source_y_boundary
-\end{lstlisting}
-
-\begin{lstlisting}[style=FORTRAN, caption=CMakeLists]
-cmake_minimum_required(VERSION 3.1)
-project(EPOCH_2D)
-enable_language(CXX Fortran)
-
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
-set(CMAKE_Fortran_MODULE_DIRECTORY ${CMAKE_SOURCE_DIR}/obj)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
-
-find_package(MPI REQUIRED)
-find_package(SDF REQUIRED)
-
-include_directories(${MPI_Fortran_INCLUDE_PATH})
-include_directories(${SDF_Fortran_INCLUDE_PATH})
-include_directories(src/include)
-
-execute_process(COMMAND ./src/gen_commit_string.sh)
-execute_process(COMMAND grep -oP "(?<=COMMIT=)[^ ]+" ./src/COMMIT OUTPUT_VARIABLE COMMIT)
-execute_process(COMMAND date +%s OUTPUT_VARIABLE DATE)
-execute_process(COMMAND uname -n OUTPUT_VARIABLE MACHINE)
-
-add_definitions('-D_COMMIT="${COMMIT}"')
-add_definitions('-D_DATE=${DATE}')
-add_definitions('-D_MACHINE="${MACHINE}"')
-
-if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
-message(STATUS "Setting build type to 'Release', Debug mode was not specified.")
-set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
-# Set the possible values of build type for cmake-gui
-set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release")
-endif()
-
-if(${CMAKE_Fortran_COMPILER_ID} MATCHES "Intel")
-set(CMAKE_Fortran_FLAGS_RELEASE "-O3 -xHost -no-prec-div -fno-math-errno -unroll=3 -qopt-subscript-in-range -align all")
-set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -nothreads -traceback -fltconsistency -C -g -heap-arrays 64 -warn -fp-stack-check -check bounds -fpe0")
-elseif(${CMAKE_Fortran_COMPILER_ID} MATCHES "GNU")
-set(CMAKE_Fortran_FLAGS_RELEASE "-O2 -fimplicit-none -ffixed-line-length-132")
-set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -g -Wall -Wextra -pedantic -fbounds-check -ffpe-trap=invalid,zero,overflow -Wno-unused-parameter")
-elseif(${CMAKE_Fortran_COMPILER_ID} MATCHES "PGI")
-  set(CMAKE_Fortran_FLAGS_RELEASE "-r8 -fast -fastsse -O3 -Mipa=fast,inline -Minfo")
-  set(CMAKE_Fortran_FLAGS_DEBUG "-Mbounds -g")
-elseif(${CMAKE_Fortran_COMPILER_ID} MATCHES "G95")
-  set(CMAKE_Fortran_FLAGS_RELEASE "-O3")
-  set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -g")
-elseif(${CMAKE_Fortran_COMPILER_ID} MATCHES "XL")
-  set(CMAKE_Fortran_FLAGS_RELEASE "-O5 -qhot -qipa")
-  set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -C -g -qfullpath -qinfo -qnosmp -qxflag=dvz -Q! -qnounwind -qnounroll")
-else()
-message(STATUS "No optimized Fortran compiler flags are known")
-message(STATUS "Fortran compiler full path: " ${CMAKE_Fortran_COMPILER})
-set(CMAKE_Fortran_FLAGS_RELEASE "-O2")
-set(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -g")
-endif()
-
-if(${CMAKE_CXX_COMPILER_ID} MATCHES "Intel")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3 -std=c++11 -no-prec-div -ansi-alias -qopt-prefetch=4 -unroll-aggressive -m64")
-set(CMAKE_CXX_FLAGS_DEBUG "-O0 -std=c++11 -g -traceback -mp1 -fp-trap=common -fp-model strict")
-elseif(${CMAKE_CXX_COMPILER_ID} MATCHES "GNU")
-set(CMAKE_CXX_FLAGS_RELEASE "-O2 -std=c++11 -msse4 -mtune=native -march=native -funroll-loops -fno-math-errno -ffast-math")
-set(CMAKE_CXX_FLAGS_DEBUG "-O0 -std=c++11 -g -pedantic -Wall -Wextra -Wno-unused")
-elseif(${CMAKE_CXX_COMPILER_ID} MATCHES "PGI")
-  set(CMAKE_CXX_FLAGS_RELEASE "-std=c++0x")
-  set(CMAKE_CXX_FLAGS_DEBUG "-std=c++0x")
-elseif(${CMAKE_CXX_COMPILER_ID} MATCHES "G95")
-  set(CMAKE_CXX_FLAGS_RELEASE "-std=c++0x")
-  set(CMAKE_CXX_FLAGS_DEBUG "-std=c++0x")
-elseif(${CMAKE_CXX_COMPILER_ID} MATCHES "XL")
-  set(CMAKE_CXX_FLAGS_RELEASE "-qlanglvl=extended0x")
-  set(CMAKE_CXX_FLAGS_DEBUG "-qlanglvl=extended0x")
-else()
-message(STATUS "No optimized C++ compiler flags are known")
-message(STATUS "C++ compiler full path: " ${CMAKE_CXX_COMPILER})
-set(CMAKE_CXX_FLAGS_RELEASE "-O2 -std=c++11")
-set(CMAKE_CXX_FLAGS_DEBUG "-O0 -std=c++11 -g")
-endif()
-
-set(SOURCES
-${CMAKE_SOURCE_DIR}/src/epoch2d.F90
-${CMAKE_SOURCE_DIR}/src/boundary.f90
-${CMAKE_SOURCE_DIR}/src/fields.f90
-${CMAKE_SOURCE_DIR}/src/laser.F90
-${CMAKE_SOURCE_DIR}/src/particles.F90
-${CMAKE_SOURCE_DIR}/src/shared_data.F90
-)
-
-set(FOLDERS deck housekeeping io parser physics_packages user_interaction)
-foreach(FOLDER ${FOLDERS})
-file(GLOB TMP ${CMAKE_SOURCE_DIR}/src/${FOLDER}/*)
-list(APPEND SOURCES ${TMP})
-endforeach()
-
-option(OPENMP "Enable multithreading using OpenMP directives." OFF)
-option(PER_SPECIES_WEIGHT "Set every pseudoparticle in a species to represent the same number of real particles." OFF)
-option(NO_TRACER_PARTICLES "Don't enable support for tracer particles." OFF)
-option(NO_PARTICLE_PROBES "Don't enable support for particle probes." OFF)
-option(PARTICLE_SHAPE_TOPHAT "Use second order particle weighting." OFF)
-option(PARTICLE_SHAPE_BSPLINE3 "Use fifth order particle weighting." OFF)
-option(PARTICLE_ID "Include a unique global particle ID using an 8-byte integer." OFF)
-option(PARTICLE_ID4 "Include a unique global particle ID using an 4-byte integer." OFF)
-option(PARTICLE_COUNT_UPDATE "Keep global particle counts up to date." OFF)
-option(PHOTONS "Include QED routines" OFF)
-option(TRIDENT_PHOTONS "Use the Trident process for pair production." OFF)
-option(PREFETCH "Use Intel-specific 'mm_prefetch' calls to load next particle in the list into cache ahead of time." OFF)
-option(PARSER_DEBUG "Turn on debugging." OFF)
-option(PARTICLE_DEBUG "Turn on debugging." OFF)
-option(MPI_DEBUG "Turn on debugging." OFF)
-option(SIMPLIFY_DEBUG "Turn on debugging." OFF)
-option(NO_IO "Don't generate any output at all. Useful for benchmarking." OFF)
-option(COLLISIONS_TEST "Bypass the main simulation and only perform collision tests." OFF)
-option(PER_PARTICLE_CHARGE_MASS "specify charge and mass per particle rather than per species." OFF)
-option(PARSER_CHECKING "Perform checks on evaluated deck expressions." OFF)
-option(USE_INSITU "Link epoch with ParaView Catalyst." OFF)
-option(INSITU_DOUBLE_PREC "Double precision for data exported insitu." OFF)
-option(TIGHT_FOCUSING "Maxwell consistent computation of EM fields at boundary for tight-focusing." OFF)
-
-if(OPENMP)
-message(STATUS "Option 'OPENMP' enabled")
-add_definitions("-DOPENMP")
-if(${CMAKE_Fortran_COMPILER_ID} MATCHES "Intel")
-set(CMAKE_Fortran_FLAGS_RELEASE "${CMAKE_Fortran_FLAGS_RELEASE} -qopenmp")
-set(CMAKE_Fortran_FLAGS_DEBUG "${CMAKE_Fortran_FLAGS_DEBUG} -qopenmp")
-elseif(${CMAKE_Fortran_COMPILER_ID} MATCHES "GNU")
-set(CMAKE_Fortran_FLAGS_RELEASE "${CMAKE_Fortran_FLAGS_RELEASE} -fopenmp")
-set(CMAKE_Fortran_FLAGS_DEBUG "${CMAKE_Fortran_FLAGS_DEBUG} -fopenmp")
-else()
-message(STATUS "Fortran OpenMP compiler flag not known.")
-endif()
-if(${CMAKE_CXX_COMPILER_ID} MATCHES "Intel")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -qopenmp")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -qopenmp")
-elseif(${CMAKE_CXX_COMPILER_ID} MATCHES "GNU")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fopenmp")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fopenmp")
-else()
-message(STATUS "C++ OpenMP compiler flag not known.")
-endif()
-endif()
-
-if(TIGHT_FOCUSING AND NOT FFT_LIBRARY)
-message(STATUS "No FFT library specified. Setting FFT library to 'none'.")
-set(FFT_LIBRARY none CACHE STRING "Choose the FFT library." FORCE)
-set_property(CACHE FFT_LIBRARY PROPERTY STRINGS "FFTW" "MKL" "None")
-endif()
-
-if(PER_SPECIES_WEIGHT)
-message(STATUS "Option 'PER_SPECIES_WEIGHT' enabled")
-add_definitions("-DPER_SPECIES_WEIGHT")
-endif()
-
-if(NO_TRACER_PARTICLES)
-message(STATUS "Option 'NO_TRACER_PARTICLES' enabled")
-add_definitions("-DNO_TRACER_PARTICLES")
-endif()
-
-if(NO_PARTICLE_PROBES)
-message(STATUS "Option 'NO_PARTICLE_PROBES' enabled")
-add_definitions("-DNO_PARTICLE_PROBES")
-endif()
-
-if(PARTICLE_SHAPE_TOPHAT)
-message(STATUS "Option 'PARTICLE_SHAPE_TOPHAT' enabled")
-add_definitions("-DPARTICLE_SHAPE_TOPHAT")
-endif()
-
-if(PARTICLE_SHAPE_BSPLINE3)
-message(STATUS "Option 'PARTICLE_SHAPE_BSPLINE3' enabled")
-add_definitions("-DPARTICLE_SHAPE_BSPLINE3")
-endif()
-
-if(PARTICLE_ID)
-message(STATUS "Option 'PARTICLE_ID' enabled")
-add_definitions("-DPARTICLE_ID")
-endif()
-
-if(PARTICLE_ID4)
-message(STATUS "Option 'PARTICLE_ID4' enabled")
-add_definitions("-DPARTICLE_ID4")
-endif()
-
-if(PARTICLE_COUNT_UPDATE)
-message(STATUS "Option 'PARTICLE_COUNT_UPDATE' enabled")
-add_definitions("-DPARTICLE_COUNT_UPDATE")
-endif()
-
-if(PHOTONS)
-message(STATUS "Option 'PHOTONS' enabled")
-add_definitions("-DPHOTONS")
-endif()
-
-if(TRIDENT_PHOTONS)
-message(STATUS "Option 'TRIDENT_PHOTONS' enabled")
-add_definitions("-DTRIDENT_PHOTONS")
-endif()
-
-if(PREFETCH)
-message(STATUS "Option 'PREFETCH' enabled")
-add_definitions("-DPREFETCH")
-endif()
-
-if(PARSER_DEBUG)
-message(STATUS "Option 'PARSER_DEBUG' enabled")
-add_definitions("-DPARSER_DEBUG")
-endif()
-
-if(PARTICLE_DEBUG)
-message(STATUS "Option 'PARTICLE_DEBUG' enabled")
-add_definitions("-DPARTICLE_DEBUG")
-endif()
-
-if(MPI_DEBUG)
-message(STATUS "Option 'MPI_DEBUG' enabled")
-add_definitions("-DMPI_DEBUG")
-endif()
-
-if(SIMPLIFY_DEBUG)
-message(STATUS "Option 'SIMPLIFY_DEBUG' enabled")
-add_definitions("-DSIMPLIFY_DEBUG")
-endif()
-
-if(NO_IO)
-message(STATUS "Option 'NO_IO' enabled")
-add_definitions("-DNO_IO")
-endif()
-
-if(COLLISIONS_TEST)
-message(STATUS "Option 'COLLISIONS_TEST' enabled")
-add_definitions("-DCOLLISIONS_TEST")
-endif()
-
-if(PER_PARTICLE_CHARGE_MASS)
-message(STATUS "Option 'PER_PARTICLE_CHARGE_MASS' enabled")
-add_definitions("-DPER_PARTICLE_CHARGE_MASS")
-endif()
-
-if(PARSER_CHECKING)
-message(STATUS "Option 'PARSER_CHECKING' enabled")
-add_definitions("-DPARSER_CHECKING")
-endif()
-
-if(USE_INSITU)
-message(STATUS "Option 'USE_INSITU' enabled")
-find_package(ParaView 5.2 REQUIRED COMPONENTS vtkPVPythonCatalyst)
-include(${PARAVIEW_USE_FILE})
-file(GLOB ADAPTOR ${CMAKE_SOURCE_DIR}/src/adaptor/*)
-list(APPEND SOURCES ${ADAPTOR})
-add_definitions("-DINSITU")
-if(NOT PARAVIEW_USE_MPI)
-message(SEND_ERROR "ParaView must be built with MPI enabled")
-endif()
-if(INSITU_DOUBLE_PREC)
-message(STATUS "Option 'INSITU_DOUBLE_PREC' enabled")
-add_definitions("-DINSITU_DOUBLE_PREC")
-endif()
-endif()
-
-if(TIGHT_FOCUSING)
-message(STATUS "Option 'TIGHT_FOCUSING' enabled")
-file(GLOB FOCUSING ${CMAKE_SOURCE_DIR}/src/focusing/interface.f90)
-list(APPEND SOURCES ${FOCUSING})
-include_directories(${MPI_CXX_INCLUDE_PATH})
-add_definitions("-DTIGHT_FOCUSING")
-set(FOCUS_SRC
-${CMAKE_SOURCE_DIR}/src/focusing/main.cpp
-${CMAKE_SOURCE_DIR}/src/focusing/domain_param.cpp
-${CMAKE_SOURCE_DIR}/src/focusing/laser_param.cpp
-${CMAKE_SOURCE_DIR}/src/focusing/global.cpp
-${CMAKE_SOURCE_DIR}/src/focusing/laser_bcs.cpp
-)
-include_directories(${CMAKE_SOURCE_DIR}/src/focusing/inc)
-if(${FFT_LIBRARY} MATCHES "FFTW")
-if(OPENMP)
-message(SEND_ERROR "Multi-threaded FFTW routines are not supported. Disable OpenMP.")
-endif()
-message(STATUS "FFT library: FFTW")
-message(STATUS "Option 'USE_FFTW' enabled")
-add_definitions("-DUSE_FFTW")
-find_package(FFTW REQUIRED)
-include_directories(${FFTW_INCLUDES})
-endif()
-if(${FFT_LIBRARY} MATCHES "MKL")
-if(NOT ${CMAKE_CXX_COMPILER_ID} MATCHES "Intel")
-message(SEND_ERROR "MKL library can be used only with Intel compilers")
-endif()
-message(STATUS "FFT library: MKL")
-message(STATUS "Option 'USE_MKL' enabled")
-add_definitions("-DUSE_MKL")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mkl")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mkl")
-set(CMAKE_Fortran_FLAGS_RELEASE "${CMAKE_Fortran_FLAGS_RELEASE} -mkl")
-set(CMAKE_Fortran_FLAGS_DEBUG "${CMAKE_Fortran_FLAGS_DEBUG} -mkl")
-endif()
-if(${FFT_LIBRARY} MATCHES "None")
-message(STATUS "FFT library: None")
-endif()
-add_library(focus ${FOCUS_SRC})
-if(${FFT_LIBRARY} MATCHES "FFTW")
-#if(OPENMP)
-#  target_link_libraries(focus LINK_PUBLIC ${FFTW_LIBRARIES} ${FFTW_LIBRARIES_OMP})
-#else()
-target_link_libraries(focus LINK_PUBLIC ${FFTW_LIBRARIES})
-#endif()
-endif()
-set_target_properties(focus PROPERTIES LINKER_LANGUAGE CXX)
-endif()
-
-add_executable(epoch2d ${SOURCES})
-target_link_libraries(epoch2d LINK_PRIVATE ${MPI_Fortran_LIBRARIES} ${SDF_Fortran_LIBRARIES})
-if(USE_INSITU)
-target_link_libraries(epoch2d LINK_PRIVATE vtkPVPythonCatalyst vtkParallelMPI)
-endif()
-if(TIGHT_FOCUSING)
-target_link_libraries(epoch2d LINK_PRIVATE ${MPI_CXX_LIBRARIES} focus)
-endif()
-set_target_properties(epoch2d PROPERTIES LINKER_LANGUAGE Fortran)
-\end{lstlisting}
+\floatsetup[figure]{style=plain, subcapbesideposition=top}
+\begin{figure}[h!]
+	\centering
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/05/absorp.pdf}}}
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/2/absorp.pdf}}}\\
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/05/absorp.pdf}}}
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/2/absorp.pdf}}}
+	\caption{Laser energy absorption in time for the case of simulations with the laser intensity I = $ 10^{20} $ W/cm$^2$ and with the beam waist \textbf{(a)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(b)} $ w_0 = 2.0 \ \mu\mathrm{m} $ and for the case of simulations with the laser intensity I = $ 10^{21} $ W/cm$^2$ and with the beam waist \textbf{(c)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(d)} $ w_0 = 2.0 \ \mu\mathrm{m} $.}
+	\label{fig:10}
+\end{figure}
+
+\floatsetup[figure]{style=plain, subcapbesideposition=top}
+\begin{figure}[h!]
+	\centering
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/05/x_px.pdf}}}
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/2/x_px.pdf}}}\\
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/05/x_px.pdf}}}
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/2/x_px.pdf}}}
+	\caption{Dependency of the x-component of the momentum of electrons on the x-coordinate at the time $ t = 100 \ \mathrm{fs} $ for the case of simulations with the laser intensity I = $ 10^{20} $ W/cm$^2$ and with the beam waist \textbf{(a)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(b)} $ w_0 = 2.0 \ \mu\mathrm{m} $ and for the case of simulations with the laser intensity I = $ 10^{21} $ W/cm$^2$ and with the beam waist \textbf{(c)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(d)} $ w_0 = 2.0 \ \mu\mathrm{m} $. The colorbars are in logarithmic scale.}
+	\label{fig:11}
+\end{figure}
+
+\floatsetup[figure]{style=plain, subcapbesideposition=top}
+\begin{figure}[h!]
+	\centering
+	\sidesubfloat[]{{\includegraphics[width=0.4\linewidth]{./img/results/i1e20/05/traj_1.pdf}}}
+	\sidesubfloat[]{{\includegraphics[width=0.4\linewidth]{./img/results/i1e20/05/traj_2.pdf}}}\\[2mm]
+	\sidesubfloat[]{{\includegraphics[width=0.4\linewidth]{./img/results/i1e20/2/traj_1.pdf}}}
+	\sidesubfloat[]{{\includegraphics[width=0.4\linewidth]{./img/results/i1e20/2/traj_2.pdf}}}
+	\caption{Two types of trajectories of randomly chosen electron samples for the case of simulations with the laser intensity I = $ 10^{20} $ W/cm$^2$ and with the beam waist \textbf{(a), (b)} $ w_0 = 0.5 \ \mu\mathrm{m} $ and \textbf{(c), (d)} $ w_0 = 2.0 \ \mu\mathrm{m} $. The trajectories are colored according to the Lorentz gamma factor of corresponding particles.}
+	\label{fig:19}
+\end{figure}
+
+\floatsetup[figure]{style=plain, subcapbesideposition=top}
+\begin{figure}[h!]
+	\centering
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/05/fpx.pdf}}}
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/05/fpy.pdf}}}\\
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/2/fpx.pdf}}}
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/2/fpy.pdf}}}
+	\caption{The x-component of ponderomotive force $ F_{p, x} $ \textbf{(a)} and the y-component of ponderomotive force $ F_{p, y} $ \textbf{(b)} for the case of the laser beam with intensity I = $ 10^{20} $ W/cm$^2$ and the beam waist $ w_0 = 0.5 \ \mu\mathrm{m} $ propagating in vacuum. The x-component of ponderomotive force $ F_{p, x} $ \textbf{(c)} and the y-component of ponderomotive force $ F_{p, y} $ \textbf{(d)} for the case of the laser beam with intensity I = $ 10^{20} $ W/cm$^2$ and the beam waist $ w_0 = 2.0 \ \mu\mathrm{m} $ propagating in vacuum. (max: \textbf{(a)} 5.1312e-06 \textbf{(b)} 1.5913e-06 ... pomer: x:y = 3.2:1 \textbf{(c)} 5.9528e-06 \textbf{(d)} 4.6193e-07 ... pomer: x:y = 12.8:1)}
+	\label{fig:21}
+\end{figure}
+
+\floatsetup[figure]{style=plain, subcapbesideposition=top}
+\begin{figure}[h!]
+	\centering
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/05/ekbar_2.pdf}}}
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/2/ekbar_2.pdf}}}\\[2mm]
+	\caption{Mean kinetic energy of electrons at the time $ t = 80 \ \mathrm{fs} $ for the case of simulations with the laser intensity I = $ 10^{21} $ W/cm$^2$ and with the beam waist \textbf{(a)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(b)} $ w_0 = 2.0 \ \mu\mathrm{m} $. The colorbars are in logarithmic scale.}
+	\label{fig:17}
+\end{figure}
+
+\floatsetup[figure]{style=plain, subcapbesideposition=top}
+\begin{figure}[h!]
+	\centering
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/05/jy.pdf}}}
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/2/jy.pdf}}}\\[2mm]
+	\caption{The y-component of the current density $ J_{y} $ at the time $ t = 100 \ \mathrm{fs} $ for the case of simulations with the laser intensity I = $ 10^{21} $ W/cm$^2$ and with the beam waist \textbf{(a)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(b)} $ w_0 = 2.0 \ \mu\mathrm{m} $.}
+	\label{fig:18}
+\end{figure}
+
+\floatsetup[figure]{style=plain, subcapbesideposition=top}
+\begin{figure}[h!]
+	\centering
+	\sidesubfloat[]{{\includegraphics[width=0.445\linewidth]{./img/results/i1e20/dens.pdf}}}
+	\hspace{1mm}
+	\sidesubfloat[]{{\includegraphics[width=0.445\linewidth]{./img/results/i1e21/dens.pdf}}}
+	\caption{Contours of ion critical density for several different beam waists at the time $ t = 100 \ \mathrm{fs} $ for the case of simulations with the laser intensity \textbf{(a)} I = $ 10^{20} $ W/cm$^2$ and \textbf{(b)} I = $ 10^{21} $ W/cm$^2$.}
+	\label{fig:15}
+\end{figure}
+
+\floatsetup[figure]{style=plain, subcapbesideposition=top}
+\begin{figure}[h!]
+	\centering
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/05/ekbar.pdf}}}
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/2/ekbar.pdf}}}\\[2mm]
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/05/ekbar.pdf}}}
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/2/ekbar.pdf}}}
+	\caption{Mean kinetic energy of electrons at the time $ t = 120 \ \mathrm{fs} $ for the case of simulations with the laser intensity I = $ 10^{20} $ W/cm$^2$ and with the beam waist \textbf{(a)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(b)} $ w_0 = 2.0 \ \mu\mathrm{m} $ and for the case of simulations with the laser intensity I = $ 10^{21} $ W/cm$^2$ and with the beam waist \textbf{(c)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(d)} $ w_0 = 2.0 \ \mu\mathrm{m} $. The colorbars are in logarithmic scale.}
+	\label{fig:16}
+\end{figure}
+
+\floatsetup[figure]{style=plain, subcapbesideposition=top}
+\begin{figure}[h!]
+	\centering
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/05/abs_ex.pdf}}}
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/2/abs_ex.pdf}}}\\[2mm]
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/05/abs_ex.pdf}}}
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/2/abs_ex.pdf}}}
+	\caption{Longitudinal electric field ($ E_{x} $) at the time  $ t = 120 \ \mathrm{fs} $ for the case of simulations with the laser intensity I = $ 10^{20} $ W/cm$^2$ and with the beam waist \textbf{(a)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(b)} $ w_0 = 2.0 \ \mu\mathrm{m} $ and for the case of simulations with the laser intensity I = $ 10^{21} $ W/cm$^2$ and with the beam waist \textbf{(c)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(d)} $ w_0 = 2.0 \ \mu\mathrm{m} $.}
+	\label{fig:20}
+\end{figure}
+
+\floatsetup[figure]{style=plain, subcapbesideposition=top}
+\begin{figure}[h!]
+	\centering
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/05/px_py.pdf}}}
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/2/px_py.pdf}}}\\
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/05/px_py.pdf}}}
+	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/2/px_py.pdf}}}
+	\caption{Dependency of the x-component of the momentum of electrons on the y-component of the  momentum of electrons at the time $ t = 100 \ \mathrm{fs} $ for the case of simulations with the laser intensity I = $ 10^{20} $ W/cm$^2$ and with the beam waist \textbf{(a)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(b)} $ w_0 = 2.0 \ \mu\mathrm{m} $ and for the case of simulations with the laser intensity I = $ 10^{21} $ W/cm$^2$ and with the beam waist \textbf{(c)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(d)} $ w_0 = 2.0 \ \mu\mathrm{m} $. The colorbars are in logarithmic scale.}
+	\label{fig:12}
+\end{figure}
+
+\floatsetup[figure]{style=plain, subcapbesideposition=top}
+\begin{figure}[h!]
+	\centering
+	\sidesubfloat[]{{\includegraphics[width=0.445\linewidth]{./img/results/i1e20/05/angles.pdf}}}
+	\hspace{1mm}
+	\sidesubfloat[]{{\includegraphics[width=0.445\linewidth]{./img/results/i1e20/2/angles.pdf}}}\\
+	\sidesubfloat[]{{\includegraphics[width=0.445\linewidth]{./img/results/i1e21/05/angles.pdf}}}
+	\hspace{1mm}
+	\sidesubfloat[]{{\includegraphics[width=0.445\linewidth]{./img/results/i1e21/2/angles.pdf}}}
+	\caption{Distribution of angles determining the direction of movement of electrons (the angle 0 stands for the motion forward) at the time $ t = 100 \ \mathrm{fs} $ for the case of simulations with the laser intensity I = $ 10^{20} $ W/cm$^2$ and with the beam waist \textbf{(a)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(b)} $ w_0 = 2.0 \ \mu\mathrm{m} $ and for the case of simulations with the laser intensity I = $ 10^{21} $ W/cm$^2$ and with the beam waist \textbf{(c)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(d)} $ w_0 = 2.0 \ \mu\mathrm{m} $. Electrons are divided into three energetic intervals.}
+	\label{fig:13}
+\end{figure}
+
+\floatsetup[figure]{style=plain, subcapbesideposition=top}
+\begin{figure}[h!]
+	\centering
+	\sidesubfloat[]{{\includegraphics[width=0.445\linewidth]{./img/results/i1e20/dist_e.pdf}}}
+	\hspace{1mm}
+	\sidesubfloat[]{{\includegraphics[width=0.445\linewidth]{./img/results/i1e20/dist_p.pdf}}}\\[2mm]
+	\sidesubfloat[]{{\includegraphics[width=0.445\linewidth]{./img/results/i1e21/dist_e.pdf}}}
+	\hspace{1mm}
+	\sidesubfloat[]{{\includegraphics[width=0.445\linewidth]{./img/results/i1e21/dist_p.pdf}}}
+	\caption{Energy distribution functions of electrons for several different beam waists at the time $ t = 100 \ \mathrm{fs} $ for the case of simulations with the laser intensity \textbf{(a)} I = $ 10^{20} $ W/cm$^2$ and \textbf{(c)} I = $ 10^{21} $ W/cm$^2$. Energy distribution functions of ions for several different beam waists at the time $ t = 150 \ \mathrm{fs} $ for the case of simulations with the laser intensity \textbf{(b)} I = $ 10^{20} $ W/cm$^2$ and \textbf{(d)} I = $ 10^{21} $ W/cm$^2$.}
+	\label{fig:14}
+\end{figure}
