@@ -41,9 +41,7 @@ First, the results have been analyzed in terms of laser energy absorption effici
 	\label{fig:11}
 \end{figure}
 
-In fig. \ref{fig:10}, one can see the instantaneous laser energy absorption rate with respect to time. The plots indicate that as the focal spot size increases, the energy is transfered faster to ions. This can be explained by the fact that the amount of electrons recirculating in plasma is proportional to the size of the laser focus. Also, one may expect that the processes responsible for energy transfer that take place during the interaction will be similar. Therefore, one shall identify the main plasma heating and energy absorption mechanisms.
-
-Regarding the laser intensities, one expects that the dominating absorption mechanism is $ \vec{J} \times \vec{B} $ heating. The phase space of the parallel component of the momentum and the x-coordinate of all electrons in the simulation domain at the time $ t = 100 \ \mathrm{fs} $ is shown in fig. \ref{fig:11}. The bunches of hot electrons that are ejected twice per laser period indicate that the $ \vec{J} \times \vec{B} $ heating is much more efficient in the case of $ w_0 = 2.0 \ \mu\mathrm{m} $. Thus, it is necessary to perform further investigations.
+In fig. \ref{fig:10}, one can see the instantaneous laser energy absorption rate with respect to time. The plots indicate that as the focal spot size increases, the energy transfer to ions is faster. This can be explained by the fact that the amount of electrons recirculating in plasma is proportional to the size of the laser focus. Also, one may expect that the processes responsible for energy transfer that take place during the interaction will be similar. Therefore, one shall identify the main plasma heating and energy absorption mechanisms.
 
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
 \begin{figure}[h!]
@@ -56,7 +54,9 @@ Regarding the laser intensities, one expects that the dominating absorption mech
 	\label{fig:19}
 \end{figure}
 
-To better understand the absorption mechanisms that take place during the interaction, it might be useful to track particle trajectories. For this reason,  
+Regarding the laser intensities, one expects that the dominating absorption mechanism is $ \vec{J} \times \vec{B} $ heating. The phase space of the parallel component of the momentum and the x-coordinate of all electrons in the simulation domain at the time $ t = 100 \ \mathrm{fs} $ is shown in fig. \ref{fig:11}. The bunches of hot electrons that are ejected twice per laser period indicate that the $ \vec{J} \times \vec{B} $ heating is much more efficient in the case of $ w_0 = 2.0 \ \mu\mathrm{m} $ where the peak longitudinal momentum $ p_x \approx 8 \ m_{e} c $ in the case of laser intensity $ I = 10^{20} \ \mathrm{W/cm^2} $ and $ p_x \approx 22 \ m_{e} c $ in the case of intensity $ I = 10^{21} \ \mathrm{W/cm^2} $. Thus, to better understand the absorption mechanisms that take place during the interaction in the case of $ w_0 = 0.5 \ \mu\mathrm{m} $, it is necessary to perform further investigations.
+
+For deeper understanding, it might be useful to track particle trajectories. For this reason, the fig. \ref{fig:19} shows trajectories of randomly chosen electron samples for the laser intensity $ I = 10^{20} \ \mathrm{W/cm^2} $. It turned out, that most of the trajectories can be split up into two groups. The first type of trajectories corresponds to electrons that move along the front surface of the target towards the focal spot and in the vicinity of the focus, these electrons are pushed into the target in a highly collimated beam. The second type of trajectories corresponds to electrons that are initially inside the target, then they are ejected to the target front surface and pushed back to the plasma. 
 
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
 \begin{figure}[h!]
@@ -65,10 +65,14 @@ To better understand the absorption mechanisms that take place during the intera
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/05/fpy.pdf}}}\\
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/2/fpx.pdf}}}
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/2/fpy.pdf}}}
-	\caption{The longitudinal ($ F_{p, x} $) \textbf{(a)} and the transverse ($ F_{p, y} $) \textbf{(b)} component of the ponderomotive force for the case of the laser beam with intensity $ I = 10^{20} \ \mathrm{W/cm^2} $ and the beam waist $ w_0 = 0.5 \ \mu\mathrm{m} $ propagating in vacuum. The longitudinal ($ F_{p, x} $) \textbf{(c)} and the transverse ($ F_{p, y} $) \textbf{(d)} component of the ponderomotive force for the case of the laser beam with intensity I = $ 10^{20} $ W/cm$^2$ and the beam waist $ w_0 = 2.0 \ \mu\mathrm{m} $ propagating in vacuum. The ponderomotive force has been calculated according to the non-relativistic formula \ref{2.5.1.11}. (max: \textbf{(a)} 5.1312e-06 \textbf{(b)} 1.5913e-06 ... pomer: x:y = 3.2:1 \textbf{(c)} 5.9528e-06 \textbf{(d)} 4.6193e-07 ... pomer: x:y = 12.8:1)}
+	\caption{The longitudinal ($ F_{\mathrm{p}, x} $) \textbf{(a)} and the transverse ($ F_{\mathrm{p}, y} $) \textbf{(b)} component of the ponderomotive force for the case of the laser beam with intensity $ I = 10^{20} \ \mathrm{W/cm^2} $ and the beam waist $ w_0 = 0.5 \ \mu\mathrm{m} $ propagating in vacuum. The longitudinal ($ F_{\mathrm{p}, x} $) \textbf{(c)} and the transverse ($ F_{\mathrm{p}, y} $) \textbf{(d)} component of the ponderomotive force for the case of the laser beam with intensity $ I = 10^{20} \ \mathrm{W/cm^2} $ and the beam waist $ w_0 = 2.0 \ \mu\mathrm{m} $ propagating in vacuum. The ponderomotive force has been calculated according to the non-relativistic formula \ref{2.5.1.11}.}
 	\label{fig:21}
 \end{figure}
 
+Note that there is significant quantitative difference between the two focal spot sizes for both trajectories. In the case of $ w_0 = 0.5 \ \mu\mathrm{m} $, there is approximately $ 59 \ \% $ of electrons with the trajectories of the first type and $ 41 \ \% $ of the second type. On the contrary, for the simulation of $ w_0 = 2.0 \ \mu\mathrm{m} $, there is about $ 22 \ \% $ of electrons with the trajectories of the first type and $ 78 \ \% $ of the second type.
+
+The particle trajectories are determined by the laser field. In fig. \ref{fig:21}, one can see the longitudinal and transverse components of ponderomotive force for the case of the laser beam with intensity I = $ 10^{20} $ W/cm$^2$ and the beam waists $ w_0 = 0.5 \ \mu\mathrm{m} $ and $ w_0 = 2.0 \ \mu\mathrm{m} $ propagating in vacuum. The longitudinal component is same but the transverse component is approximately 3.5 times higher in the case of 05 micron. The ratio is 3.2:1 and 12.8:1.
+ 
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
 \begin{figure}[h!]
 	\centering
