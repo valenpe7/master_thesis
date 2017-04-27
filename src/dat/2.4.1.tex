@@ -3,7 +3,7 @@ The ponderomotive force can be derived from the motion of single particle in pre
 \label{2.5.1.2}
 \vec{r} = \vec{r}_0 + \delta \vec{r}, \quad \vec{v} = \vec{v}_0 + \delta \vec{v},
 \end{equation}
-where the index $ 0 $ denotes the quantities at the center of oscillation and $ \delta \vec{x} = \vec{x} - \vec{x}_0 $ stands for the oscillating vector. Next, one may exploit the Taylor series to  expand both, the electric field $ \vec{E}\left(\vec{r}, t\right) $ and magnetic field $ \vec{B}\left(\vec{r}, t\right) $ around the oscillation center $ \vec{r}_0 $,
+where the index $ 0 $ denotes the quantities at the center of oscillation and $ \delta \vec{x} = \vec{x} - \vec{x}_0 $ stands for the oscillating vector. Note that in the case of non-relativistic derivation, the quantity $ \vec{v}_0 $ in \ref{2.5.1.2} is identically equal to zero vector. Next, one may exploit the Taylor series to  expand both, the electric field $ \vec{E}\left(\vec{r}, t\right) $ and magnetic field $ \vec{B}\left(\vec{r}, t\right) $ around the oscillation center $ \vec{r}_0 $,
 \begin{equation}
 \label{2.5.1.3}
 \vec{E}\left(\vec{r}_0 + \delta \vec{r}, t\right) \cong \vec{E}\left(\vec{r}_0, t\right) + \left(\delta \vec{r} \cdot \nabla \right) \vec{E}\left(\vec{r}_0, t\right),
@@ -16,7 +16,7 @@ where the index $ 0 $ denotes the quantities at the center of oscillation and $ 
 Note that taking only the zeroth and first-order terms of the fields is sufficiently accurate approximation for the description of non-relativistic ponderomotive force. By substituting \ref{2.5.1.2}, \ref{2.5.1.3} and \ref{2.5.1.4} into \ref{2.2.5} and collecting the terms of the same order, one obtains the following two equations, 
 \begin{equation}
 \label{2.5.1.5}
-m_s \diff[2]{\delta \vec{r}}{t} = q_s \left[ \vec{E}\left(\vec{r}_0, t\right) + \vec{v}_0 \times \vec{B}\left(\vec{r}_0, t\right)\right],
+m_s \diff[2]{\delta \vec{r}}{t} = q_s \vec{E}\left(\vec{r}_0, t\right),
 \end{equation}
 \begin{equation}
 \label{2.5.1.6}
@@ -28,7 +28,7 @@ To solve equations \ref{2.5.1.5} and \ref{2.5.1.6}, assume further the laser fie
 \vec{E}\left(\vec{r}_0, t\right) = \vec{E}_0 \left(\vec{r}_0 \right) \cos \omega t, \quad  \vec{B}\left(\vec{r}_0, t\right) = - \frac{1}{\omega} \rot{\vec{E}_0 \left(\vec{r}_0 \right)} \sin \omega t.
 \end{equation}
 
-Note that the magnetic field in \ref{2.5.1.7} has been obtained by the integration of Faraday's law (\ref{1.3}). For the non-relativistic case, the term $ \vec{v}_0 \times \vec{B}\left(\vec{r}_0, t\right) $ is small in comparison with the term $ \vec{E}\left(\vec{r}_0, t\right) $ in the equation \ref{2.5.1.5}, thus it can be neglected. Taking into account the previous considerations, the solution of \ref{2.5.1.5} yields the oscillating quantities,
+Note that the magnetic field in \ref{2.5.1.7} has been obtained by the integration of Faraday's law (\ref{1.3}). Taking into account the previous considerations, the solution of \ref{2.5.1.5} yields the oscillating quantities,
 \begin{equation}
 \label{2.5.1.8}
 \delta \vec{r} = -\frac{q_s}{m_s \omega^2} \vec{E}_0 \left(\vec{r}_0 \right) \cos \omega t, \quad \delta \vec{v} = \frac{q_s}{m_s \omega} \vec{E}_0 \left(\vec{r}_0 \right) \sin \omega t.
@@ -49,9 +49,7 @@ The first term on the right-hand side of \ref{2.5.1.10} contributes to the trans
 \label{2.5.1.11}
 \vec{F}_{\mathrm{p}} = - \grad{\Phi_{\mathrm{p}}}, \quad \Phi_{\mathrm{p}} = \frac{q_s^{2}}{4 m_s \omega^2} E_0^{2},
 \end{equation}
-where $ \Phi_{\mathrm{p}} \left( \vec{r} \right) $ is the corresponding ponderomotive potential, which may be interpreted as a cycle-averaged oscillation energy.
-
-%Sometimes, it may be yet useful to have the expression for the ponderomotive force per unit volume $ \vec{f}_{p} \left( \vec{r} \right) $. To obtain it, one has to multiply the formula \ref{2.5.1.10} by the particle density. In the case of the electron fluid and normal laser light incidence on plasma, one gets the following easy-to-remember form,
-%\begin{equation}
-%\vec{f}_{p} = - \frac{\varepsilon_0}{4} \frac{\omega_{pe}^{2}}{\omega^{2}} \nabla E_0^{2}.
-%\end{equation}
+where $ \Phi_{\mathrm{p}} \left( \vec{r} \right) $ is the corresponding ponderomotive potential, which may be interpreted as a cycle-averaged oscillation energy. Sometimes, it may be yet useful to have the expression for the ponderomotive force per unit volume $ \vec{f}_{p} \left( \vec{r} \right) $. To obtain it, one has to multiply the formula \ref{2.5.1.10} by the particle density. In the case of the electron fluid and normal laser light incidence on plasma, one gets the following expression,
+\begin{equation}
+\vec{f}_{p} = - \frac{\varepsilon_0}{4} \frac{\omega_{pe}^{2}}{\omega^{2}} \nabla E_0^{2}.
+\end{equation}
