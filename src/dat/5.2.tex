@@ -4,13 +4,13 @@
 	\centering
 	\begin{tabular}{c | c | c | c}
 		\multirow{2}{*}{$ w_0 $ [$ \mu\mathrm{m} $]} & \multicolumn{3}{c}{Total absorption of laser energy [\%]} \\ \cline{2-4}
-		 & const. $ E = 2.83 \cdot 10^{4} \ \mathrm{J} $ & const. $ I = 10^{20} \ \mathrm{W/cm^2} $ & const. $ I = 10^{21} \ \mathrm{W/cm^2} $ \\ \hline \hline
+		 & const. $ E \approx 30 \ \mathrm{mJ} $ & const. $ I = 10^{20} \ \mathrm{W/cm^2} $ & const. $ I = 10^{21} \ \mathrm{W/cm^2} $ \\ \hline \hline
 		0.5 & 20.12 & 16.23 & 31.77 \\ \hline
 		1.0 & 9.59 & 9.59 & 23.76 \\ \hline
 		2.0 & 5.27 & 8.26 & 23.82 \\ \hline
 		4.0 & 3.49 & 8.29 & 23.71 \\
 	\end{tabular}
-	\caption{A summary of the rates of the total laser energy absorption in plasma for several different sizes of the focal spot and different laser intensities.}
+	\caption{The total laser energy absorption in plasma for several different sizes of the focal spot and different laser intensities.}
 	\label{table:2}
 \end{table}
 \endgroup
@@ -22,11 +22,11 @@
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e20/2/absorp.pdf}}}\\
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/05/absorp.pdf}}}
 	\sidesubfloat[]{{\includegraphics[width=0.45\linewidth]{./img/results/i1e21/2/absorp.pdf}}}
-	\caption{The laser energy absorption in time for the case of simulations with the laser intensity $ I = 10^{20} \ \mathrm{W/cm^2} $ and with the beam waist \textbf{(a)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(b)} $ w_0 = 2.0 \ \mu\mathrm{m} $ and for the case of simulations with the laser intensity $ I = 10^{21} \ \mathrm{W/cm^2} $ and with the beam waist \textbf{(c)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(d)} $ w_0 = 2.0 \ \mu\mathrm{m} $.}
+	\caption{The kinetic energy $ E_k $ of particles ($ E_{k0} $ denotes the initial kinetic energy of particles) normalized to the laser pulse energy $ E_L $ in time for the case of simulations with the laser intensity $ I = 10^{20} \ \mathrm{W/cm^2} $ and with the beam waist \textbf{(a)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(b)} $ w_0 = 2.0 \ \mu\mathrm{m} $ and for the case of simulations with the laser intensity $ I = 10^{21} \ \mathrm{W/cm^2} $ and with the beam waist \textbf{(c)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(d)} $ w_0 = 2.0 \ \mu\mathrm{m} $.}
 	\label{fig:10}
 \end{figure}
 
-In this section, the results of simulations performed within this work are presented. Due to the limited space, we decided to attach figures only for the beams focused down to $ w_0 = 2.0 \ \mu\mathrm{m} $ and $ w_0 = 0.5 \ \mu\mathrm{m} $. These represent the cases of the focal spot larger than the center laser wavelength and the focal spot of a sub-wavelength level. Nevertheless, the results of simulations for other focal spot sizes are compared and briefly discussed as well. In spite of the fact that in terms of physical relevance it would be more proper to compare the results of simulations with constant beam energies, they are not discussed here. In this case, it would be too difficult to recognize and distinguish only the effects of the focal spot size on the laser-matter interaction results.
+In this section, the results of simulations performed within this work are presented. Due to the limited space, we decided to attach figures only for the beams focused down to $ w_0 = 2.0 \ \mu\mathrm{m} $ and $ w_0 = 0.5 \ \mu\mathrm{m} $. These represent the cases of the focal spot larger than the center laser wavelength and the focal spot of a sub-wavelength level. Nevertheless, the results of simulations for other focal spot sizes are compared and briefly discussed as well. In spite of the fact that in terms of physical relevance it would be more proper to compare the results of simulations with constant beam energies, they are discussed here only very briefly, because it is too difficult to recognize and distinguish only the effects of the focal spot size on the laser-matter interaction results.
 
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
 \begin{figure}[h!]
@@ -39,9 +39,7 @@ In this section, the results of simulations performed within this work are prese
 	\label{fig:11}
 \end{figure}
 
-First, the results have been analyzed in terms of the laser energy absorption efficiency. The comparison of rates of the total laser light absorption in plasma for all performed simulations is shown in the table \ref{table:2}. It might be clearly seen that for the simulations where the beam is focused to a focal spot larger than the center laser wavelength whilst its peak intensity remains constant, there is no significant difference between the absorption rates. On the other hand, in the case of the sub-wavelength level focus, the rate of energy absorption sharply increases. The difference of the absorption percentage between the beams focused to $ w_0 = 1.0 \ \mu\mathrm{m} $ and $ w_0 = 0.5 \ \mu\mathrm{m} $ is $ 6.64 \ \% $ in the case of the laser intensity $ I = 10^{20} \ \mathrm{W/cm^2} $ and $ 8.01 \ \% $ in the case of the intensity $ I = 10^{21} \ \mathrm{W/cm^2} $.
-
-In the fig. \ref{fig:10}, one can see the instantaneous laser energy absorption rate with respect to time. The plots indicate that as the focal spot size increases, the energy transfer to ions is faster. This can be explained by the fact that the amount of electrons recirculating in plasma is approximately proportional to the size of the laser focus. Also, one may expect that the processes responsible for the energy transfer that take place during the interaction will be similar. Therefore, one shall identify the main plasma heating and energy absorption mechanisms.
+First, the results have been analyzed in terms of the laser energy absorption efficiency. The comparison of the total laser light absorption in plasma for all performed simulations is shown in the table \ref{table:2}. It might be clearly seen that there is no significant difference between the absorption rates for the simulations where the beam is focused to a focal spot larger than the center laser wavelength whilst its peak intensity remains constant. On the other hand, in the case of the sub-wavelength focus, the rate of the energy absorption sharply increases. The ratio between the absorption of the beam focused to $ w_0 = 1.0 \ \mu\mathrm{m} $ and $ w_0 = 0.5 \ \mu\mathrm{m} $ is $ 1.7 $ in the case of the laser intensity $ I = 10^{20} \ \mathrm{W/cm^2} $ and $ 1.34 $ in the case of the intensity $ I = 10^{21} \ \mathrm{W/cm^2} $.
 
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
 \begin{figure}[h!]
@@ -54,7 +52,11 @@ In the fig. \ref{fig:10}, one can see the instantaneous laser energy absorption 
 	\label{fig:19}
 \end{figure}
 
-Regarding the laser intensities in simulations, one expects that the dominating absorption mechanism is $ \vec{J} \times \vec{B} $ heating. The phase space of the parallel component of the momentum and the x-coordinate of all electrons in the simulation domain at the time $ t = 100 \ \mathrm{fs} $ is shown in the fig. \ref{fig:11}. The bunches of hot electrons that are ejected twice per laser period indicate that the $ \vec{J} \times \vec{B} $ heating is much more efficient in the case of $ w_0 = 2.0 \ \mu\mathrm{m} $ where the peak longitudinal momentum $ p_x \approx 8 \ m_{e} c $ in the case of the laser intensity $ I = 10^{20} \ \mathrm{W/cm^2} $ (fig. \ref{fig:11}-b) and $ p_x \approx 22 \ m_{e} c $ in the case of the intensity $ I = 10^{21} \ \mathrm{W/cm^2} $ (fig. \ref{fig:11}-d). Thus, to better understand the absorption mechanisms that take place during the interaction in the case of $ w_0 = 0.5 \ \mu\mathrm{m} $, it is necessary to perform further investigations.
+The temporal evolution of the kinetic energy of particles normalized to the laser pulse energy can be seen in the fig. \ref{fig:10}. The maximum kinetic energy of electrons occurs when the peak intensity reaches the target at $ 100 \ \mathrm{fs} $. Even before that when the hot electron population becomes significant ($ \sim 80 \ \mathrm{fs} $) ion acceleration sets in. In the case of these intensities and the p-polarization it is dominated by the TNSA processes described in the chapter 2. The plots indicate that as the focal spot size increases, the energy transfer to ions is faster. This may have two reasons. Either the electric field induced by the expanding hot electrons on the target surface is higher or it decays more slowly with time. Note that even if the absorption is lower for larger spot size, the amount of energy absorbed in the target is higher because of the four times higher laser energy. Nevertheless, to understand the energy transfer from hot electrons to ions, one has to identify the main plasma heating and energy absorption mechanisms.
+
+It is expected that the dominating absorption mechanism is $ \vec{J} \times \vec{B} $ heating for the laser intensities used in simulations. The phase space of the parallel component of the momentum and the x-coordinate of all electrons in the simulation domain at the time $ t = 100 \ \mathrm{fs} $ is shown in the fig. \ref{fig:11}. The bunches of hot electrons that are ejected twice per laser period due to the $ \vec{J} \times \vec{B} $ heating are more compact and clearly visible in the case of $ w_0 = 2.0 \ \mu\mathrm{m} $.
+
+The peak longitudinal momentum $ p_x \approx 8 \ m_{e} c $ in the case of the laser intensity $ I = 10^{20} \ \mathrm{W/cm^2} $ and $ p_x \approx 22 \ m_{e} c $ in the case of the intensity $ I = 10^{21} \ \mathrm{W/cm^2} $ independently of the focal spot size. Thus, to better understand the absorption mechanisms that take place during the interaction in the case of $ w_0 = 0.5 \ \mu\mathrm{m} $, it is necessary to perform further investigations.
 
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
 \begin{figure}[h!]
@@ -67,8 +69,6 @@ Regarding the laser intensities in simulations, one expects that the dominating 
 	\label{fig:21}
 \end{figure}
 
-For deeper understanding, it might be useful to track particle trajectories. For this reason, the fig. \ref{fig:19} shows trajectories of randomly chosen electron samples for the laser intensity $ I = 10^{20} \ \mathrm{W/cm^2} $. It turned out that most of the trajectories can be split up into two groups. The first type of trajectories corresponds to electrons that move along the front surface of the target towards the focal spot and in the vicinity of the focus, these electrons are pushed into the target in a highly collimated beam (fig. \ref{fig:19}-a, \ref{fig:19}-c). The second type of trajectories corresponds to electrons that are initially inside the target, then they are ejected at the target front surface and pushed back to the plasma in a relatively divergent beam (fig. \ref{fig:19}-b, \ref{fig:19}-d). Note that there is a significant quantitative difference between the two focal spot sizes for both types of trajectories. In the case of $ w_0 = 0.5 \ \mu\mathrm{m} $, there is approximately $ 59 \ \% $ of electrons with the trajectories of the first type (fig. \ref{fig:19}-a) and $ 41 \ \% $ of the second type (fig. \ref{fig:19}-b). On the contrary, for the simulation of $ w_0 = 2.0 \ \mu\mathrm{m} $, there is about $ 22 \ \% $ of electrons with the trajectories of the first type (fig. \ref{fig:19}-c) and $ 78 \ \% $ of the second type (fig. \ref{fig:19}-d).
-
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
 \begin{figure}[h!]
 	\centering
@@ -77,6 +77,8 @@ For deeper understanding, it might be useful to track particle trajectories. For
 	\caption{Mean kinetic energy of electrons at the time $ t = 80 \ \mathrm{fs} $ for the case of simulations with the laser intensity $ I = 10^{21} \ \mathrm{W/cm^2} $ and with the beam waist \textbf{(a)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(b)} $ w_0 = 2.0 \ \mu\mathrm{m} $. The color scales are logarithmic.}
 	\label{fig:17}
 \end{figure}
+
+For deeper understanding, it might be useful to track particle trajectories. For this reason, the fig. \ref{fig:19} shows trajectories of randomly chosen electron samples for the laser intensity $ I = 10^{20} \ \mathrm{W/cm^2} $. It turned out that most of the trajectories can be split up into two groups. The first type of trajectories corresponds to electrons that move along the front surface of the target towards the focal spot and in the vicinity of the focus, these electrons are pushed into the target in a highly collimated beam (fig. \ref{fig:19}-a, \ref{fig:19}-c). The second type of trajectories corresponds to electrons that are initially inside the target, then they are ejected at the target front surface and pushed back to the plasma in a relatively divergent beam (fig. \ref{fig:19}-b, \ref{fig:19}-d). Note that there is a significant quantitative difference between the two focal spot sizes for both types of trajectories. In the case of $ w_0 = 0.5 \ \mu\mathrm{m} $, there is approximately $ 59 \ \% $ of electrons with the trajectories of the first type (fig. \ref{fig:19}-a) and $ 41 \ \% $ of the second type (fig. \ref{fig:19}-b). On the contrary, for the simulation of $ w_0 = 2.0 \ \mu\mathrm{m} $, there is about $ 22 \ \% $ of electrons with the trajectories of the first type (fig. \ref{fig:19}-c) and $ 78 \ \% $ of the second type (fig. \ref{fig:19}-d).
 
 The electron trajectories are determined mainly by the field of incident laser pulse. In the fig. \ref{fig:21}, one can see the longitudinal and transverse components of the ponderomotive force for the laser beam with intensity $ I = 10^{20} \ \mathrm{W/cm^2} $ propagating in vacuum. The magnitude of longitudinal component is comparable for both focal spot sizes, but the transverse component is approximately $ 3.5 $ times higher in the case of $ w_0 = 0.5 \ \mu\mathrm{m} $. The ratio of longitudinal component of the ponderomotive force to transverse is approximately $ 3.2:1 $ in the case of $ w_0 = 0.5 \ \mu\mathrm{m} $ (fig. \ref{fig:21}-a, \ref{fig:21}-b) and $ 12.8:1 $ in the case of $ w_0 = 2.0 \ \mu\mathrm{m} $ (fig. \ref{fig:21}-c, \ref{fig:21}-d). Note that for the laser intensity $ I = 10^{21} \ \mathrm{W/cm^2} $, the values of ponderomotive force are one order of magnitude higher, but the ratios between longitudinal and transverse components remain identical.
 
@@ -103,8 +105,6 @@ The mean kinetic energy of electrons at the time $ t = 80 \ \mathrm{fs} $ is sho
 
 The perpendicular component of the current density at the time $ t = 100 \ \mathrm{fs} $ is shown in the fig. \ref{fig:18}. In the case of $ w_0 = 0.5 \ \mu\mathrm{m} $ (fig. \ref{fig:18}-a), one may register the electric current caused by the electrons ejected into vacuum. The charge unbalance is then compensated by the electric current along the front surface of the target and this might be the reason, why there is more electrons with the trajectories of the first type. The fig. \ref{fig:18} also indicates a different shape of the target deformed during the hole boring phase.
 
-Therefore, one may be interested in a contour lines of ion critical density that are shown in the fig. \ref{fig:15}. Notice that in the case of $ w_0 = 0.5 \ \mu\mathrm{m} $, the plasma in the vicinity of incoming laser beam expands rapidly (marked by blue lines in the fig. \ref{fig:15}-a, \ref{fig:15}-b). It means that the absorption processes which take place when the laser pulse is obliquely incident on a plasma density gradient (such as resonance absorption) may also significantly contribute to the overall laser energy absorption (table \ref{table:2}).
-
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
 \begin{figure}[h!]
 	\centering
@@ -116,9 +116,9 @@ Therefore, one may be interested in a contour lines of ion critical density that
 	\label{fig:16}
 \end{figure}
 
-The mean kinetic energy of electrons at the time $ t = 120 \ \mathrm{fs} $ in a global view is shown in the fig. \ref{fig:16}. Again, one can clearly see that in the case of $ w_0 = 0.5 \ \mu\mathrm{m} $ (fig. \ref{fig:16}-a), hot electrons spread out to the sides with respect to the incident laser pulse much more than in the case of $ w_0 = 2.0 \ \mu\mathrm{m} $ (fig. \ref{fig:16}-b). For the laser intensity $ I = 10^{21} \ \mathrm{W/cm^2} $, however, the difference is less noticeable (fig. \ref{fig:16}-c, \ref{fig:16}-d).
+Therefore, one may be interested in a contour lines of ion critical density that are shown in the fig. \ref{fig:15}. Notice that in the case of $ w_0 = 0.5 \ \mu\mathrm{m} $, the plasma in the vicinity of incoming laser beam expands rapidly (marked by blue lines in the fig. \ref{fig:15}-a, \ref{fig:15}-b). It means that the absorption processes which take place when the laser pulse is obliquely incident on a plasma density gradient (such as resonance absorption) may also significantly contribute to the overall laser energy absorption (table \ref{table:2}).
 
-Additionally, the longitudinal component of the electric field in the simulation box at the time $ t = 120 \ \mathrm{fs} $ is demonstrated in the fig. \ref{fig:20}. Note that in the case of $ w_0 = 2.0 \ \mu\mathrm{m} $ (fig. \ref{fig:20}-b, \ref{fig:20}-d), the longitudinal electric field is stronger, therefore more of the expelled electrons are attracted back to the target and recirculate. As already mentioned, their energy is consequently transfered to ions this way. There is also a large difference between the shapes of the reflected laser light for both cases. While in the case of $ w_0 = 2.0 \ \mu\mathrm{m} $ (fig. \ref{fig:20}-b, \ref{fig:20}-d) the laser light is reflected in a relatively narrow beam, in the case of $ w_0 = 0.5 \ \mu\mathrm{m} $ (fig. \ref{fig:20}-a, \ref{fig:20}-c) the reflected light spreads radially outwards from the focal point.
+The mean kinetic energy of electrons at the time $ t = 120 \ \mathrm{fs} $ in a global view is shown in the fig. \ref{fig:16}. Again, one can clearly see that in the case of $ w_0 = 0.5 \ \mu\mathrm{m} $ (fig. \ref{fig:16}-a), hot electrons spread out to the sides with respect to the incident laser pulse much more than in the case of $ w_0 = 2.0 \ \mu\mathrm{m} $ (fig. \ref{fig:16}-b). For the laser intensity $ I = 10^{21} \ \mathrm{W/cm^2} $, however, the difference is less noticeable (fig. \ref{fig:16}-c, \ref{fig:16}-d).
 
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
 \begin{figure}[h!]
@@ -131,7 +131,7 @@ Additionally, the longitudinal component of the electric field in the simulation
 	\label{fig:20}
 \end{figure}
 
-The phase space of the parallel and the perpendicular components of the momentum of all electrons in the simulation domain at the time $ t = 100 \ \mathrm{fs} $ is shown in the fig. \ref{fig:12}. This might be also particularly useful for determining the propagation direction of electrons. As one can clearly see, in the case of $ w_0 = 0.5 \ \mu\mathrm{m} $ (fig. \ref{fig:12}-a), electrons propagate forward in a more collimated beam than in the case of $ w_0 = 2.0 \ \mu\mathrm{m} $ (fig. \ref{fig:12}-b). For the laser intensity $ I = 10^{21} \ \mathrm{W/cm^2} $, there is no significant difference between the shape of both electron distribution functions (fig. \ref{fig:12}-c, \ref{fig:12}-d). Note that the first statement would be in a contradiction with the previous observations. The fig. \ref{fig:12}, however, does not provide a complete information about the high-energy electrons.
+Additionally, the longitudinal component of the electric field in the simulation box at the time $ t = 120 \ \mathrm{fs} $ is demonstrated in the fig. \ref{fig:20}. Note that in the case of $ w_0 = 2.0 \ \mu\mathrm{m} $ (fig. \ref{fig:20}-b, \ref{fig:20}-d), the longitudinal electric field is stronger, therefore more of the expelled electrons are attracted back to the target and recirculate. As already mentioned, their energy is consequently transfered to ions this way. There is also a large difference between the shapes of the reflected laser light for both cases. While in the case of $ w_0 = 2.0 \ \mu\mathrm{m} $ (fig. \ref{fig:20}-b, \ref{fig:20}-d) the laser light is reflected in a relatively narrow beam, in the case of $ w_0 = 0.5 \ \mu\mathrm{m} $ (fig. \ref{fig:20}-a, \ref{fig:20}-c) the reflected light spreads radially outwards from the focal point.
 
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
 \begin{figure}[h!]
@@ -143,6 +143,8 @@ The phase space of the parallel and the perpendicular components of the momentum
 	\caption{Phase space of the parallel ($ p_x $) and the perpendicular ($ p_y $) components of the momentum of all electrons in the simulation domain at the time $ t = 100 \ \mathrm{fs} $ for the case of simulations with the laser intensity $ I = 10^{20} \ \mathrm{W/cm^2} $ and with the beam waist \textbf{(a)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(b)} $ w_0 = 2.0 \ \mu\mathrm{m} $ and for the case of simulations with the laser intensity $ I = 10^{21} \ \mathrm{W/cm^2} $ and with the beam waist \textbf{(c)} $ w_0 = 0.5 \ \mu\mathrm{m} $, \textbf{(d)} $ w_0 = 2.0 \ \mu\mathrm{m} $. The color scales are logarithmic and the units are arbitrary, but the same for all sub-figures.}
 	\label{fig:12}
 \end{figure}
+
+The phase space of the parallel and the perpendicular components of the momentum of all electrons in the simulation domain at the time $ t = 100 \ \mathrm{fs} $ is shown in the fig. \ref{fig:12}. This might be also particularly useful for determining the propagation direction of electrons. As one can clearly see, in the case of $ w_0 = 0.5 \ \mu\mathrm{m} $ (fig. \ref{fig:12}-a), electrons propagate forward in a more collimated beam than in the case of $ w_0 = 2.0 \ \mu\mathrm{m} $ (fig. \ref{fig:12}-b). For the laser intensity $ I = 10^{21} \ \mathrm{W/cm^2} $, there is no significant difference between the shape of both electron distribution functions (fig. \ref{fig:12}-c, \ref{fig:12}-d). Note that the first statement would be in a contradiction with the previous observations. The fig. \ref{fig:12}, however, does not provide a complete information about the high-energy electrons.
 
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
 \begin{figure}[h!]

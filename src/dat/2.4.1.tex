@@ -3,9 +3,7 @@ The ponderomotive force can be derived from the motion of single particle in pre
 \label{2.5.1.2}
 \vec{r} = \vec{r}_0 + \delta \vec{r}, \quad \vec{v} = \vec{v}_0 + \delta \vec{v},
 \end{equation}
-where the index $ 0 $ denotes the quantities at the center of oscillation and $ \delta \vec{x} = \vec{x} - \vec{x}_0 $ stands for the oscillating vector.
-
-Next, one may exploit the Taylor series to  expand both, the electric field $ \vec{E}\left(\vec{r}, t\right) $ and magnetic field $ \vec{B}\left(\vec{r}, t\right) $ around the oscillation center $ \vec{r}_0 $,
+where the index $ 0 $ denotes the quantities at the center of oscillation and $ \delta \vec{x} = \vec{x} - \vec{x}_0 $ stands for the oscillating vector. Next, one may exploit the Taylor series to  expand both, the electric field $ \vec{E}\left(\vec{r}, t\right) $ and magnetic field $ \vec{B}\left(\vec{r}, t\right) $ around the oscillation center $ \vec{r}_0 $,
 \begin{equation}
 \label{2.5.1.3}
 \vec{E}\left(\vec{r}_0 + \delta \vec{r}, t\right) \cong \vec{E}\left(\vec{r}_0, t\right) + \left(\delta \vec{r} \cdot \nabla \right) \vec{E}\left(\vec{r}_0, t\right),
@@ -14,9 +12,8 @@ Next, one may exploit the Taylor series to  expand both, the electric field $ \v
 \label{2.5.1.4}
 \vec{B}\left(\vec{r}_0 + \delta \vec{r}, t\right) \cong \vec{B}\left(\vec{r}_0, t\right) + \left(\delta \vec{r} \cdot \nabla \right) \vec{B}\left(\vec{r}_0, t\right).
 \end{equation}
-Note that taking only the zeroth and first-order terms of the fields is sufficiently accurate approximation for the description of non-relativistic ponderomotive force.
 
-By substituting \ref{2.5.1.2}, \ref{2.5.1.3} and \ref{2.5.1.4} into \ref{2.2.5} and collecting the terms of the same order, one obtains following two equations, 
+Note that taking only the zeroth and first-order terms of the fields is sufficiently accurate approximation for the description of non-relativistic ponderomotive force. By substituting \ref{2.5.1.2}, \ref{2.5.1.3} and \ref{2.5.1.4} into \ref{2.2.5} and collecting the terms of the same order, one obtains the following two equations, 
 \begin{equation}
 \label{2.5.1.5}
 m_s \diff[2]{\delta \vec{r}}{t} = q_s \left[ \vec{E}\left(\vec{r}_0, t\right) + \vec{v}_0 \times \vec{B}\left(\vec{r}_0, t\right)\right],
@@ -25,20 +22,18 @@ m_s \diff[2]{\delta \vec{r}}{t} = q_s \left[ \vec{E}\left(\vec{r}_0, t\right) + 
 \label{2.5.1.6}
 m_s \diff[2]{\vec{r}_0}{t} = q_s \left[\left(\delta \vec{r} \cdot \nabla \right) \vec{E}\left(\vec{r}_0, t\right) + \delta \vec{v} \times \vec{B}\left(\vec{r}_0, t\right) \right]. 
 \end{equation}
-
 To solve equations \ref{2.5.1.5} and \ref{2.5.1.6}, assume further the laser fields in the form of standing monochromatic wave, 
 \begin{equation}
 \label{2.5.1.7}
 \vec{E}\left(\vec{r}_0, t\right) = \vec{E}_0 \left(\vec{r}_0 \right) \cos \omega t, \quad  \vec{B}\left(\vec{r}_0, t\right) = - \frac{1}{\omega} \rot{\vec{E}_0 \left(\vec{r}_0 \right)} \sin \omega t.
 \end{equation}
+
 Note that the magnetic field in \ref{2.5.1.7} has been obtained by the integration of Faraday's law (\ref{1.3}). For the non-relativistic case, the term $ \vec{v}_0 \times \vec{B}\left(\vec{r}_0, t\right) $ is small in comparison with the term $ \vec{E}\left(\vec{r}_0, t\right) $ in the equation \ref{2.5.1.5}, thus it can be neglected. Taking into account the previous considerations, the solution of \ref{2.5.1.5} yields the oscillating quantities,
 \begin{equation}
 \label{2.5.1.8}
 \delta \vec{r} = -\frac{q_s}{m_s \omega^2} \vec{E}_0 \left(\vec{r}_0 \right) \cos \omega t, \quad \delta \vec{v} = \frac{q_s}{m_s \omega} \vec{E}_0 \left(\vec{r}_0 \right) \sin \omega t.
 \end{equation}
-Since the integration constants can be considered as a slowly varying time functions, they have been included in $ \vec{r}_0 $.
-
-By inserting \ref{2.5.1.8} into \ref{2.5.1.6} one gets immediately the following formula,
+Since the integration constants can be considered as a slowly varying time functions, they have been included in $ \vec{r}_0 $. By inserting \ref{2.5.1.8} into \ref{2.5.1.6} one gets the following formula,
 \begin{equation}
 \label{2.5.1.9}
 m_s \diff[2]{\vec{r}_0}{t} = - \frac{q_s^{2}}{m_s \omega^2} \left[\left(\vec{E}_0 \left(\vec{r}_0 \right) \cdot \nabla \right) \vec{E}_0 \left(\vec{r}_0 \right) \cos^2 \omega t + \vec{E}_0 \left(\vec{r}_0 \right) \times \left( \nabla \times \vec{E}_0 \left(\vec{r}_0 \right) \right) \sin^2 \omega t \right].
