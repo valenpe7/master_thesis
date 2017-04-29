@@ -14,7 +14,7 @@ where $ q_p = q_s w_p $. However, using the formulas \ref{3.1.2.2} for charge an
 
 Similarly, to advance macro-particle positions, as shown in the second section of this chapter, one has to know the force acting on them. Hence, it is necessary to assign electric and magnetic fields that are calculated at the discrete grid points to the continuous macro-particle positions. This simulation step is usually referred to as field weighting.
 
-By analogy to the particle weighting, one may exploit the shape functions to calculate the spatial averages of the all electric and magnetic field components,
+By analogy to the particle weighting, one may exploit the shape functions to calculate the spatial averages of the electric and magnetic field components,
 \begin{equation}
 \vec{E}_{p}^{\,n} = \sum_{ijk} \vec{E}_{ijk}^{\,n} S_{r}\left(\vec{r}_{ijk} - \vec{r}_{p}^{\,n}\right), \qquad \vec{B}_{p}^{\,n} = \sum_{ijk} \vec{B}_{ijk}^{\,n} S_{r}\left(\vec{r}_{ijk} - \vec{r}_{p}^{\,n}\right).
 \end{equation}

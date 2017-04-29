@@ -32,7 +32,7 @@ For marching in time, the leap-frog scheme is used. Therefore, discretized Maxwe
 \end{equation}
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=0.355\paperwidth]{./img/YEE/yee.pdf}
+	\includegraphics[width=0.4\paperwidth]{./img/YEE/yee.pdf}
 	\caption{Standard Cartesian Yee cell used for FDTD method}
 	\label{3.1.1.14}
 \end{figure}
@@ -57,7 +57,7 @@ These operators have the following properties,
 Symbol $ \Delta^{\pm} $ stands for the discrete Laplace operator in central differences,
 \begin{equation}
 \label{3.1.1.11}
-\Delta^{\pm} f_{i, j, k} = \frac{f_{i - 1, j, k} + 2 f_{i, j, k} + f_{i + 1, j, k}}{\Delta x^{2}} + \frac{f_{i, j - 1, k} + 2 f_{i, j, k} + f_{i, j + 1, k}}{\Delta y^{2}} + \frac{f_{i, j, k - 1} + 2 f_{i, j, k} + f_{i, j, k + 1}}{\Delta z^{2}}.
+\Delta^{\pm} f_{i, j, k} = \frac{f_{i - 1, j, k} - 2 f_{i, j, k} + f_{i + 1, j, k}}{\Delta x^{2}} + \frac{f_{i, j - 1, k} - 2 f_{i, j, k} + f_{i, j + 1, k}}{\Delta y^{2}} + \frac{f_{i, j, k - 1} - 2 f_{i, j, k} + f_{i, j, k + 1}}{\Delta z^{2}}.
 \end{equation}
 
 Before trying to find the solution of discretized Maxwell equations \ref{3.1.1.6} - \ref{3.1.1.7}, one must realize that this system of equations is not independent. In the three-dimensional case, there are eight first-order differential equations, but only six unknown vector components. Acting on the equations \ref{3.1.1.16} and \ref{3.1.1.7} by operators $ \left(\nabla^{-}\cdot\right) $ and $ \left(\nabla^{+}\cdot\right) $, respectively, one obtains
