@@ -1,4 +1,4 @@
-In this section, another mathematical description of a focused laser beam based on a rigorous solution of the wave equation \ref{1.34} is presented. The following calculations are reproduced from the work of Illia Thiele et al. [source]. Assume that the laser beam propagates in vacuum without external sources along the z-axis of the Cartesian coordinate system. The wave equation \ref{1.34} in temporal Fourier space has the following form,
+In this section, another mathematical description of a focused laser beam based on a rigorous solution of the wave equation \ref{1.34} is presented. The following calculations are reproduced from the work of Illia Thiele et al. \cite{Thiele2016}. Assume that the laser beam propagates in vacuum without external sources along the z-axis of the Cartesian coordinate system. The wave equation \ref{1.34} in temporal Fourier space has the following form,
 \begin{equation}
 \label{4.1}
 \laplace{\hat{\vec{E}}} \left(\vec{r}, \omega \right) + \frac{\omega^2}{c^2} \hat{\vec{E}} \left(\vec{r}, \omega \right) = 0,
@@ -44,7 +44,7 @@ where
 \end{equation} 
 \endgroup
 
-Analogically, one could solve the wave equation for the magnetic field \ref{1.35}, prescribe two transverse components of $ \bar{\vec{B}}_{0, \bot}^{\pm}\left(\vec{k}_\bot, \omega \right) $ at the plane $ z = z_0 $ and afterwards calculate all other fields using Maxwell's equations \ref{1.2}, \ref{1.4}. The complete proof, that the fields \ref{4.5} - \ref{4.7} are consistent with the Maxwell's equations in vacuum \ref{1.1} - \ref{1.4} can be found in the original paper [source].
+Analogically, one could solve the wave equation for the magnetic field \ref{1.35}, prescribe two transverse components of $ \bar{\vec{B}}_{0, \bot}^{\pm}\left(\vec{k}_\bot, \omega \right) $ at the plane $ z = z_0 $ and afterwards calculate all other fields using Maxwell's equations \ref{1.2}, \ref{1.4}. The complete proof, that the fields \ref{4.5} - \ref{4.7} are consistent with the Maxwell's equations in vacuum \ref{1.1} - \ref{1.4} can be found in the original paper \cite{Thiele2016}.
 
 Note that for $ k_\bot^2 > \omega^2/c^2 $, $ k_z \left(\vec{k}_\bot, \omega \right) $ becomes imaginary and equation \ref{4.4} describes evanescent waves that are unphysical in free space. Thus the Fourier spectrum of laser waves has to be filtered in the transverse Fourier space. On the other hand, if the spatial Fourier spectrum contains only components with $ k_\bot^2 \ll \omega^2/c^2 $, then $ k_z \left(\vec{k}_\bot, \omega \right) $ can be approximated using the first few terms of a Taylor series,
 \begin{equation}
@@ -57,7 +57,7 @@ In the last part of this section, the practical algorithm for implementation of 
 
 Consider that the transverse part of simulation domain is made of equidistant rectangular grid described by $ x^{i} $, $ y^{j} $, where $ i, j \in \left\lbrace 1, \ldots, N_{x, y} \right\rbrace $, and the grid steps $ \delta x $, $\delta y $. The simulation time $ t^{n} $, where $ n \in \left\lbrace 1, \ldots, N_{t} \right\rbrace $, is also divided into equidistant time steps of size $ \delta t $.
 
-The algorithm allows to calculate fields $ \vec{E}_{\mathrm{B}}^{ij} (t) $ and $ \vec{B}_{\mathrm{B}}^{ij} (t) $ for any given time $ t $ from the interval $ \left[ t^{1} - \frac{z_\mathrm{B} - z_0}{c}, t^{N_t} - \frac{z_\mathrm{B} - z_0}{c} \right] $. In order to preserve clarity, the algorithm below is given in the exact form as in the original paper [source].
+The algorithm allows to calculate fields $ \vec{E}_{\mathrm{B}}^{ij} (t) $ and $ \vec{B}_{\mathrm{B}}^{ij} (t) $ for any given time $ t $ from the interval $ \left[ t^{1} - \frac{z_\mathrm{B} - z_0}{c}, t^{N_t} - \frac{z_\mathrm{B} - z_0}{c} \right] $. In order to preserve clarity, the algorithm below is given in the exact form as in the original paper \cite{Thiele2016}.
 
 \begin{enumerate}
 	\item Calculate $ \hat{\vec{E}}_{0, \bot}^{ijn} $ via discrete Fourier transforms in time:
