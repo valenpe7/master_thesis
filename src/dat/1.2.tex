@@ -1,4 +1,4 @@
-The first-order partial differential Maxwell's equations can be effectively converted to a smaller number of second-order equations by introducing electrodynamic potentials. Hence, one can express the electric and magnetic field as follows,
+The first-order partial differential Maxwell's equations can be effectively converted to a smaller number of second-order equations by introducing electrodynamic potentials. Hence, one can express the electric and magnetic field as follows \cite{Thide2011},
 \begin{equation}
 \label{1.12}
 \vec{E} = -\grad{\Phi} - \diffp{\vec{A}}{t},
@@ -14,7 +14,7 @@ However, by definitions \ref{1.12}, \ref{1.13}, $ \Phi\left(\vec{r}, t \right) $
 \label{1.14}
 \div{\vec{A}} + \mu \varepsilon \diffp{\Phi}{t} = 0.
 \end{equation}
-The condition \ref{1.14} is called the Lorenz gauge. Lorenz gauge is commonly used in electromagnetism because of its independence of the coordinate system. Furthermore, it leads to the following uncoupled equations,
+The condition \ref{1.14} is called the Lorenz gauge \cite{Thide2011}. Lorenz gauge is commonly used in electromagnetism because of its independence of the coordinate system. Furthermore, it leads to the following uncoupled equations,
 \begin{equation}
 \label{1.15}
 \laplace{\Phi} - \mu \varepsilon \diffp[2]{\Phi}{t} = -\frac{\rho}{\varepsilon},
@@ -25,7 +25,7 @@ The condition \ref{1.14} is called the Lorenz gauge. Lorenz gauge is commonly us
 \end{equation}
 that are in all respects equivalent to the Maxwell's equations and in many situations much simpler to solve.
 
-Equations \ref{1.15}, \ref{1.16} correspond to the inhomogeneous wave equations for scalar potential $ \Phi\left(\vec{r}, t \right) $ and vector potential $ \vec{A}\left(\vec{r}, t \right) $. Their general solutions are given by the following expressions,
+Equations \ref{1.15}, \ref{1.16} correspond to the inhomogeneous wave equations for scalar potential $ \Phi\left(\vec{r}, t \right) $ and vector potential $ \vec{A}\left(\vec{r}, t \right) $. Their general solutions are given by the following expressions \cite{Thide2011},
 \begin{equation}
 \label{1.17}
 \Phi\left(\vec{r}, t \right) = \frac{1}{4 \pi \varepsilon} \int \frac{\rho\left(\vec{r^{\: \prime}}, t^{\: \prime} \right)}{\norm{\vec{r} - \vec{r^{\: \prime}}}} \mathrm{d} V,
@@ -34,4 +34,4 @@ Equations \ref{1.15}, \ref{1.16} correspond to the inhomogeneous wave equations 
 \label{1.18}
 \vec{A}\left(\vec{r}, t \right) = \frac{\mu}{4 \pi} \int \frac{\vec{J}\left(\vec{r^{\: \prime}}, t^{\: \prime} \right)}{\norm{\vec{r} - \vec{r^{\: \prime}}}} \mathrm{d} V,
 \end{equation}
-where $ \mathrm{d} V $ is a volume element and $ \norm{.} $ stands for the standard Euclidean norm. Note that the solutions \ref{1.17}, \ref{1.18} are dependent only on charge and current densities at position $ \vec{r^{\: \prime}} $ at so-called retarded time $ t^{\: \prime} = t - \sqrt{\mu \epsilon} \norm{\vec{r} - \vec{r^{\: \prime}}} $ which takes into account the finite velocity of the wave. In other words, the fields at the observation point $ \vec{r} $ at the time $ t $ are proportional to the sum of all the electromagnetic waves that leave the source elements at point $ \vec{r^{\: \prime}} $ at the retarded time $ t^{\: \prime} $.
+where $ \mathrm{d} V $ is a volume element and $ \norm{.} $ stands for the standard Euclidean norm. Note that the solutions \ref{1.17}, \ref{1.18} are dependent only on charge and current densities at position $ \vec{r^{\: \prime}} $ at so-called retarded time $ t^{\: \prime} = t - \sqrt{\mu \epsilon} \norm{\vec{r} - \vec{r^{\: \prime}}} $ which takes into account the finite velocity of the wave \cite{Feynman1963}. In other words, the fields at the observation point $ \vec{r} $ at the time $ t $ are proportional to the sum of all the electromagnetic waves that leave the source elements at point $ \vec{r^{\: \prime}} $ at the retarded time $ t^{\: \prime} $.

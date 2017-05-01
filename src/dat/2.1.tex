@@ -16,34 +16,34 @@ One of the most important parameters, which allows to predict the behavior of pl
 \end{equation}
 Here $ n_k $ is the density of atoms in the k-th state of ionization, $ n_e $ is the electron density, $ m_e $ stands for the mass of electron, $ k_B $ is Boltzmann's constant, $ T $ is the gas temperature, $ h $ is Planck's constant, $ g_k $ is the degeneracy of the energy level for ions in the k-th state and $ \varepsilon_k $ is the ionization energy of the k-th level. From the equation (\ref{2.1.2}), it may be clearly seen that the fully ionized plasmas exist only at high temperatures. This is the main reason why plasmas do not occur naturally on Earth (with a few exceptions).
 
-A fundamental characteristics of the plasma behavior is its ability to shield out the electric potentials that are applied to it. Therefore, another important quantity $ \lambda_{Ds} $, which is called the Debye length of species $ s $, is defined as,
+A fundamental characteristics of the plasma behavior is its ability to shield out the electric potentials that are applied to it. Therefore, another important quantity $ \lambda_{Ds} $, which is called the Debye length of species $ s $, is defined as \cite{Chen1984},
 \begin{equation}
 \label{2.1.3}
 \lambda_{Ds} = \sqrt{\frac{\varepsilon_0 k_B T_s}{q_s^2 \, n_s}}.
 \end{equation}
 The physical constant $ T_s $ denotes the temperature of the particles of species $ s $. It often happens that a different species of particles in plasma have separate distributions with different temperatures, although each species can be in its own thermal equilibrium. The Debye length is a measure of the shielding distance or thickness of the sheath.
 
-In plasma, each particle tries to gather its own shielding cloud. The previously mentioned concept of Debye shielding is valid only if there are enough particles in that cloud. Therefore, another important dimensionless number $ N_{Ds} $, which is called plasma parameter of species $ s $, is established. This parameter is defined as the average number of particles of species $ s $ in a plasma contained within a sphere of radius equal to the Debye length, thus
+In plasma, each particle tries to gather its own shielding cloud. The previously mentioned concept of Debye shielding is valid only if there are enough particles in that cloud. Therefore, another important dimensionless number $ N_{Ds} $, which is called plasma parameter of species $ s $, is established. This parameter is defined as the average number of particles of species $ s $ in a plasma contained within a sphere of radius equal to the Debye length, thus \cite{Chen1984}
 \begin{equation}
 \label{2.1.4}
 N_{Ds} = \frac{4}{3} \pi n_s \lambda_{Ds}^3. 
 \end{equation}
 
-Charge separation in plasma results in a typical harmonic electrostatic oscillations of charged particles described by the plasma frequency. One may define the plasma frequency for particles of species s,
+Charge separation in plasma results in a typical harmonic electrostatic oscillations of charged particles described by the plasma frequency. One may define the plasma frequency for particles of species s \cite{Chen1984},
 \begin{equation}
 \label{2.1.5}
 \omega_{ps} = \sqrt{\frac{q_s^{2}\,n_s}{\varepsilon_0 m_s}},
 \end{equation}
-Note that as the ions are much heavier than electrons, they do not respond to the high frequency oscillations of the laser electric field. In many of the phenomena described in this chapter, the ions are treated as an immobile, uniform, neutralizing background. However, if the frequency of external radiation source or the waves induced in plasmas is close to the ion plasma frequency, the ion motion must also be included. An example may be a stimulated Brillouin scattering.
+Note that as the ions are much heavier than electrons, they do not respond to the high frequency oscillations of the laser electric field. In many of the phenomena described in this chapter, the ions are treated as an immobile, uniform, neutralizing background. However, if the frequency of external radiation source or the waves induced in plasmas is close to the ion plasma frequency, the ion motion must also be included. An example may be a stimulated Brillouin scattering \cite{kruer}.
 
 A typical charged particle in plasma simultaneously undergoes Coulomb collisions with all the other particles in the Debye sphere. The importance of collisions is described by the collision frequency $ \nu_c $, which is the inverse of the mean time that it takes for a particle to significantly change its momentum due to collisions. The electron-ion collision frequency $ \nu_{ei} $ is given by the following relation \cite{nicholson},
 \begin{equation}
 \label{2.1.6}
 \nu_{ei} = \frac{Z e^4 n_e}{4 \pi \varepsilon_0^2 m_e^2 v^3} \ln{\Lambda}, \qquad \Lambda = \frac{\lambda_D}{b_0}.
 \end{equation}
-The coefficient $ Z $ denotes the charge number, $ v $ is relative velocity of colliding particles and $ \ln \Lambda $ is the so-called Coulomb logarithm. It is ratio of the Debye to Landau length. Landau length $ b_0 $ is the impact parameter at which the scattering angle in the center of mass frame is $ 90^\circ $. For many plasmas of interest Coulomb logarithm takes on values between $ 5 - 15 $. In plasma, a single Coulomb collision rarely results in a large deflection. The cumulative effect of the many random small angle collisions, however, is often larger than the effect of the few large angle collisions. Notice that the collision frequency $ \nu_{ei} $ is proportional to $ v^{-3} $, therefore the effect of collisions in hot plasmas is usually weak.
+The coefficient $ Z $ denotes the charge number, $ v $ is relative velocity of colliding particles and $ \ln \Lambda $ is the so-called Coulomb logarithm. It is ratio of the Debye to Landau length. Landau length $ b_0 $ is the impact parameter at which the scattering angle in the center of mass frame is $ 90^\circ $. For many plasmas of interest Coulomb logarithm takes on values between $ 5 - 15 $. In plasma, a single Coulomb collision rarely results in a large deflection. The cumulative effect of the many random small angle collisions, however, is often larger than the effect of the few large angle collisions \cite{Chen1984}. Notice that the collision frequency $ \nu_{ei} $ is proportional to $ v^{-3} $, therefore the effect of collisions in hot plasmas is usually weak.
 
-In a constant and uniform magnetic field, one can find that a charged particle spirals in a helix about the magnetic field line. This helix defines a fundamental time unit and distance scale,
+In a constant and uniform magnetic field, one can find that a charged particle spirals in a helix about the magnetic field line. This helix defines a fundamental time unit and distance scale \cite{Chen1984},
 \begin{equation}
 \label{2.1.7}
 \omega_{cs} = \frac{\abs{q_{s}} \norm{\vec{B}}}{m_{s}}, \qquad r_{Ls} = \frac{v_\perp}{\omega_{cs}}.

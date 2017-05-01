@@ -18,7 +18,7 @@ To discretize the equations of motion \ref{3.2.4.2}, a time-centered leap-frog s
 \frac{\vec{u}_{p}^{\:n+1/2} - \vec{u}_{p}^{\:n-1/2}}{\Delta t} = \frac{q_{s}}{m_{s}} \left( \vec{E}_{p}^{\:n} + \frac{\vec{u}_{p}^{\:n+1/2} + \vec{u}_{p}^{\:n-1/2}}{2 \gamma^{\:n}} \times \vec{B}_{p}^{\:n} \right).
 \end{equation}
 
-Although these equations appear to be very simple, the solution is one of the most time-consuming parts of the simulation, because they must be solved for every single macro-particle at each time step. Standard approach for particle pushing in plasma simulation PIC codes involves Boris method, which completely separates the effect of electric and magnetic fields \cite{birdsall}. Substitute
+Although these equations appear to be very simple, the solution is one of the most time-consuming parts of the simulation, because they must be solved for every single macro-particle at each time step. Standard approach for particle pushing in plasma simulation PIC codes involves Boris method \cite{Boris1970, Qin2013}, which completely separates the effect of electric and magnetic fields \cite{birdsall}. Substitute
 \begin{equation}
 \label{3.2.4.6}
 \vec{u}_{p}^{\:n-1/2} = \vec{u}_{p}^{\:-} - \frac{q_{s} \vec{E}_{p}^{\:n}}{m_{s}} \frac{\Delta t}{2}, \qquad \vec{u}_{p}^{\:n+1/2} = \vec{u}_{p}^{\:+} + \frac{q_{s} \vec{E}_{p}^{\:n}}{m_{s}} \frac{\Delta t}{2}
