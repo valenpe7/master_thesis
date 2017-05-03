@@ -6,6 +6,7 @@ First, the results have been analyzed in terms of the laser energy absorption ef
 \renewcommand*{\arraystretch}{1.5}
 \begin{table}[h!]
 	\centering
+	{\footnotesize
 	\begin{tabular}{c | c | c | c}
 		\multirow{2}{*}{$ w_0 $ [$ \mu\mathrm{m} $]} & \multicolumn{3}{c}{Total absorption of laser energy [\%]} \\ \cline{2-4}
 		& const. $ E \approx 30 \ \mathrm{mJ} $ & const. $ I = 10^{20} \ \mathrm{W/cm^2} $ & const. $ I = 10^{21} \ \mathrm{W/cm^2} $ \\ \hline \hline
@@ -13,7 +14,7 @@ First, the results have been analyzed in terms of the laser energy absorption ef
 		1.0 & 9.59 & 9.59 & 23.76 \\ \hline
 		2.0 & 5.27 & 8.26 & 23.82 \\ \hline
 		4.0 & 3.49 & 8.29 & 23.71 \\
-	\end{tabular}
+	\end{tabular}}
 	\caption{Total laser energy absorption in plasma for several different sizes of the focal spot and different laser intensities.}
 	\label{table:2}
 \end{table}
@@ -23,13 +24,14 @@ First, the results have been analyzed in terms of the laser energy absorption ef
 \renewcommand*{\arraystretch}{1.5}
 \begin{table}[h!]
 	\centering
+	{\footnotesize
 	\begin{tabular}{c | c | c }
 		$ w_0 $ [$ \mu\mathrm{m} $]	& $ k_B T $ of hot electrons [MeV] & maximum energy of ions [MeV] \\ \hline \hline
 		0.5 & 0.93 & 4.73 \\ \hline
 		1.0 & 0.64 & 1.71 \\ \hline
 		2.0 & 0.32 & 0.74 \\ \hline
 		4.0 & 0.16 & 0.43 \\
-	\end{tabular}
+	\end{tabular}}
 	\caption{Temperature of hot electrons estimated by fitting the energy distributions at the time $ t = 100 \ \mathrm{fs} $ by Maxwellian functions and the maximum ion energy at the time $ t = 150 \ \mathrm{fs} $ for the laser beam with constant energy $ E \approx 30 \ \mathrm{mJ} $ and several different sizes of the focal spot.}
 	\label{table:3}
 \end{table}
@@ -57,7 +59,7 @@ First, the results have been analyzed in terms of the laser energy absorption ef
 	\label{fig:11}
 \end{figure}
 
-The absorption rates for the laser beam with constant energy strongly depends on the laser intensity at focus. As can be seen from the table \ref{table:3}, the simulations consequently result in increasing the hot electron temperature and maximum ion energy as the focal spot size decreases. Therefore, to better understand the dependency of the energy absorption on the size of the focal spot, it is better to further study the results of laser-matter interaction for the laser beams with constant intensities.
+The simulations with constant laser beam energy result in increasing hot electron temperature and maximum ion energy as the focal spot size decreases as can be seen from the table \ref{table:3}. One would expect a much weaker scaling of the hot electron temperature due to the $ \vec{J} \times \vec{B} $ heating \cite{Gibbon2005} and of the maximum proton energy in the TNSA regime with the laser intensity ($ \sim \sqrt{I} $) \cite{Wilks1992, Zeil2010, Fuchs2006}. However, the absorption rates for the laser beam with a given waist strongly depend on the laser intensity at focus as can be seen in the table \ref{table:2} comparing the last two columns. Therefore, to better understand the dependency of the energy absorption on the size of the focal spot, it is better to further study the results of laser-matter interaction for the laser beams with constant intensities.
 
 \floatsetup[figure]{style=plain, subcapbesideposition=top}
 \begin{figure}[h!]
@@ -188,6 +190,6 @@ The phase space of the parallel and the perpendicular components of the momentum
 
 The fig. \ref{fig:13} demonstrates the angular distribution of electrons in the whole simulation domain at the time $ t = 100 \ \mathrm{fs} $. It might be seen that in the case of $ w_0 = 0.5 \ \mu\mathrm{m} $, the lower-energy electrons (green and blue lines in the fig. \ref{fig:13}-a) propagate forward in a narrower beam than in the case of $ w_0 = 2.0 \ \mu\mathrm{m} $ (green and blue lines in the fig. \ref{fig:13}-b) which is in accordance with the fig. \ref{fig:12}. The divergence angle of the high-energy electrons propagating forward is almost identical for both cases (red line in the fig. \ref{fig:13}-a, \ref{fig:13}-b). However, in the case of $ w_0 = 0.5 \ \mu\mathrm{m} $, there is much more electrons spreading in the transverse direction (angle of $ \pm \pi/2 $) with respect to the incidence direction of the incoming laser pulse. Regarding the laser intensity $ I = 10^{21} \ \mathrm{W/cm^2} $, the angular distribution of lower-energy electrons is more isotropic (green and blue lines in the fig. \ref{fig:13}-c, \ref{fig:13}-d). The high-energy electrons propagate forward in a more collimated beam in the case of $ w_0 = 2.0 \ \mu\mathrm{m} $ (red line in the fig. \ref{fig:13}-d). However, in the case of $ w_0 = 0.5 \ \mu\mathrm{m} $ (red line in the fig. \ref{fig:13}-c), there is again larger amount of electrons spreading to the sides with respect to the incoming laser pulse.
 
-The electron energy distribution functions at the time $ t = 100 \ \mathrm{fs} $ as well as the ion energy distributions at the time $ t = 150 \ \mathrm{fs} $ are shown in the fig. \ref{fig:14}. Apart from the case of $ w_0 = 0.5 \ \mu\mathrm{m} $, the high-energy tail of distribution functions has a similar slope which indicates the same hot electron temperatures (fig. \ref{fig:14}-a). In the case of $ w_0 = 0.5 \ \mu\mathrm{m} $, the temperature of hot electrons is significantly higher (blue line in the fig. \ref{fig:14}-a). Regarding the laser intensity $ I = 10^{21} \ \mathrm{W/cm^2} $, the energy distribution function of electrons in the case of $ w_0 = 0.5 \ \mu\mathrm{m} $ (blue line in the fig. \ref{fig:14}-c) is quantitatively different than the distribution functions for the other focal spot sizes. However, as one can see in the fig. \ref{fig:10}, ion acceleration sets in at this time so the energy distributions of hot electrons are also influenced by the TNSA process.
+The electron energy distribution functions at the time $ t = 100 \ \mathrm{fs} $ as well as the ion energy distributions at the time $ t = 150 \ \mathrm{fs} $ are shown in the fig. \ref{fig:14}. Apart from the case of $ w_0 = 0.5 \ \mu\mathrm{m} $, the high-energy tail of distribution functions has a similar slope which indicates the same hot electron temperatures (fig. \ref{fig:14}-a). In the case of $ w_0 = 0.5 \ \mu\mathrm{m} $, the temperature of hot electrons is significantly higher (blue line in the fig. \ref{fig:14}-a). Regarding the laser intensity $ I = 10^{21} \ \mathrm{W/cm^2} $, the energy distribution function of electrons in the case of $ w_0 = 0.5 \ \mu\mathrm{m} $ (blue line in the fig. \ref{fig:14}-c) is quantitatively different than the distribution functions for the other focal spot sizes. However, the energy distributions of hot electrons may be influenced by the TNSA process which already sets in (fig. \ref{fig:10}) or by thermalizing boundary conditions.
 
 Concerning the maximum ion energies (fig. \ref{fig:14}-b, \ref{fig:14}-d), one can clearly see that they increase with the focal spot size. As already discussed, the electric field decays more slowly for larger spot sizes because it takes more time for hot electrons to spread transversally. Moreover, for the higher intensity, even the peak longitudinal electric field is higher. Therefore, in spite of the fact that the absorption is lower for larger spot size, ion acceleration efficiency is similar to the case of smaller spot size and the cut-off energy of ions is significantly higher.
