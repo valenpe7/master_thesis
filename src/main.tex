@@ -171,6 +171,7 @@
 
 \setlength{\parindent}{20pt}
 \setlength{\parskip}{0pt plus 0.1pt minus 0.1pt}
+\renewcommand{\baselinestretch}{1.0}
 \pagenumbering{arabic}
 \frenchspacing
 
@@ -179,25 +180,20 @@
 \DeclareSymbolFont{mathx}{U}{mathx}{m}{n}
 \DeclareMathAccent{\widebar}{0}{mathx}{"73}
 
-%commands-----------------------------------------------------------------------
-
-\renewcommand{\baselinestretch}{1.0}
+%commands----------------------------------------------------------------------
 
 \newcommand{\ctu}{Czech Technical University in Prague }
 \newcommand{\fnspe}{Faculty of Nuclear Sciences and Physical Engineering }
 \newcommand{\dpe}{Department of Physical Electronics }
 \newcommand{\branch}{Computational Physics }
-
 \newcommand{\projecttitle}{Tight-focusing of short intense laser pulses in particle-in-cell simulations of laser-plasma~interaction }
 \newcommand{\projecttitlecz}{Zaostření krátkého intenzivního laserového impulsu do velmi malého ohniska v částicových simulacích interakce s plazmatem }
-
 \newcommand{\valenta}{Bc. Petr Valenta }
 \newcommand{\klimo}{doc. Ing. Ondřej Klimo, Ph.D. }
 \newcommand{\weber}{Dr. Stefan Andreas Weber }
 \newcommand{\academicyear}{2016/2017 }
-
-\newcommand{\keywords}{}
-\newcommand{\projectabstract}{}
+\newcommand{\keywords}{tight-focusing, PIC simulations, laser-plasma interaction, plasma optics}
+\newcommand{\keywordscz}{fokuzace, PIC simulace, laser-plazma interakce, optika}
 
 %macros-------------------------------------------------------------------------
 
@@ -330,9 +326,9 @@ I hereby declare that I carried out this work independently, and only with the c
 \textbf{Abstrakt}\\
 \end{center}
 
-Content...\\
+obsah.. \\
 
-Klíčová slova: fokuzace, PIC simulace, laser-plazma interakce, optika
+\noindent Klíčová slova: \keywordscz
 
 
 %8------------------------------------------------------------------------------
@@ -362,9 +358,9 @@ Klíčová slova: fokuzace, PIC simulace, laser-plazma interakce, optika
 	\textbf{Abstract}\\
 \end{center}
 
-Content...\\
+Tight-focusing with the plasma-based optics could be an effective way to increase the peak intensity and enhance the spatial and temporal contrast ratio of the laser pulse. Since the paraxial approximation is not valid for description of tightly focused laser beams, the appropriate model has to be employed. Within this work, the laser boundary conditions based on the approach consistent with the Maxwell's equations have been implemented into the particle-in-cell simulation code. The instrumented code has been exploited for series of large-scale simulations employing tightly focused laser beams interacting with solid targets while the emphasis has been placed mainly on identifying the effects of the focal spot size on the laser-matter interaction results. We show that the hot electron trajectories and absorption processes which take place during the interaction are strongly influenced by the transverse component of ponderomotive force, which becomes significant as the focal spot size decreases. Consequently, the laser energy absorption efficiency sharply increases, the energy distribution functions are qualitatively different and the temperature of hot electrons is significantly higher in the case of sub-wavelength focus. \\
 
-Keywords: tight-focusing, PIC simulations, laser-plasma interaction, plasma optics
+\noindent Keywords: \keywords
 
 %9------------------------------------------------------------------------------
 
