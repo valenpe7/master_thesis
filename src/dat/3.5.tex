@@ -11,4 +11,4 @@ C = c^{2} \Delta t^{2} \left(\frac{1}{\Delta x^{2}} + \frac{1}{\Delta y^{2}} + \
 \end{equation}
 where the dimensionless number $ C \leq 1 $ is called the CFL number. This condition limits the range of motion of all objects in the simulation during one time step. It ensures that particles would not cross more than one cell in one simulation time step. When this condition is violated, the growth of non-physical effects can be very rapid. Another condition on the time step comes from the requirement to avoid aliasing, i.e. the time step must resolve all important frequencies according to the Nyquist-Shannon theorem \cite{Shannon1949} $ \omega \Delta t \leq 2 $ ($ \omega = \max\left( \omega_p, \omega_L \right) $).
 
-The leap-frog scheme, used to solve the field equations and equations of motion, is second-order accurate in both, time and space. In addition, this scheme is explicit and time-reversible. An extensive study of PIC method can be found in \cite{birdsall, hockney}.
+The leap-frog scheme, used to solve the field equations and equations of motion, is second-order accurate in both, time and space. In addition, this scheme is explicit and time-reversible.
