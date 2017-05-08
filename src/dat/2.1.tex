@@ -2,14 +2,14 @@ Plasma, one of the four fundamental states of matter, is a quasi-neutral gas of 
 
 By collective behavior one means motion that depends not only on local conditions but on the state of the plasma in remote regions as well. As charged particles move around, they can generate local concentrations of positive or negative charge, which give rise to electric fields. Motion of charges also generates currents, and hence magnetic fields. These fields affect the motion of other charged particles far away \cite{Chen1984}. Thus, the plasma supports a wide range of possible motions.
 
-Quasi-neutrality describes the apparent charge neutrality of a plasma over large volumes, while at smaller scales, there can be charge imbalance, which may give rise to local electric fields. This fact can be expressed mathematically as
+Quasi-neutrality describes the apparent charge neutrality of a plasma over large volumes, while at smaller scales, there can be charge imbalance, which may give rise to local electric fields. This fact can be mathematically expressed as
 \begin{equation}
 \label{2.1.1}
 \sum_{s} q_s n_s \approx 0,
 \end{equation}
 where $ q_s $ and $ n_s $ is, respectively, the charge and density of particles of species $ s $. The index of summation is taken over all the particle species of given system.
 
-One of the most important parameters, which allows to predict the behavior of plasmas more accurately, is the degree of its ionization. For a gas containing only single atomic species in thermodynamic equilibrium, the ionization can be clearly recognized from the Saha-Langmuir equation, which can be written in the following form \cite{Saha1920, Saha1921, Langmuir1923, Fridman2008},
+One of the most important parameters, which allows to predict the behavior of plasmas more accurately, is the degree of its ionization. For a gas containing only a single atomic species in thermodynamic equilibrium, the ionization can be clearly recognized from the Saha-Langmuir equation, which can be written in the following form \cite{Saha1920, Saha1921, Langmuir1923, Fridman2008},
 \begin{equation}
 \label{2.1.2}
 \frac{n_{k+1}}{n_k} = \frac{2}{n_e h^3}\left(2\pi m_e k_B T\right)^{\frac{3}{2}} \frac{g_{k+1}}{g_k} \exp\left(-\frac{\varepsilon_{k+1} - \varepsilon_{k}}{k_{B} T} \right).
@@ -21,7 +21,7 @@ A fundamental characteristics of the plasma behavior is its ability to shield ou
 \label{2.1.3}
 \lambda_{Ds} = \sqrt{\frac{\varepsilon_0 k_B T_s}{q_s^2 \, n_s}}.
 \end{equation}
-The physical constant $ T_s $ denotes the temperature of the particles of species $ s $. It often happens that a different species of particles in plasma have separate distributions with different temperatures, although each species can be in its own thermal equilibrium. The Debye length is a measure of the shielding distance or thickness of the sheath.
+The physical constant $ T_s $ denotes the temperature of the particles of species $ s $. It often happens that a different species of particles in plasma have distinct distributions with different temperatures, although each species can be in its own thermal equilibrium. The Debye length is a measure of the shielding distance or thickness of the sheath.
 
 In plasma, each particle tries to gather its own shielding cloud. The previously mentioned concept of Debye shielding is valid only if there are enough particles in that cloud. Therefore, another important dimensionless number $ N_{Ds} $, which is called plasma parameter of species $ s $, is established. This parameter is defined as the average number of particles of species $ s $ in a plasma contained within a sphere of radius equal to the Debye length, thus \cite{Chen1984}
 \begin{equation}
@@ -34,18 +34,18 @@ Charge separation in plasma results in a typical harmonic electrostatic oscillat
 \label{2.1.5}
 \omega_{ps} = \sqrt{\frac{q_s^{2}\,n_s}{\varepsilon_0 m_s}},
 \end{equation}
-Note that as the ions are much heavier than electrons, they do not respond to the high frequency oscillations of the laser electric field. In many of the phenomena described in this chapter, the ions are treated as an immobile, uniform, neutralizing background. However, if the frequency of external radiation source or the waves induced in plasmas is close to the ion plasma frequency, the ion motion must also be included. An example may be a stimulated Brillouin scattering \cite{kruer}.
+Note that since the ions are much heavier than electrons, they do not respond to the high frequency oscillations of the laser electric field. In many of the phenomena described in this chapter, the ions are treated as an immobile, uniform, neutralizing background. However, if the frequency of external radiation source or the waves induced in plasmas is close to the ion plasma frequency, the ion motion must be included as well. An example may be a stimulated Brillouin scattering \cite{kruer}.
 
 A typical charged particle in plasma simultaneously undergoes Coulomb collisions with all the other particles in the Debye sphere. The importance of collisions is described by the collision frequency $ \nu_c $, which is the inverse of the mean time that it takes for a particle to significantly change its momentum due to collisions. The electron-ion collision frequency $ \nu_{ei} $ is given by the following relation \cite{nicholson},
 \begin{equation}
 \label{2.1.6}
 \nu_{ei} = \frac{Z e^4 n_e}{4 \pi \varepsilon_0^2 m_e^2 v^3} \ln{\left(\Lambda\right)}, \qquad \Lambda = \frac{\lambda_D}{b_0}.
 \end{equation}
-The coefficient $ Z $ denotes the charge number, $ e $ is elementary charge, $ v $ is relative velocity of colliding particles and $ \ln{\left(\Lambda\right)} $ is the so-called Coulomb logarithm. It is ratio of the Debye to Landau length. Landau length $ b_0 $ is the impact parameter at which the scattering angle in the center of mass frame is $ 90^\circ $. For many plasmas of interest Coulomb logarithm takes on values between $ 5 - 15 $. In plasma, a single Coulomb collision rarely results in a large deflection. The cumulative effect of the many random small angle collisions, however, is often larger than the effect of the few large angle collisions \cite{Chen1984}. Notice that the collision frequency $ \nu_{ei} $ is proportional to $ v^{-3} $, therefore the effect of collisions in hot plasmas is usually weak.
+The coefficient $ Z $ denotes the charge number, $ e $ is elementary charge, $ v $ is relative velocity of colliding particles and $ \ln{\left(\Lambda\right)} $ is the so-called Coulomb logarithm. It is a ratio of the Debye to Landau length. Landau length $ b_0 $ is the impact parameter at which the scattering angle in the center of mass frame is $ 90^\circ $. For many plasmas of interest, Coulomb logarithm takes on values between $ 5 - 15 $. In plasma, a single Coulomb collision rarely results in a large deflection. The cumulative effect of the many random small angle collisions, however, is often larger than the effect of the few large angle collisions \cite{Chen1984}. Notice that the collision frequency $ \nu_{ei} $ is proportional to $ v^{-3} $, therefore the effect of collisions in hot plasmas is usually weak.
 
 In a constant and uniform magnetic field, one can find that a charged particle spirals in a helix about the magnetic field line. This helix defines a fundamental time unit and distance scale \cite{Chen1984},
 \begin{equation}
 \label{2.1.7}
 \omega_{cs} = \frac{\abs{q_{s}} \norm{\vec{B}}}{m_{s}}, \qquad r_{Ls} = \frac{v_\perp}{\omega_{cs}}.
 \end{equation}
-These are called the cyclotron frequency $ \omega_{cs} $ and the Larmor radius $ r_{Ls} $ of species $ s $. Here $ v_\perp $ is a positive constant denoting the speed in the plane perpendicular to $ \vec{B} $.
+These are called the cyclotron frequency $ \omega_{cs} $ and the Larmor radius $ r_{Ls} $ of species $ s $. Here, $ v_\perp $ is a positive constant denoting the speed in the plane perpendicular to $ \vec{B} $.

@@ -10,17 +10,17 @@ The approximation for TNSA mechanism can be provided either by the static or dyn
 \diffp{\vec{u}_i}{t} + \left(\vec{u}_i \cdot \grad{} \right) \vec{u}_i = \frac{Z e}{m_i} \vec{E}. 
 \end{equation}
 
-Assume that at time $ t = 0 $, the electron density satisfies the Boltzmann distribution and the ion density occupies a half space with an infinitely sharp boundary, thus
+Assume that at the time $ t = 0 $, the electron density satisfies the Boltzmann distribution and the ion density occupies a half space with an infinitely sharp boundary, thus
 \begin{equation}
 \label{2.7.2.1}
 n_e = n_{e0} \exp{\left( \frac{e \Phi}{k_B T_e} \right)}, \quad n_i = n_{i0} H(x).
 \end{equation}
-Assume further that the plasma is locally neutral on the scale length larger than the Debye radius, therefore $ n_e = Z n_i $. However, one shall be aware that the condition for the local neutrality does not imply that there is no electrostatic field. The electrostatic field may arise due to the sources coming from the regions where the condition for quasi-neutrality does not hold \cite{Macchi2013}. Therefore, the electric field  $ \vec{E} \left(\vec{r}, t\right) $ in the equation \ref{2.7.2.3} may be replaced by the electrostatic field $ \vec{E}_{es} \left(\vec{r}, t\right) = -\grad{\Phi} \left(\vec{r}, t\right) $, which one can obtain by taking the gradient of the electron density \ref{2.7.2.1}. After replacing the electric field $ \vec{E} \left(\vec{r}, t\right) $ in the equation \ref{2.7.2.3} one gets
+Assume further that the plasma is locally neutral on the scale length larger than the Debye radius, therefore $ n_e = Z n_i $. One shall be aware, however, that the condition for the local neutrality does not imply that there is no electrostatic field. The electrostatic field may arise due to the sources coming from the regions where the condition for quasi-neutrality does not hold \cite{Macchi2013}. Therefore, the electric field  $ \vec{E} \left(\vec{r}, t\right) $ in the equation \ref{2.7.2.3} may be replaced by the electrostatic field $ \vec{E}_{es} \left(\vec{r}, t\right) = -\grad{\Phi} \left(\vec{r}, t\right) $, which one can obtain by taking the gradient of the electron density \ref{2.7.2.1}. After replacing the electric field $ \vec{E} \left(\vec{r}, t\right) $ in the equation \ref{2.7.2.3} one gets
 \begin{equation}
 \label{2.7.2.5}
 \diffp{\vec{u}_i}{t} + \left(\vec{u}_i \cdot \grad{} \right) \vec{u}_i = - \frac{c_s^2}{n_i} \grad{n_i}, \quad c_s = \sqrt{\frac{Z k_B T_e}{m_i}},
 \end{equation}
-where $ c_s \left(\vec{r}, t\right) $ is the ion-acoustic velocity. By performing the Fourier transforms of the equations \ref{2.7.2.2} and \ref{2.7.2.5}, one easily obtains the dispersion relation of the ion-acoustic waves. However, the system has also a non-linear self-similar solution which describes the rarefaction wave. Thus, define a self-similar variable in 1D geometry as $ \xi = x/t $. The ion fluid density and velocity then become $ n_i \left(x, t\right) = N \left( \xi \right) $ and $ u_i \left(x, t\right) = V \left( \xi \right) $, respectively. After transformation, the system of equations \ref{2.7.2.2} and \ref{2.7.2.5} yields
+where $ c_s \left(\vec{r}, t\right) $ is the ion-acoustic velocity. By performing the Fourier transforms of the equations \ref{2.7.2.2} and \ref{2.7.2.5}, one easily obtains the dispersion relation of the ion-acoustic waves. However, the system has also a non-linear self-similar solution which describes the rarefaction wave. Thus, one defines a self-similar variable in 1D geometry as $ \xi = x/t $. The ion fluid density and velocity then become $ n_i \left(x, t\right) = N \left( \xi \right) $ and $ u_i \left(x, t\right) = V \left( \xi \right) $, respectively. After transformation, the system of equations \ref{2.7.2.2} and \ref{2.7.2.5} yields
 \begin{equation}
 \label{2.7.2.6}
 \frac{1}{N} \diff{N}{\xi} = - \frac{V - \xi}{c_s},
@@ -41,7 +41,7 @@ Note that the solution \ref{2.7.2.8} is valid only for $ x > -c_s t $ where $ u_
 E_x = \frac{2 E_0}{\omega_{pi} t}, \quad E_0 = c_s \sqrt{\frac{n_i m_i}{\varepsilon_0}}.
 \end{equation}
 
-The apparent drawback of formula \ref{2.7.2.9} is that it has a singularity at time $ t = 0 $. However, one may find a simple expression for the electric field at $ t = 0 $ by integration of the Poisson's equation from $ x = 0 $ to $ x = +\infty $,
+The apparent drawback of formula \ref{2.7.2.9} is that it has a singularity at $ t = 0 $. However, one may find a simple expression for the electric field at $ t = 0 $ by integration of the Poisson's equation from $ x = 0 $ to $ x = +\infty $,
 \begin{equation}
 \label{2.7.2.10}
 E_x = \sqrt{\frac{2}{e}} E_0.
